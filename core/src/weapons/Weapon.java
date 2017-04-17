@@ -23,6 +23,9 @@ public class Weapon {
     float width;
     float height;
     
+    int ammoCur;
+    int ammoMax;
+    
     float speed;
     
     float timer;
@@ -32,7 +35,9 @@ public class Weapon {
     
     Sound fireSound;
     
-    public Weapon(float width, float height, float delay, float speed, Texture texture)
+    
+    
+    public Weapon(float width, float height, int ammoMax, float delay, float speed, Texture texture)
     {
         if(texture != null)
         {
@@ -44,6 +49,7 @@ public class Weapon {
             this.width = width;
             this.height = height;
         }
+        this.ammoMax = ammoCur = ammoMax;
         this.delay = delay;
         timer = delay;
         this.speed = speed;
@@ -72,15 +78,39 @@ public class Weapon {
         return canShoot;
     }
     
+    public boolean hasAmmo()
+    {
+        return ammoCur > 0;
+    }
+    
+    public int getCurrentAmmo()
+    {
+        return ammoCur;
+    }
+    
+    public int getMaxAmmo()
+    {
+        return ammoMax;
+    }
+    
+    public void reload()
+    {
+        ammoCur = ammoMax;
+    }
+    
     public Bullet fireBullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle)
     {
         Bullet result = null;
         if(canShoot)
         {
-            canShoot = false;
-            timer = delay;
-            result = new Bullet(s, sh, x, y, angle - 90, speed, texture);
-            fireSound.play();
+            if(hasAmmo())
+            {
+                canShoot = false;
+                timer = delay;
+                result = new Bullet(s, sh, x, y, angle - 90, speed, texture);
+                fireSound.play();
+                ammoCur--;
+            }
         }
         return result;
     }

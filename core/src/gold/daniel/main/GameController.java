@@ -37,6 +37,11 @@ public class GameController
         return engine.isMouseButtonPressed(Buttons.LEFT);
     }
     
+    public boolean isReloadPressed()
+    {
+        return engine.isKeyJustPressed(Keys.R);
+    }
+    
     public Vector2 getMoveDirection()
     {
         Vector2 result = new Vector2();

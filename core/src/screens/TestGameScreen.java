@@ -8,6 +8,7 @@ package screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -15,9 +16,11 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import gameobjects.World;
 import gameobjects.Player;
+import gameobjects.Robot;
 import gold.daniel.main.GameEngine;
 import gold.daniel.main.Main;
 import gold.daniel.main.Screen;
+import gold.daniel.main.Textures;
 
 /**
  *
@@ -30,6 +33,7 @@ public class TestGameScreen extends Screen
     World world;
     OrthogonalTiledMapRenderer tmr;
     
+    SpriteBatch hudBatch;
     
     Sound backgroundSong;
     
@@ -51,7 +55,12 @@ public class TestGameScreen extends Screen
         player = new Player(s, sh, engine.getNextController());
         world.addEntity(player);
         
+        Robot robot = new Robot(s, sh, new Texture(Gdx.files.internal("characters/robot/example.png")));
+        world.addEntity(robot);
+        
         backgroundSong = Gdx.audio.newSound(Gdx.files.internal("audio/game_background.wav"));
+        
+        hudBatch = new SpriteBatch();
         updating = false;
     }
 
@@ -107,6 +116,17 @@ public class TestGameScreen extends Screen
     public void draw()
     {
         world.draw();
+
+        hudBatch.begin();
+        for(int i = 0; i < player.getWeapon().getCurrentAmmo(); i++)
+        {
+            hudBatch.draw(Textures.ammoTexture, Textures.ammoTexture.getWidth() * i * 2 + 1*i, 0, Textures.ammoTexture.getWidth() * 2, Textures.ammoTexture.getHeight() * 2);
+        }
+        for(int i = player.getWeapon().getCurrentAmmo(); i < player.getWeapon().getMaxAmmo(); i++)
+        {
+            hudBatch.draw(Textures.noAmmoTexture, Textures.noAmmoTexture.getWidth() * i * 2 + 1*i, 0, Textures.noAmmoTexture.getWidth() * 2, Textures.noAmmoTexture.getHeight() * 2);
+        }
+        hudBatch.end();
     }
 
     @Override

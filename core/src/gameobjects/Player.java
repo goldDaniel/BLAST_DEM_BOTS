@@ -48,7 +48,7 @@ public class Player extends GameObject
         x = 400;
         y = 400;
 
-        weapon = new Weapon(8, 8, 25f, 250f, new Texture(Gdx.files.internal("weapons/bullets/6.png")));
+        weapon = new Weapon(8, 8, 10, 25f, 250f, new Texture(Gdx.files.internal("weapons/bullets/6.png")));
         
         
         collisionTiles = new Array<Tile>();
@@ -84,12 +84,23 @@ public class Player extends GameObject
         handleWeapons(world);
     }
 
+    public Weapon getWeapon()
+    {
+        return weapon;
+    }
        
     private void handleWeapons(World world)
     {
         if(controller.isFireButtonPressed())
         {
-            world.addEntity(weapon.fireBullet(s, sh, x + width / 2, y + height / 2, angle));
+            if(weapon.hasAmmo())
+            {
+                world.addEntity(weapon.fireBullet(s, sh, x + width / 2, y + height / 2, angle));
+            }
+        }
+        if(controller.isReloadPressed())
+        {
+            weapon.reload();
         }
     }
     
@@ -129,7 +140,7 @@ public class Player extends GameObject
         temp.sub(controller.getMousePosition());
 
         //-90 to compensate for image rotation 
-        result = -90 + MathUtils.atan2(temp.y, temp.x) / MathUtils.degreesToRadians;
+        result = -90 + temp.angle();
         
         return result;
     }

@@ -5,6 +5,7 @@
  */
 package gold.daniel.main;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
@@ -18,5 +19,7 @@ public class Textures
     public static Texture healthBarEnd = new Texture("hud/part-1.png");
     public static Texture healthBarMid = new Texture("hud/part-2.png");
     public static Texture healthRect = new Texture("hud/life-rectangle.png");
-    
+ 
+    public static Texture ammoTexture = new Texture(Gdx.files.internal("hud/ammo.png"));
+    public static Texture noAmmoTexture = new Texture(Gdx.files.internal("hud/ammo-empty.png"));
 }

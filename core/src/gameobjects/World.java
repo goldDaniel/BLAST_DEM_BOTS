@@ -5,7 +5,6 @@
  */
 package gameobjects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -78,6 +77,7 @@ public class World extends GameObject
         if(updating)toAddToScene.add(obj);
         else entities.add(obj);
     }
+    
     public void removeEntity(GameObject obj)
     {
         if(obj == null) return;
@@ -163,7 +163,7 @@ public class World extends GameObject
             result.add(tiles[tileX - 1][tileY]);
         }
         
-        if(tileX + 1 < tiles.length - 1 &&
+        if(tileX + 1 < tiles.length - 1 && tileX + 1 >= 0 && 
            tiles[tileX + 1][tileY].isSolid)
         {
             result.add(tiles[tileX + 1][tileY]);
@@ -175,7 +175,7 @@ public class World extends GameObject
             result.add(tiles[tileX][tileY - 1]);
         }
         
-        if(tileY + 1 < tiles[0].length - 1 &&
+        if(tileY + 1 < tiles[0].length - 1 && tileY + 1 >= 0 &&
            tiles[tileX][tileY + 1].isSolid)
         {
             result.add(tiles[tileX][tileY + 1]);
