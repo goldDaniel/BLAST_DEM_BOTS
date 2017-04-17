@@ -50,4 +50,5 @@ Temporary Items
 .gradle
 .nb-gradle
 core/assets/*
+core/build/*
 desktop/build/*

@@ -120,6 +120,13 @@ public class World extends GameObject
         int tileX = x / Tile.SIZE;
         int tileY = y / Tile.SIZE;
         
+        if(tileX >= 0 && tileX < tiles.length - 1 &&
+           tileY >= 0 && tileY < tiles[0].length - 1 && 
+           tiles[tileX][tileY].isSolid)
+        {
+            result.add(tiles[tileX][tileY]);
+        }
+        
         if(tileX - 1 >= 0 &&
            tiles[tileX - 1][tileY].isSolid)
         {
