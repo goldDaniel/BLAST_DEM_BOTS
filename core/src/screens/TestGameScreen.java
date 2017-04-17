@@ -5,13 +5,15 @@
  */
 package screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import gameobjects.World;
 import gameobjects.Player;
 import gold.daniel.main.GameEngine;
@@ -27,6 +29,10 @@ public class TestGameScreen extends Screen
     Player player;
     World world;
     OrthogonalTiledMapRenderer tmr;
+    
+    
+    Sound backgroundSong;
+    
     boolean updating;
     
     
@@ -45,6 +51,7 @@ public class TestGameScreen extends Screen
         player = new Player(s, sh, engine.getNextController());
         world.addEntity(player);
         
+        backgroundSong = Gdx.audio.newSound(Gdx.files.internal("audio/game_background.wav"));
         updating = false;
     }
 
@@ -52,11 +59,12 @@ public class TestGameScreen extends Screen
     public void update(float deltaTime)
     {
         updating = true;
-                
+        backgroundSong.resume();
         tmr.setView(engine.getCamera());
         if(engine.isKeyJustPressed(Keys.ESCAPE))
         {
             engine.switchScreen(TEST_GAME, MAIN_MENU);
+            backgroundSong.stop();
             updating = !updating;
         }
         world.update(deltaTime);
@@ -83,17 +91,18 @@ public class TestGameScreen extends Screen
     public void destroy()
     {
         world.dispose();
-        
+        backgroundSong.dispose();
     }
 
     @Override
     public void enter()
     {
         updating = false;
+        backgroundSong.play(0.1f);
     }
     @Override
     public void exit()
     {
-
+        backgroundSong.stop();
     }
 }

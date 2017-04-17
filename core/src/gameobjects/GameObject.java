@@ -115,7 +115,7 @@ public abstract class GameObject
                 verticalDif = y + height - tile.y;
             }
             
-            //DO HORIZONTALdd
+            //DO HORIZONTAL
             if(horizontalDif < verticalDif)
             {
                 if(left)

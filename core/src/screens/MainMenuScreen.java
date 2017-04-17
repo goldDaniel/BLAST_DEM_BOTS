@@ -29,7 +29,6 @@ public class MainMenuScreen extends Screen
     Sound menuSound;
     long menuSoundID;
     
-    
     Sound navSound; 
     
     int currentOptionSelection;
