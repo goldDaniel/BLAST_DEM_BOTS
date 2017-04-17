@@ -135,14 +135,11 @@ public class Player extends GameObject
 
     private float calculateAngleToMouse(float x, float y)
     {
-        float result;
         Vector2 temp = new Vector2(x + width / 2, y + height / 2);
         temp.sub(controller.getMousePosition());
 
         //-90 to compensate for image rotation 
-        result = -90 + temp.angle();
-        
-        return result;
+        return -90 + temp.angle();
     }
 
     @Override

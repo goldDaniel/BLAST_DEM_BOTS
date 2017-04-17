@@ -76,12 +76,9 @@ public class Robot extends GameObject
     
     private float calculateAnglePoint(float x, float y)
     {
-        float result;
         Vector2 temp = new Vector2(this.x + width / 2, this.y + height / 2);
         temp.sub(x, y);
 
-        result = 180 + temp.angle();
-        
-        return result;
+        return 180 + temp.angle();
     }
 }
