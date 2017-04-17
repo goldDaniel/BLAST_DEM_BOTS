@@ -5,6 +5,7 @@
  */
 package gameobjects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -50,7 +51,7 @@ public class Player extends GameObject
         x = 100;
         y = 100;
 
-        weapon = new Weapon(8, 8, 30f, 200f, null);
+        weapon = new Weapon(8, 8, 15f, 350f, new Texture(Gdx.files.internal("weapons/bullets/1.png")));
         
         
         collisionTiles = new Array<Tile>();
@@ -91,7 +92,7 @@ public class Player extends GameObject
     {
         if(controller.isFireButtonPressed())
         {
-            world.addEntity(weapon.createBullet(s, sh, x + width / 2, y + height / 2, angle));
+            world.addEntity(weapon.fireBullet(s, sh, x + width / 2, y + height / 2, angle));
         }
     }
     

@@ -7,6 +7,7 @@ package gameobjects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 
@@ -19,6 +20,8 @@ public class Bullet extends GameObject
     float angle;
     float speed;
 
+    Texture texture;
+    
     public Bullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle, float speed, Texture texture)
     {
         super(s, sh);
@@ -26,6 +29,7 @@ public class Bullet extends GameObject
         this.x = x;
         this.y = y;
         this.angle = angle;
+        this.texture = texture;
         width = height = 8;
     }
 
@@ -51,9 +55,9 @@ public class Bullet extends GameObject
     @Override
     public void draw()
     {
-        sh.begin(ShapeRenderer.ShapeType.Filled);
-        sh.circle(x + width / 2, y + height / 2, width);
-        sh.end();
+       s.begin();
+       s.draw(new TextureRegion(texture), x, y, width / 2, height / 2, width, height, 1, 1, angle);
+       s.end();
     }
     
     @Override

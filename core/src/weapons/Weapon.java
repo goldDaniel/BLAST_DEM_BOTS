@@ -5,6 +5,8 @@
  */
 package weapons;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -28,6 +30,8 @@ public class Weapon {
     
     Texture texture;
     
+    Sound fireSound;
+    
     public Weapon(float width, float height, float delay, float speed, Texture texture)
     {
         this.width = width;
@@ -36,6 +40,8 @@ public class Weapon {
         timer = delay;
         this.speed = speed;
         this.texture = texture;
+        
+        fireSound = Gdx.audio.newSound(Gdx.files.internal("audio/shoot-1.wav"));
         
         canShoot = true;
     }
@@ -58,13 +64,15 @@ public class Weapon {
         return canShoot;
     }
     
-    public Bullet createBullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle)
+    public Bullet fireBullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle)
     {
         Bullet result = null;
         if(canShoot)
         {
             canShoot = false;
+            timer = delay;
             result = new Bullet(s, sh, x, y, angle - 90, speed, texture);
+            fireSound.play();
         }
         return result;
     }
