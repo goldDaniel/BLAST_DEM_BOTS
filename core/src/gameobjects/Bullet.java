@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 
 /**
  *
@@ -44,6 +45,15 @@ public class Bullet extends GameObject
         for(Tile tile : collisionTiles)
         {
             handleTileCollisionResponse(tile);
+        }
+        
+        Array<Robot> enemies = (Array<Robot>)world.getEntityType(Robot.class);
+        for(Robot robot : enemies)
+        {
+            if(isColliding(robot))
+            {
+                isAlive = false;
+            }
         }
         
         if(!isAlive)

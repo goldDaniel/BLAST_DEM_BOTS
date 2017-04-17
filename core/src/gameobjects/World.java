@@ -184,4 +184,44 @@ public class World extends GameObject
         
         return result;
     }
+
+    Array<?> getEntityType(Class<?> type)
+    {
+        Array<GameObject> result = new Array<GameObject>();
+        
+        
+        for(int i = 0; i < entities.size; i++)
+        {
+            GameObject obj = entities.get(i);
+            if(type == Robot.class)
+            {
+                if(obj instanceof Robot)
+                {
+                    result.add(obj);
+                }
+            }
+            else if(type == Player.class)
+            {
+                if(obj instanceof Player)
+                {
+                    result.add(obj);
+                }
+            }
+            else if(type == Tile.class)
+            {
+                if(obj instanceof Tile)
+                {
+                    result.add(obj);
+                }
+            }
+            else if(type == Bullet.class)
+            {
+                if(obj instanceof Bullet)
+                {
+                    result.add(obj);
+                }
+            }
+        }
+        return result;
+    }
 }

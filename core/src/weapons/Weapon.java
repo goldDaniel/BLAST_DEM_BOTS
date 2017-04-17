@@ -35,7 +35,7 @@ public class Weapon {
     
     Sound fireSound;
     
-    
+    static Sound noAmmoSound = Gdx.audio.newSound(Gdx.files.internal("audio/no-ammo.wav"));
     
     public Weapon(float width, float height, int ammoMax, float delay, float speed, Texture texture)
     {
@@ -46,8 +46,6 @@ public class Weapon {
         }
         else
         {
-            this.width = width;
-            this.height = height;
         }
         this.ammoMax = ammoCur = ammoMax;
         this.delay = delay;
@@ -56,6 +54,7 @@ public class Weapon {
         this.texture = texture;
         
         fireSound = Gdx.audio.newSound(Gdx.files.internal("audio/shoot-1.wav"));
+        
         
         canShoot = true;
     }
@@ -105,13 +104,19 @@ public class Weapon {
         {
             if(hasAmmo())
             {
-                canShoot = false;
-                timer = delay;
                 result = new Bullet(s, sh, x, y, angle - 90, speed, texture);
                 fireSound.play();
                 ammoCur--;
             }
+            else
+            {
+                noAmmoSound.play(0.4f);
+                
+            }
+            timer = delay;
+            canShoot = false;
         }
+        
         return result;
     }
 }

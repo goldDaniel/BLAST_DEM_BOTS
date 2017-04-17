@@ -50,7 +50,6 @@ public class Robot extends GameObject
                 float playerX = world.entities.get(i).x;
                 float playerY = world.entities.get(i).y;
                 
-                System.out.println(playerX + playerY);
                 angle = calculateAnglePoint(playerX, playerY);
             }
         }

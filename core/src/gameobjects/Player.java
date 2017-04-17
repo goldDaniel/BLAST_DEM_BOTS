@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.GameController;
@@ -48,7 +47,7 @@ public class Player extends GameObject
         x = 400;
         y = 400;
 
-        weapon = new Weapon(8, 8, 10, 25f, 250f, new Texture(Gdx.files.internal("weapons/bullets/6.png")));
+        weapon = new Weapon(8, 8, 10, 25f, 250f, new Texture(Gdx.files.internal("weapons/bullets/12.png")));
         
         
         collisionTiles = new Array<Tile>();
@@ -83,6 +82,16 @@ public class Player extends GameObject
         weapon.update();
         handleWeapons(world);
     }
+    
+    public int getHealth()
+    {
+        return health;
+    }
+        
+    public int getMaxHealth()
+    {
+        return healthMax;
+    }
 
     public Weapon getWeapon()
     {
@@ -93,14 +102,14 @@ public class Player extends GameObject
     {
         if(controller.isFireButtonPressed())
         {
-            if(weapon.hasAmmo())
-            {
-                world.addEntity(weapon.fireBullet(s, sh, x + width / 2, y + height / 2, angle));
-            }
+            world.addEntity(weapon.fireBullet(s, sh, x + width / 2, y + height / 2, angle));
         }
         if(controller.isReloadPressed())
         {
-            weapon.reload();
+            if(!weapon.hasAmmo())
+            {
+                weapon.reload();
+            }
         }
     }
     

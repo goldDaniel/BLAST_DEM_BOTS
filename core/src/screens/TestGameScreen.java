@@ -39,6 +39,7 @@ public class TestGameScreen extends Screen
     
     boolean updating;
     
+  
     
     public TestGameScreen(GameEngine engine, SpriteBatch s, ShapeRenderer sh)
     {
@@ -64,6 +65,7 @@ public class TestGameScreen extends Screen
         updating = false;
     }
 
+    
     @Override
     public void update(float deltaTime)
     {
@@ -118,6 +120,7 @@ public class TestGameScreen extends Screen
         world.draw();
 
         hudBatch.begin();
+        ////DRAWING AMMO COUNTER
         for(int i = 0; i < player.getWeapon().getCurrentAmmo(); i++)
         {
             hudBatch.draw(Textures.ammoTexture, Textures.ammoTexture.getWidth() * i * 2 + 1*i, 0, Textures.ammoTexture.getWidth() * 2, Textures.ammoTexture.getHeight() * 2);
@@ -126,6 +129,7 @@ public class TestGameScreen extends Screen
         {
             hudBatch.draw(Textures.noAmmoTexture, Textures.noAmmoTexture.getWidth() * i * 2 + 1*i, 0, Textures.noAmmoTexture.getWidth() * 2, Textures.noAmmoTexture.getHeight() * 2);
         }
+        /////////////////////////
         hudBatch.end();
     }
 
