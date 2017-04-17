@@ -9,6 +9,7 @@ import screens.HowToPlayScreen;
 import screens.MainMenuScreen;
 import screens.TestGameScreen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -153,6 +154,20 @@ public class GameEngine
             }
         }
         return false;
+    }
+    
+    public boolean isMouseButtonPressed(int... buttoncode)
+    {
+        boolean result = false;
+        for(int code : buttoncode)
+        {
+            if(Gdx.input.isButtonPressed(code))
+            {
+                result = true;
+            }
+            
+        }
+        return result;
     }
 
     public void switchScreen(String curr, String nextScreen)

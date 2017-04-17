@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  *
@@ -20,10 +19,10 @@ public class Bullet extends GameObject
     float angle;
     float speed;
 
-    public Bullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle, Texture texture)
+    public Bullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle, float speed, Texture texture)
     {
         super(s, sh);
-        speed = 14f;
+        this.speed = speed;
         this.x = x;
         this.y = y;
         this.angle = angle;
@@ -35,14 +34,35 @@ public class Bullet extends GameObject
     {
         x += speed * MathUtils.cosDeg(angle) * deltaTime;
         y += speed * MathUtils.sinDeg(angle) * deltaTime;
+        
+        collisionTiles.addAll(world.getCollisionTiles((int)(x + width / 2), (int)(y + height / 2)));
+        
+        for(Tile tile : collisionTiles)
+        {
+            handleTileCollisionResponse(tile);
+        }
+        
+        if(!isAlive)
+        {
+            world.removeEntity(this);
+        }
     }
-
+    
     @Override
     public void draw()
     {
         sh.begin(ShapeRenderer.ShapeType.Filled);
-        sh.rect(x + width / 2, y + height / 2, width, height);
+        sh.circle(x + width / 2, y + height / 2, width);
         sh.end();
+    }
+    
+    @Override
+    protected void handleTileCollisionResponse(Tile tile)
+    {
+        if(isColliding(tile))
+        {
+            isAlive = false;
+        }
     }
 
     @Override

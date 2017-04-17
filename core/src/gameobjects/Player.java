@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.GameController;
 import gold.daniel.main.Textures;
+import weapons.Weapon;
 
 /**
  * 
@@ -39,14 +40,8 @@ public class Player extends GameObject
 
     Texture texture;
 
-    //used to hold player surrounding tiles, should be at most 5 (4 directions + current)
-    /*
-        010
-        111
-        010
-    */
-    Array<Tile> collisionTiles;
-            
+    Weapon weapon;
+ 
             
     public Player(SpriteBatch s, ShapeRenderer sh, GameController controller)
     {
@@ -55,6 +50,8 @@ public class Player extends GameObject
         x = 100;
         y = 100;
 
+        weapon = new Weapon(8, 8, 30f, 200f, null);
+        
         
         collisionTiles = new Array<Tile>();
         texture = Textures.player;
@@ -69,83 +66,32 @@ public class Player extends GameObject
         
         Vector2 movement = controller.getMoveDirection();
         
-        
-        collisionTiles.clear();
         collisionTiles.addAll(world.getCollisionTiles((int)(x + width / 2), (int)(y + height / 2)));
         
         x += speed * movement.x * deltaTime;
         for(Tile tile : collisionTiles)
         {
-            if(isColliding(tile))
-            {
-                handleCollisionResponse(tile);
-            }
+            handleTileCollisionResponse(tile);
         }
         y += speed * movement.y * deltaTime;
         for(Tile tile : collisionTiles)
         {
-            if(isColliding(tile))
-            {
-                handleCollisionResponse(tile);
-            }
+            handleTileCollisionResponse(tile);
         }
         
         
         angle = calculateAngleToMouse(x, y);
+
+        weapon.update();
+        handleWeapons(world);
     }
 
-    private void handleCollisionResponse(Tile tile)
+       
+    private void handleWeapons(World world)
     {
-        if(isColliding(tile))
+        if(controller.isFireButtonPressed())
         {
-            boolean left = x < tile.x;
-            boolean above = y > tile.y;
-            
-            float horizontalDif;
-            float verticalDif;
-            
-            if(left)
-            {
-                horizontalDif = x + width - tile.x;
-            }
-            else
-            {
-                horizontalDif = tile.x + tile.width- x;
-            }
-            
-            if(above)
-            {
-                verticalDif = tile.y + tile.height - y;
-            }
-            else
-            {
-                verticalDif = y + height - tile.y;
-            }
-            
-            //DO HORIZONTALdd
-            if(horizontalDif < verticalDif)
-            {
-                if(left)
-                {
-                    x = tile.x - width;
-                }
-                else
-                {
-                    x = tile.x + tile.width;
-                }
-            }
-            //DO VERTICAL
-            else
-            {
-                if(above)
-                {
-                    y = tile.y + tile.height;
-                }
-                else
-                {
-                    y = tile.y - height;
-                }
-            }
+            world.addEntity(weapon.createBullet(s, sh, x + width / 2, y + height / 2, angle));
         }
     }
     
@@ -175,8 +121,7 @@ public class Player extends GameObject
         sh.setColor(Color.RED);
         sh.line(x + width / 2, y + height / 2, controller.getMousePosition().x, controller.getMousePosition().y);
         ///////
-        sh.rect(x, y, width, height);
-        sh.end();
+         sh.end();
     }
 
     private float calculateAngleToMouse(float x, float y)

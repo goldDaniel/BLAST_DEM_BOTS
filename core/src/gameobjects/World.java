@@ -25,6 +25,7 @@ public class World extends GameObject
     
     Array<GameObject> entities;
     Array<GameObject> toAddToScene;
+    Array<GameObject> toRemoveFromScene;
     
     
     boolean updating = false;
@@ -38,6 +39,7 @@ public class World extends GameObject
         
         entities = new Array<GameObject>();
         toAddToScene = new Array<GameObject>();
+        toRemoveFromScene = new Array<GameObject>();
         
         createTiles();
     }
@@ -53,17 +55,28 @@ public class World extends GameObject
                 int tileX = (int)(i * layer.getTileWidth());
                 int tileY = (int)(j * layer.getTileHeight());
                 
-                boolean isSolid = layer.getCell(i, j).getTile().getProperties().get("isSolid") != null;
-                
+                boolean isSolid = false;
+                if(layer.getCell(i, j) != null)
+                {
+                    isSolid = layer.getCell(i, j).getTile().getProperties().get("isSolid") != null;
+                }
                 tiles[i][j] = new Tile(s, sh, tileX, tileY, isSolid);
+                entities.add(tiles[i][j]);
             }
         }
     }
     
     public void addEntity(GameObject obj)
     {
+        if(obj == null) return;
         if(updating)toAddToScene.add(obj);
         else entities.add(obj);
+    }
+    public void removeEntity(GameObject obj)
+    {
+        if(obj == null) return;
+        if(updating) toRemoveFromScene.add(obj);
+        else entities.removeValue(obj, true);
     }
     
     public void update(float deltaTime)
@@ -83,7 +96,8 @@ public class World extends GameObject
             toAddToScene.clear();
         }
         
-        
+        entities.removeAll(toRemoveFromScene, true);
+        toRemoveFromScene.clear();
     }
 
     @Override
