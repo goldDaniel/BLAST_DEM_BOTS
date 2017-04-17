@@ -104,10 +104,19 @@ public class World extends GameObject
     public void draw()
     {
         tmr.render();
+        Player temp = null;
         for(GameObject entity : entities)
         {
-            entity.draw();
+            if(entity instanceof Player)
+            {
+                temp = (Player)entity;
+            }
+            else
+            {
+                entity.draw();
+            }
         }
+        if(temp != null) temp.draw();
     }
 
     @Override

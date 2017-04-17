@@ -46,6 +46,7 @@ public class MainMenuScreen extends Screen
         {
             menuOptions.add("START GAME");
             menuOptions.add("HOW TO PLAY");
+            menuOptions.add("OPTIONS");
             menuOptions.add("EXIT");
         
         }
@@ -90,6 +91,10 @@ public class MainMenuScreen extends Screen
                 engine.switchScreen(MAIN_MENU, HOW_TO_PLAY);
             }
             else if(currentOptionSelection == 2)
+            {
+                engine.switchScreen(MAIN_MENU, OPTIONS);
+            }
+            else if(currentOptionSelection == 3)
             {
                 engine.exit();
             }

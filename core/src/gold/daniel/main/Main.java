@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 
 public class Main extends ApplicationAdapter
 {
-    public static final int WIDTH = 1024;
-    public static final int HEIGHT  = 768;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT  = 600;
     
     GameEngine engine;
 

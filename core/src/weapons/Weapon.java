@@ -34,8 +34,16 @@ public class Weapon {
     
     public Weapon(float width, float height, float delay, float speed, Texture texture)
     {
-        this.width = width;
-        this.height = height;
+        if(texture != null)
+        {
+            this.width = texture.getWidth();
+            this.height = texture.getHeight();
+        }
+        else
+        {
+            this.width = width;
+            this.height = height;
+        }
         this.delay = delay;
         timer = delay;
         this.speed = speed;

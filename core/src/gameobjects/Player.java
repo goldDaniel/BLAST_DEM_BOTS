@@ -26,13 +26,10 @@ import weapons.Weapon;
 public class Player extends GameObject
 {
 
-    //used to see number of iterations when testing 
-    //with outputs that are repetitive(so you can see when the output starts and stops)aa
-    private float DEBUG_COUNTER = 0;
         
     GameController controller;
 
-    float speed = 60f;
+    float speed = 75f;
 
     float angle = 0;
 
@@ -51,7 +48,7 @@ public class Player extends GameObject
         x = 100;
         y = 100;
 
-        weapon = new Weapon(8, 8, 15f, 350f, new Texture(Gdx.files.internal("weapons/bullets/1.png")));
+        weapon = new Weapon(8, 8, 25f, 250f, new Texture(Gdx.files.internal("weapons/bullets/6.png")));
         
         
         collisionTiles = new Array<Tile>();
@@ -127,10 +124,11 @@ public class Player extends GameObject
 
     private float calculateAngleToMouse(float x, float y)
     {
-        float result = 0;
+        float result;
         Vector2 temp = new Vector2(x + width / 2, y + height / 2);
         temp.sub(controller.getMousePosition());
 
+        //-90 to compensate for image rotation 
         result = -90 + MathUtils.atan2(temp.y, temp.x) / MathUtils.degreesToRadians;
         
         return result;

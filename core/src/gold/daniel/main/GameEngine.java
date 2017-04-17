@@ -66,6 +66,7 @@ public class GameEngine
         screens.put(Screen.MAIN_MENU, new MainMenuScreen(this, s, sh));
         screens.put(Screen.HOW_TO_PLAY, new HowToPlayScreen(this, s, sh));
         screens.put(Screen.TEST_GAME, new TestGameScreen(this, s, sh));
+        screens.put(Screen.OPTIONS, new OptionsScreen(this, s, sh));
         
         currentScreen = new MainMenuScreen(this, s, sh);
         currentScreen.load();
