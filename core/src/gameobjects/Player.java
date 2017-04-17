@@ -45,8 +45,8 @@ public class Player extends GameObject
     {
         super(s, sh);
         this.controller = controller;
-        x = 100;
-        y = 100;
+        x = 400;
+        y = 400;
 
         weapon = new Weapon(8, 8, 25f, 250f, new Texture(Gdx.files.internal("weapons/bullets/6.png")));
         

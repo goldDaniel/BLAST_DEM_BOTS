@@ -7,7 +7,6 @@ package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -17,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import gameobjects.World;
 import gameobjects.Player;
 import gold.daniel.main.GameEngine;
+import gold.daniel.main.Main;
 import gold.daniel.main.Screen;
 
 /**
@@ -71,8 +71,30 @@ public class TestGameScreen extends Screen
 
         
         
+        
         engine.getCamera().position.x = (int)(player.getX() + player.getWidth() / 2);
+        //CAMERA MAP CLAMPING FOR X-AXIS
+        if(engine.getCamera().position.x < world.getX() + Main.WIDTH / 2 * engine.getCamera().zoom)
+        {
+            engine.getCamera().position.x = world.getX() + Main.WIDTH / 2 * engine.getCamera().zoom;
+        }
+        else if(engine.getCamera().position.x > world.getX() + world.getWidth() - Main.WIDTH / 2 * engine.getCamera().zoom)
+        {
+            engine.getCamera().position.x = world.getX() + world.getWidth() - Main.WIDTH / 2 * engine.getCamera().zoom;
+        }
+        ////////////////////////////////////////
+        
+        //CAMERA MAP CLAMPING FOR Y-AXIS
         engine.getCamera().position.y = (int)(player.getY() + player.getHeight() / 2);
+        if(engine.getCamera().position.y < world.getY() + Main.HEIGHT / 2 * engine.getCamera().zoom)
+        {
+            engine.getCamera().position.y = world.getY() + Main.HEIGHT / 2 * engine.getCamera().zoom;
+        }
+        else if(engine.getCamera().position.y > world.getY() + world.getHeight() - Main.HEIGHT / 2 * engine.getCamera().zoom)
+        {
+            engine.getCamera().position.y = world.getY() + world.getHeight() - Main.HEIGHT / 2 * engine.getCamera().zoom;
+        }
+        ///////////////////////////////////////////
         
         engine.getCamera().zoom = 0.5f;
         updating = false;

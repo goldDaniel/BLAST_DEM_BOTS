@@ -5,6 +5,7 @@
  */
 package gameobjects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -36,6 +37,11 @@ public class World extends GameObject
         super(s, sh);
         this.map = map;
         this.tmr = tmr;
+
+        x = 0;
+        y = 0;
+        width = Tile.SIZE * map.getProperties().get("width", Integer.class);
+        height = Tile.SIZE * map.getProperties().get("height", Integer.class);
         
         entities = new Array<GameObject>();
         toAddToScene = new Array<GameObject>();
@@ -98,6 +104,7 @@ public class World extends GameObject
         
         entities.removeAll(toRemoveFromScene, true);
         toRemoveFromScene.clear();
+        
     }
 
     @Override
