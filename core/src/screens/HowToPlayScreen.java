@@ -19,9 +19,9 @@ import gold.daniel.main.Screen;
 public class HowToPlayScreen extends Screen
 {
 
-    public HowToPlayScreen(GameEngine engine, SpriteBatch s, ShapeRenderer sh)
+    public HowToPlayScreen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
     {
-        super(engine, s, sh);
+        super(engine, s, hudBatch, sh);
     }
 
     @Override

@@ -30,10 +30,11 @@ public class TestGameScreen extends Screen
 {
 
     Player player;
+    
+    Robot robot;
+    
     World world;
     OrthogonalTiledMapRenderer tmr;
-    
-    SpriteBatch hudBatch;
     
     Sound backgroundSong;
     
@@ -41,9 +42,9 @@ public class TestGameScreen extends Screen
     
   
     
-    public TestGameScreen(GameEngine engine, SpriteBatch s, ShapeRenderer sh)
+    public TestGameScreen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
     {
-        super(engine, s, sh);
+        super(engine, s, hudBatch, sh);
     }
 
     @Override
@@ -56,12 +57,11 @@ public class TestGameScreen extends Screen
         player = new Player(s, sh, engine.getNextController());
         world.addEntity(player);
         
-        Robot robot = new Robot(s, sh, new Texture(Gdx.files.internal("characters/robot/example.png")));
+        robot = new Robot(s, sh, new Texture(Gdx.files.internal("characters/robot/example.png")));
         world.addEntity(robot);
         
         backgroundSong = Gdx.audio.newSound(Gdx.files.internal("audio/game_background.wav"));
         
-        hudBatch = new SpriteBatch();
         updating = false;
     }
 

@@ -16,8 +16,8 @@ import gold.daniel.main.Screen;
  */
 public class OptionsScreen extends Screen {
 
-    public OptionsScreen(GameEngine engine, SpriteBatch s, ShapeRenderer sh) {
-        super(engine, s, sh);
+    public OptionsScreen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh) {
+        super(engine, s, hudBatch, sh);
     }
 
     @Override

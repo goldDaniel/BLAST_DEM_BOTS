@@ -22,18 +22,13 @@ import weapons.Weapon;
  *
  * @author wrksttnpc
  */
-public class Player extends GameObject
+public class Player extends Character
 {
 
         
     GameController controller;
 
-    float speed = 75f;
-
-    float angle = 0;
-
-    int health = 10;
-    int healthMax = 10;
+   
 
     Texture texture;
 
@@ -83,15 +78,9 @@ public class Player extends GameObject
         handleWeapons(world);
     }
     
-    public int getHealth()
-    {
-        return health;
-    }
+    
         
-    public int getMaxHealth()
-    {
-        return healthMax;
-    }
+    
 
     public Weapon getWeapon()
     {
@@ -113,15 +102,6 @@ public class Player extends GameObject
         }
     }
     
-    public void damage(int amount)
-    {
-        health -= amount;
-        if (health < 0)
-        {
-            health = 0;
-        }
-    }
-
     public boolean isAlive()
     {
         return health > 0;

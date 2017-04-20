@@ -91,6 +91,10 @@ public class World extends GameObject
         for(GameObject entity : entities)
         {
             entity.update(this, deltaTime);
+            if(!entity.isAlive)
+            {
+                toRemoveFromScene.add(entity);
+            }
         }
         
         updating = false;

@@ -33,9 +33,9 @@ public class MainMenuScreen extends Screen
     
     int currentOptionSelection;
 
-    public MainMenuScreen(GameEngine engine, SpriteBatch s, ShapeRenderer sh)
+    public MainMenuScreen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
     {
-        super(engine, s, sh);
+        super(engine, s, hudBatch, sh);
     }
 
     @Override
@@ -109,9 +109,9 @@ public class MainMenuScreen extends Screen
     @Override
     public void draw()
     {
-        s.begin();
+        hudBatch.begin();
         Fonts.TITLE_FONT.setColor(Color.MAGENTA);
-        Fonts.TITLE_FONT.draw(s, "MAIN MENU", Main.WIDTH / 2 - Fonts.TITLE_GLYPH_LAYOUT.width / 2, Main.HEIGHT - Fonts.TITLE_GLYPH_LAYOUT.height / 2);
+        Fonts.TITLE_FONT.draw(hudBatch, "MAIN MENU", Main.WIDTH / 2 - Fonts.TITLE_GLYPH_LAYOUT.width / 2, Main.HEIGHT - Fonts.TITLE_GLYPH_LAYOUT.height / 2);
 
         for (int i = 0; i < menuOptions.size; i++)
         {
@@ -123,10 +123,10 @@ public class MainMenuScreen extends Screen
             {
                 Fonts.OPTIONS_FONT.setColor(Color.WHITE);
             }
-            Fonts.OPTIONS_FONT.draw(s, menuOptions.get(i), Main.WIDTH / 2 - Fonts.TITLE_GLYPH_LAYOUT.width / 2, Main.WIDTH / 3- (i * 60));
+            Fonts.OPTIONS_FONT.draw(hudBatch, menuOptions.get(i), Main.WIDTH / 2 - Fonts.TITLE_GLYPH_LAYOUT.width / 2, Main.WIDTH / 3- (i * 60));
         }
 
-        s.end();
+        hudBatch.end();
     }
 
     @Override

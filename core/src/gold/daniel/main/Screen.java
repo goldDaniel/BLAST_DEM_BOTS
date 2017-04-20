@@ -23,13 +23,15 @@ public abstract class Screen
     protected GameEngine engine;
     
     protected SpriteBatch s;
+    protected SpriteBatch hudBatch;
     protected ShapeRenderer sh;
 
     
-    public Screen(GameEngine engine, SpriteBatch s, ShapeRenderer sh)
+    public Screen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
     {
         this.engine = engine;
         this.s = s;
+        this.hudBatch = hudBatch;
         this.sh = sh;
     }
     

@@ -53,6 +53,7 @@ public class Bullet extends GameObject
             if(isColliding(robot))
             {
                 isAlive = false;
+                robot.damage(1);
             }
         }
         

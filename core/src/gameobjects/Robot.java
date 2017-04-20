@@ -16,12 +16,8 @@ import com.badlogic.gdx.math.Vector2;
  *
  * @author goldd
  */
-public class Robot extends GameObject
+public class Robot extends Character
 {
-
-    float angle;
-    
-    float speed;
     
     Texture texture;
     
@@ -36,6 +32,8 @@ public class Robot extends GameObject
         
         speed = 20f;
         angle = 0;
+        
+        healthMax = health = 30;
     }
 
     @Override

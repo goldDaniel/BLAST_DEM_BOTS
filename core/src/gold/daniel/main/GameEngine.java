@@ -31,7 +31,12 @@ public class GameEngine
 
     FitViewport viewport;
     OrthographicCamera camera;
+    
+    FitViewport hudViewport;
+    OrthographicCamera hudCamera;
 
+    SpriteBatch hudBatch;
+    
     SpriteBatch s;
     ShapeRenderer sh;
 
@@ -49,14 +54,27 @@ public class GameEngine
     {
 
         camera = new OrthographicCamera();
+        hudCamera = new OrthographicCamera();
+        
         viewport = new FitViewport(Main.WIDTH, Main.HEIGHT, camera);
         viewport.apply();
 
         camera.position.x = Main.WIDTH / 2;
         camera.position.y = Main.HEIGHT / 2;
 
+        hudViewport = new FitViewport(Main.WIDTH, Main.HEIGHT, hudCamera);
+        hudViewport.apply();
+        
+        
+        hudCamera.position.x = Main.WIDTH / 2;
+        hudCamera.position.y = Main.HEIGHT / 2;
+        
         s = new SpriteBatch();
         s.enableBlending();
+        
+        hudBatch = new SpriteBatch();
+        hudBatch.enableBlending();
+        
         sh = new ShapeRenderer();
         
         Fonts.loadFonts();
@@ -64,12 +82,12 @@ public class GameEngine
 
         screens = new ArrayMap<String, Screen>();
         
-        screens.put(Screen.MAIN_MENU, new MainMenuScreen(this, s, sh));
-        screens.put(Screen.HOW_TO_PLAY, new HowToPlayScreen(this, s, sh));
-        screens.put(Screen.TEST_GAME, new TestGameScreen(this, s, sh));
-        screens.put(Screen.OPTIONS, new OptionsScreen(this, s, sh));
+        screens.put(Screen.MAIN_MENU, new MainMenuScreen(this, s, hudBatch, sh));
+        screens.put(Screen.HOW_TO_PLAY, new HowToPlayScreen(this, s, hudBatch, sh));
+        screens.put(Screen.TEST_GAME, new TestGameScreen(this, s, hudBatch, sh));
+        screens.put(Screen.OPTIONS, new OptionsScreen(this, s, hudBatch, sh));
         
-        currentScreen = new MainMenuScreen(this, s, sh);
+        currentScreen = screens.get(Screen.MAIN_MENU);
         currentScreen.load();
     }
 
@@ -79,6 +97,7 @@ public class GameEngine
      */
     public void updateEngine()
     {
+        hudCamera.update();
         camera.update();
        
     }
@@ -87,8 +106,7 @@ public class GameEngine
      * Like engine, but for when entities interact. What I want to do, is that
      * any time I write the same thing in 2 different scenes, it must be
      * re-factored into updateEngine()
-     * @param deltaTime time since last frame divided by 0.01666f
-     *                  multiply changes by it
+     * @param deltaTime 
      */
     public void updateGame(float deltaTime)
     {
@@ -105,6 +123,7 @@ public class GameEngine
     public void draw()
     {
         s.setProjectionMatrix(camera.combined);
+        hudBatch.setProjectionMatrix(hudCamera.combined);
         sh.setProjectionMatrix(camera.combined);
         if (currentScreen != null)
         {
@@ -212,6 +231,8 @@ public class GameEngine
     {
         viewport.update(width, height);
         viewport.apply();
+        hudViewport.update(width, height);
+        hudViewport.apply();
     }
 
     public Vector2 getMouseCoords()
