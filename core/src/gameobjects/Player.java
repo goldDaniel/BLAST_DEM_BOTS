@@ -5,7 +5,6 @@
  */
 package gameobjects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,15 +25,19 @@ public class Player extends Character
 {
 
         
+    //Please try to keep all input related things here
     GameController controller;
-
    
-
     Texture texture;
 
     Weapon weapon;
- 
             
+    /**
+     * 
+     * @param s
+     * @param sh
+     * @param controller 
+     */
     public Player(SpriteBatch s, ShapeRenderer sh, GameController controller)
     {
         super(s, sh);
@@ -42,14 +45,19 @@ public class Player extends Character
         x = 400;
         y = 400;
 
-        weapon = new Weapon(8, 8, 10, 25f, 250f, new Texture(Gdx.files.internal("weapons/bullets/12.png")));
+        weapon = new Weapon(8, 8, 10, 25f, 250f, Textures.BULLET_12);
         
         
         collisionTiles = new Array<Tile>();
-        texture = Textures.player;
+        texture = Textures.PLAYER;
         width = height = texture.getWidth() * 0.60f;
     }
 
+    /**
+     * 
+     * @param world
+     * @param deltaTime 
+     */
     @Override
     public void update(World world, float deltaTime)
     {
@@ -72,7 +80,7 @@ public class Player extends Character
         }
         
         
-        angle = calculateAngleToMouse(x, y);
+        angle = -90 + calculateAnglePoint(controller.getMousePosition().x, controller.getMousePosition().y);
 
         weapon.update();
         handleWeapons(world);
@@ -122,14 +130,6 @@ public class Player extends Character
          sh.end();
     }
 
-    private float calculateAngleToMouse(float x, float y)
-    {
-        Vector2 temp = new Vector2(x + width / 2, y + height / 2);
-        temp.sub(controller.getMousePosition());
-
-        //-90 to compensate for image rotation 
-        return -90 + temp.angle();
-    }
 
     @Override
     public void dispose()

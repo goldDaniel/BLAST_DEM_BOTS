@@ -5,7 +5,6 @@
  */
 package screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +19,7 @@ import gameobjects.Robot;
 import gold.daniel.main.GameEngine;
 import gold.daniel.main.Main;
 import gold.daniel.main.Screen;
+import gold.daniel.main.Sounds;
 import gold.daniel.main.Textures;
 
 /**
@@ -57,10 +57,10 @@ public class TestGameScreen extends Screen
         player = new Player(s, sh, engine.getNextController());
         world.addEntity(player);
         
-        robot = new Robot(s, sh, new Texture(Gdx.files.internal("characters/robot/example.png")));
+        robot = new Robot(s, sh, Textures.ROBOT);
         world.addEntity(robot);
         
-        backgroundSong = Gdx.audio.newSound(Gdx.files.internal("audio/game_background.wav"));
+        backgroundSong = Sounds.GAME_BACKGROUND;
         
         updating = false;
     }
@@ -123,11 +123,11 @@ public class TestGameScreen extends Screen
         ////DRAWING AMMO COUNTER
         for(int i = 0; i < player.getWeapon().getCurrentAmmo(); i++)
         {
-            hudBatch.draw(Textures.ammoTexture, Textures.ammoTexture.getWidth() * i * 2 + 1*i, 0, Textures.ammoTexture.getWidth() * 2, Textures.ammoTexture.getHeight() * 2);
+            hudBatch.draw(Textures.AMMO_TEXTURE, Textures.AMMO_TEXTURE.getWidth() * i * 2 + 1*i, 0, Textures.AMMO_TEXTURE.getWidth() * 2, Textures.AMMO_TEXTURE.getHeight() * 2);
         }
         for(int i = player.getWeapon().getCurrentAmmo(); i < player.getWeapon().getMaxAmmo(); i++)
         {
-            hudBatch.draw(Textures.noAmmoTexture, Textures.noAmmoTexture.getWidth() * i * 2 + 1*i, 0, Textures.noAmmoTexture.getWidth() * 2, Textures.noAmmoTexture.getHeight() * 2);
+            hudBatch.draw(Textures.AMMO_EMPTY_TEXTURE, Textures.AMMO_EMPTY_TEXTURE.getWidth() * i * 2 + 1*i, 0, Textures.AMMO_EMPTY_TEXTURE.getWidth() * 2, Textures.AMMO_EMPTY_TEXTURE.getHeight() * 2);
         }
         /////////////////////////
         hudBatch.end();

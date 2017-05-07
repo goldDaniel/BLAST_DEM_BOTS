@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  *
@@ -21,6 +20,12 @@ public class Robot extends Character
     
     Texture texture;
     
+    /**
+     * TODO: make constructor that takes in position.
+     * @param s
+     * @param sh
+     * @param texture 
+     */
     public Robot(SpriteBatch s, ShapeRenderer sh, Texture texture)
     {
         super(s, sh);
@@ -36,6 +41,11 @@ public class Robot extends Character
         healthMax = health = 30;
     }
 
+    /**
+     * 
+     * @param world
+     * @param deltaTime 
+     */
     @Override
     public void update(World world, float deltaTime)
     {
@@ -48,7 +58,8 @@ public class Robot extends Character
                 float playerX = world.entities.get(i).x;
                 float playerY = world.entities.get(i).y;
                 
-                angle = calculateAnglePoint(playerX, playerY);
+                //offset for rotation 
+                angle =  180 + calculateAnglePoint(playerX, playerY);
             }
         }
         
@@ -57,6 +68,9 @@ public class Robot extends Character
         
     }
 
+    /**
+     * 
+     */
     @Override
     public void draw()
     {
@@ -70,12 +84,5 @@ public class Robot extends Character
     {
 
     }
-    
-    private float calculateAnglePoint(float x, float y)
-    {
-        Vector2 temp = new Vector2(this.x + width / 2, this.y + height / 2);
-        temp.sub(x, y);
 
-        return 180 + temp.angle();
-    }
 }

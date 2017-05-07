@@ -21,7 +21,7 @@ public class Fonts
     
     public static GlyphLayout TITLE_GLYPH_LAYOUT;
     
-    public static void loadFonts()
+    public static void load()
     {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/comic.ttf"));
         {

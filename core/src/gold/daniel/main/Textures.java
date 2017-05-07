@@ -14,12 +14,19 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class Textures
 {
-    public static Texture player = new Texture("characters/example.png");
+    public static Texture PLAYER = new Texture(Gdx.files.internal("characters/example.png"));
     
-    public static Texture healthBarEnd = new Texture("hud/part-1.png");
-    public static Texture healthBarMid = new Texture("hud/part-2.png");
-    public static Texture healthRect = new Texture("hud/life-rectangle.png");
+    public static Texture ROBOT = new Texture(Gdx.files.internal("characters/robot/example.png"));
+    
+    public static Texture BULLET_12 = new Texture(Gdx.files.internal("weapons/bullets/12.png"));
+    
+    
+    
+    public static Texture HEALTHBAR_END = new Texture(Gdx.files.internal("hud/part-1.png"));
+    public static Texture HEALTHBAR_MID = new Texture(Gdx.files.internal("hud/part-2.png"));
+    public static Texture HEALTHBAR_RECT = new Texture(Gdx.files.internal("hud/life-rectangle.png"));
  
-    public static Texture ammoTexture = new Texture(Gdx.files.internal("hud/ammo.png"));
-    public static Texture noAmmoTexture = new Texture(Gdx.files.internal("hud/ammo-empty.png"));
+    public static Texture AMMO_TEXTURE = new Texture(Gdx.files.internal("hud/ammo.png"));
+    public static Texture AMMO_EMPTY_TEXTURE = new Texture(Gdx.files.internal("hud/ammo-empty.png"));
+    
 }

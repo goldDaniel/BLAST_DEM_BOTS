@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  *
  * @author wrksttnpc
  */
-public class Character extends GameObject
+public abstract class Character extends GameObject
 {
     protected float speed = 75f;
 
@@ -55,5 +55,7 @@ public class Character extends GameObject
     public void dispose()
     {
     }
+     
+
     
 }

@@ -10,6 +10,7 @@ import screens.MainMenuScreen;
 import screens.TestGameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -44,8 +45,6 @@ public class GameEngine
     
     ArrayMap<String, Screen> screens;
   
-    
-    
     private boolean switchScreens;
     
     private String nextScreen;
@@ -77,7 +76,8 @@ public class GameEngine
         
         sh = new ShapeRenderer();
         
-        Fonts.loadFonts();
+        
+        Fonts.load();
        
 
         screens = new ArrayMap<String, Screen>();

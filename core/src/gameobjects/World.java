@@ -31,6 +31,13 @@ public class World extends GameObject
     boolean updating = false;
     
     
+    /**
+     * 
+     * @param map
+     * @param tmr
+     * @param s
+     * @param sh 
+     */
     public World(TiledMap map, OrthogonalTiledMapRenderer tmr, SpriteBatch s, ShapeRenderer sh)
     {
         super(s, sh);
@@ -49,6 +56,13 @@ public class World extends GameObject
         createTiles();
     }
 
+    /**
+     * creates tiles from tiledmap passed through constructor
+     * this exists so the constructor doesnt seem too long
+     * 
+     * probably should use the TiledMap properties, but I like rolling
+     * my own structure for tiles for simplicity
+     */
     private void createTiles()
     {
         tiles = new Tile[map.getProperties().get("width", Integer.class)][map.getProperties().get("height", Integer.class)];
@@ -71,6 +85,10 @@ public class World extends GameObject
         }
     }
     
+    /**
+     * 
+     * @param obj to add
+     */
     public void addEntity(GameObject obj)
     {
         if(obj == null) return;
@@ -78,6 +96,10 @@ public class World extends GameObject
         else entities.add(obj);
     }
     
+    /**
+     * 
+     * @param obj to remove
+     */
     public void removeEntity(GameObject obj)
     {
         if(obj == null) return;
@@ -85,6 +107,13 @@ public class World extends GameObject
         else entities.removeValue(obj, true);
     }
     
+    /**
+     * update the world plz.
+     * 
+     * updating entities, adding, and removing done in here
+     * 
+     * @param deltaTime 
+     */
     public void update(float deltaTime)
     {
         updating = true;
@@ -120,6 +149,7 @@ public class World extends GameObject
         {
             if(entity instanceof Player)
             {
+                //this is okay because there should only ever be 1 player instance
                 temp = (Player)entity;
             }
             else
@@ -141,7 +171,7 @@ public class World extends GameObject
      * 
      * used to get surrounding tiles for collision detection
      * 
-     * TODO: write method with (GameObeect) if needed?
+     * TODO: write method with (GameObeect) in signature if needed?
      * 
      * @param x 
      * @param y
@@ -189,6 +219,17 @@ public class World extends GameObject
         return result;
     }
 
+    /**
+     * Gets all entities of type ?.
+     * 
+     * useful for checking against types. - No shit.
+     *
+     * TODO: There is probably a prettier way to write this?
+     *       as of now its a giant if-else if  
+     * 
+     * @param type 
+     * @return 
+     */
     Array<?> getEntityType(Class<?> type)
     {
         Array<GameObject> result = new Array<GameObject>();

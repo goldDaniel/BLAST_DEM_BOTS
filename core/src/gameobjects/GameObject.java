@@ -87,16 +87,42 @@ public abstract class GameObject
         return height;
     }
     
+    /**
+     *  calculates angle from center of character to a point X,Y
+     * @param x
+     * @param y
+     * @return 
+     */
+    protected float calculateAnglePoint(float x, float y)
+    {
+        Vector2 temp = new Vector2(this.x + width / 2, this.y + height / 2);
+        temp.sub(x, y);
+
+        return temp.angle();
+    }
+    
+    /**
+     * makes entity go to proper position after colliding with a tile.
+     * maybe move this method the the World class? 
+     * @param tile 
+     */
     protected void handleTileCollisionResponse(Tile tile)
     {
+        //broad check if colliding
         if(isColliding(tile))
         {
+            //decide what side the object is on relative to the tile
+            
+            //horizontal side
             boolean left = x < tile.x;
+            //vertical side
             boolean above = y > tile.y;
             
+            //holds how deep the object is inside the tile on each axis
             float horizontalDif;
             float verticalDif;
             
+            //determine the differences for depth
             if(left)
             {
                 horizontalDif = x + width - tile.x;
