@@ -137,7 +137,6 @@ public class World extends GameObject
         
         entities.removeAll(toRemoveFromScene, true);
         toRemoveFromScene.clear();
-        
     }
 
     @Override
@@ -165,13 +164,17 @@ public class World extends GameObject
     {
     }
     
+    
+    public Array<Tile> getCollisionTiles(GameObject obj)
+    {
+        return getCollisionTiles((int)(obj.x + obj.width / 2), (int)(obj.y + obj.height / 2));
+    }
     /**
      * Pass X & Y world coordinates.
      * get the neighboring tiles of the point(X,Y)
      * 
      * used to get surrounding tiles for collision detection
      * 
-     * TODO: write method with (GameObeect) in signature if needed?
      * 
      * @param x 
      * @param y

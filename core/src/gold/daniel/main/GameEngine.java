@@ -9,8 +9,6 @@ import screens.HowToPlayScreen;
 import screens.MainMenuScreen;
 import screens.TestGameScreen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -45,9 +43,6 @@ public class GameEngine
     
     ArrayMap<String, Screen> screens;
   
-    private boolean switchScreens;
-    
-    private String nextScreen;
     
     public GameEngine()
     {
@@ -191,6 +186,11 @@ public class GameEngine
         return result;
     }
 
+    /**
+     * used to change game states, moving from screen to screen.
+     * @param curr
+     * @param nextScreen 
+     */
     public void switchScreen(String curr, String nextScreen)
     {
         Gdx.app.log("SCREEN SWITCH", curr + " : " + nextScreen);

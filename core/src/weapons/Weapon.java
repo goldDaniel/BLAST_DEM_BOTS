@@ -5,12 +5,12 @@
  */
 package weapons;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import gameobjects.Bullet;
+import gold.daniel.main.Sounds;
 
 /**
  *
@@ -33,9 +33,9 @@ public class Weapon {
     
     Texture texture;
     
-    Sound fireSound;
+    static Sound  fireSound = Sounds.FIRE_SOUND;
     
-    static Sound noAmmoSound = Gdx.audio.newSound(Gdx.files.internal("audio/no-ammo.wav"));
+    static Sound noAmmoSound = Sounds.NO_AMMO;
     
     public Weapon(float width, float height, int ammoMax, float delay, float speed, Texture texture)
     {
@@ -53,7 +53,7 @@ public class Weapon {
         this.speed = speed;
         this.texture = texture;
         
-        fireSound = Gdx.audio.newSound(Gdx.files.internal("audio/shoot-1.wav"));
+       
         
         
         canShoot = true;

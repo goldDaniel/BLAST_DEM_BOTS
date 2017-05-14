@@ -60,6 +60,7 @@ public class Robot extends Character
                 
                 //offset for rotation 
                 angle =  180 + calculateAnglePoint(playerX, playerY);
+                break;
             }
         }
         

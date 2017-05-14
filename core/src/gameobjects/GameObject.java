@@ -171,6 +171,7 @@ public abstract class GameObject
     
     public boolean isColliding(GameObject obj)
     {
+        
         rect1.x = this.x;
         rect1.y = this.y;
         rect1.width = this.width;

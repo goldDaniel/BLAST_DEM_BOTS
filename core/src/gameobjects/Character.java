@@ -45,6 +45,11 @@ public abstract class Character extends GameObject
             isAlive = false;
         }
     }
+    
+    public boolean isAlive()
+    {
+        return health > 0;
+    }
 
     @Override
     public void draw()

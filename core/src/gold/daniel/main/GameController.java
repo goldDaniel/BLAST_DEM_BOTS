@@ -37,6 +37,10 @@ public class GameController
         return engine.isMouseButtonPressed(Buttons.LEFT);
     }
     
+    /**
+     * this probably shouldn't bee in here
+     * @return 
+     */
     public boolean isReloadPressed()
     {
         return engine.isKeyJustPressed(Keys.R);
