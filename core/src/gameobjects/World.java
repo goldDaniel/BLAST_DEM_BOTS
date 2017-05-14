@@ -58,7 +58,7 @@ public class World extends GameObject
 
     /**
      * creates tiles from tiledmap passed through constructor
-     * this exists so the constructor doesnt seem too long
+     * this exists so the constructor doesn't seem too long
      * 
      * probably should use the TiledMap properties, but I like rolling
      * my own structure for tiles for simplicity
@@ -227,8 +227,6 @@ public class World extends GameObject
      * 
      * useful for checking against types. - No shit.
      *
-     * TODO: There is probably a prettier way to write this?
-     *       as of now its a giant if-else if  
      * 
      * @param type 
      * @return 
@@ -241,33 +239,9 @@ public class World extends GameObject
         for(int i = 0; i < entities.size; i++)
         {
             GameObject obj = entities.get(i);
-            if(type == Robot.class)
+            if(obj.getClass() == type)
             {
-                if(obj instanceof Robot)
-                {
-                    result.add(obj);
-                }
-            }
-            else if(type == Player.class)
-            {
-                if(obj instanceof Player)
-                {
-                    result.add(obj);
-                }
-            }
-            else if(type == Tile.class)
-            {
-                if(obj instanceof Tile)
-                {
-                    result.add(obj);
-                }
-            }
-            else if(type == Bullet.class)
-            {
-                if(obj instanceof Bullet)
-                {
-                    result.add(obj);
-                }
+                result.add(obj);
             }
         }
         return result;

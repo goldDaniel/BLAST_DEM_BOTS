@@ -17,4 +17,6 @@ public class Sounds
     public static Sound MENU_SOUND = Gdx.audio.newSound(Gdx.files.internal("audio/menu_new.mp3"));
     public static Sound NAV_SOUND = Gdx.audio.newSound(Gdx.files.internal("audio/GUI/misc_menu.wav"));
     public static Sound GAME_BACKGROUND = Gdx.audio.newSound(Gdx.files.internal("audio/game_background.wav"));
+    public static Sound FIRE_SOUND = Gdx.audio.newSound(Gdx.files.internal("audio/shoot-1.wav"));
+    public static Sound NO_AMMO = Gdx.audio.newSound(Gdx.files.internal("audio/no-ammo.wav"));
 }

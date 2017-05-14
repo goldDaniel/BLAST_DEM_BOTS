@@ -40,7 +40,17 @@ public class Bullet extends GameObject
         x += speed * MathUtils.cosDeg(angle) * deltaTime;
         y += speed * MathUtils.sinDeg(angle) * deltaTime;
         
+        if(x <= world.x || x >= world.x + world.width ||
+           y <= world.y || y >= world.y + world.height)
+        {
+            isAlive = false;
+            world.removeEntity(this);
+            return;
+        }
+        
         collisionTiles.addAll(world.getCollisionTiles((int)(x + width / 2), (int)(y + height / 2)));
+        
+        
         
         for(Tile tile : collisionTiles)
         {

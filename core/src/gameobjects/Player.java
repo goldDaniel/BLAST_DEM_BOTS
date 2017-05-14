@@ -45,7 +45,7 @@ public class Player extends Character
         x = 400;
         y = 400;
 
-        weapon = new Weapon(8, 8, 8, 25f, 250f, Textures.BULLET_12);
+        weapon = new Weapon(8, 8, 10, 25f, 500f, Textures.BULLET_12);
         
         
         collisionTiles = new Array<Tile>();
