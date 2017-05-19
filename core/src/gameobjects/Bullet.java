@@ -21,6 +21,8 @@ public class Bullet extends GameObject
     float angle;
     float speed;
 
+    int damage = 1;
+    
     Texture texture;
     
     public Bullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle, float speed, Texture texture)
@@ -45,31 +47,20 @@ public class Bullet extends GameObject
         {
             isAlive = false;
             world.removeEntity(this);
-            return;
         }
         
-        collisionTiles.addAll(world.getCollisionTiles((int)(x + width / 2), (int)(y + height / 2)));
-        
-        
-        
-        for(Tile tile : collisionTiles)
+        if(isAlive)
         {
-            handleTileCollisionResponse(tile);
-        }
-        
-        Array<Robot> enemies = (Array<Robot>)world.getEntityType(Robot.class);
-        for(Robot robot : enemies)
-        {
-            if(isColliding(robot))
+            collisionTiles.addAll(world.getCollisionTiles(this));
+            for(Tile tile : collisionTiles)
             {
-                isAlive = false;
-                robot.damage(1);
+                handleTileCollisionResponse(tile);
             }
-        }
-        
-        if(!isAlive)
-        {
-            world.removeEntity(this);
+            
+            if(!isAlive)
+            {
+                world.removeEntity(this);
+            }
         }
     }
     
@@ -79,6 +70,11 @@ public class Bullet extends GameObject
        s.begin();
        s.draw(new TextureRegion(texture), x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1, 1, angle);
        s.end();
+    }
+    
+    public int getDamage()
+    {
+        return damage;
     }
     
     @Override

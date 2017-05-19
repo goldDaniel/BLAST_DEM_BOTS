@@ -5,6 +5,7 @@
  */
 package gameobjects;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -117,12 +118,40 @@ public class World extends GameObject
     public void update(float deltaTime)
     {
         updating = true;
+        
+        Array<Robot> robots = new Array<Robot>();
+        Array<Bullet> bullets = new Array<Bullet>();
+        
         for(GameObject entity : entities)
         {
             entity.update(this, deltaTime);
             if(!entity.isAlive)
             {
                 toRemoveFromScene.add(entity);
+            }
+            else
+            {
+                if(entity instanceof Robot)
+                {
+                    robots.add((Robot)entity);
+                }
+                else if(entity instanceof Bullet)
+                {
+                    bullets.add((Bullet)entity);
+                }
+            }
+        }
+        
+        for(Robot robot : robots)
+        {
+            for(Bullet bullet : bullets)
+            {
+                if(bullet.isColliding(robot))
+                {
+                    bullet.isAlive = false;
+                    removeEntity(bullet);
+                    robot.damage(bullet.getDamage());
+                }
             }
         }
         
@@ -162,13 +191,21 @@ public class World extends GameObject
     @Override
     public void dispose()
     {
+        
     }
     
-    
+    /**
+     * get neighboring tiles of the centre of the gameobject.
+     * calls getCollisionTiles(x,y) 
+     * 
+     * @param obj
+     * @return 
+     */
     public Array<Tile> getCollisionTiles(GameObject obj)
     {
         return getCollisionTiles((int)(obj.x + obj.width / 2), (int)(obj.y + obj.height / 2));
     }
+    
     /**
      * Pass X & Y world coordinates.
      * get the neighboring tiles of the point(X,Y)

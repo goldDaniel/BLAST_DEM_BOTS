@@ -50,7 +50,6 @@ public class Robot extends Character
     public void update(World world, float deltaTime)
     {
         super.update(world, deltaTime);
-        
         for(int i = 0; i < world.entities.size; i++)
         {
             if(world.entities.get(i) instanceof Player)

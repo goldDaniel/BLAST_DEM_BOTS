@@ -28,5 +28,6 @@ public class Textures
  
     public static Texture AMMO_TEXTURE = new Texture(Gdx.files.internal("hud/ammo.png"));
     public static Texture AMMO_EMPTY_TEXTURE = new Texture(Gdx.files.internal("hud/ammo-empty.png"));
-    
+ 
+    public static Texture PARTICLE = new Texture(Gdx.files.internal("particle.png"));
 }

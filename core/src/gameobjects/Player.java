@@ -62,7 +62,7 @@ public class Player extends Character
     public void update(World world, float deltaTime)
     {
         super.update(world, deltaTime);
-        if (!isAlive()) return;
+        if (!isAlive) return;
         
         Vector2 movement = controller.getMoveDirection();
         
@@ -84,10 +84,7 @@ public class Player extends Character
 
         weapon.update();
         handleWeapons(world);
-    }
-    
-    
-        
+    }   
     
 
     public Weapon getWeapon()
