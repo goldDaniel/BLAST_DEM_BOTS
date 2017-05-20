@@ -38,7 +38,7 @@ public class Robot extends Character
         speed = 20f;
         angle = 0;
         
-        healthMax = health = 30;
+        healthMax = health = 2;
     }
 
     /**
@@ -61,11 +61,18 @@ public class Robot extends Character
                 angle =  180 + calculateAnglePoint(playerX, playerY);
                 break;
             }
-        }
-        
+        }     
         x += speed * MathUtils.cosDeg(angle) * deltaTime;
         y += speed * MathUtils.sinDeg(angle) * deltaTime;
         
+        if(!isAlive)
+        {
+            for (int i = 0; i < 5000; i++)
+            {
+                world.addEntity(new Particle(x + width / 2, y + height / 2,  4, 4, 
+                        MathUtils.random(60), MathUtils.random(600), MathUtils.random(360), s, sh));
+            }
+        }
     }
 
     /**
@@ -74,9 +81,7 @@ public class Robot extends Character
     @Override
     public void draw()
     {
-        s.begin();
         s.draw(new TextureRegion(texture), x, y, width / 2, height / 2, width, height, 1, 1, angle);
-        s.end();
     }
 
     @Override

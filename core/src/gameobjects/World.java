@@ -5,13 +5,13 @@
  */
 package gameobjects;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -28,6 +28,8 @@ public class World extends GameObject
     Array<GameObject> toAddToScene;
     Array<GameObject> toRemoveFromScene;
     
+    
+    Player player;
     
     boolean updating = false;
     
@@ -151,8 +153,20 @@ public class World extends GameObject
                     bullet.isAlive = false;
                     removeEntity(bullet);
                     robot.damage(bullet.getDamage());
+                    
+                    addEntity(new Particle(bullet.x, bullet.y, 4, 4, 
+                            12, 200f, -90 - bullet.angle, s, sh));
                 }
             }
+            
+            if(player != null)
+            {
+                if(robot.isColliding(player))
+                {
+                    player.damage(1);
+                }
+            }
+            
         }
         
         updating = false;
@@ -173,19 +187,23 @@ public class World extends GameObject
     {
         tmr.render();
         Player temp = null;
+        s.begin();
         for(GameObject entity : entities)
         {
             if(entity instanceof Player)
             {
                 //this is okay because there should only ever be 1 player instance
                 temp = (Player)entity;
+                player = temp;
             }
             else
             {
                 entity.draw();
             }
         }
+        s.end();
         if(temp != null) temp.draw();
+        
     }
 
     @Override

@@ -26,6 +26,15 @@ public abstract class Character extends GameObject
         super(s, sh);
     }
     
+    @Override
+    public void update(World world, float deltaTime)
+    {
+        if(health <= 0)
+        {
+            isAlive = false;
+        }
+    }
+    
     public int getHealth()
     {
         return health;

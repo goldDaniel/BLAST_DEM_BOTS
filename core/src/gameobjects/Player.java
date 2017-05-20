@@ -45,12 +45,14 @@ public class Player extends Character
         x = 400;
         y = 400;
 
+        health = 1;
+        
         weapon = new Weapon(8, 8, 10, 25f, 500f, Textures.BULLET_12);
         
         
         collisionTiles = new Array<Tile>();
         texture = Textures.PLAYER;
-        width = height = texture.getWidth() * 0.60f;
+        width = height = ((texture.getWidth() + texture.getHeight()) / 2) * 0.60f;
     }
 
     /**

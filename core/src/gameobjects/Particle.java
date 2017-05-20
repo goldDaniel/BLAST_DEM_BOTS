@@ -8,6 +8,7 @@ package gameobjects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import gold.daniel.main.Textures;
 
 /**
@@ -19,7 +20,8 @@ public class Particle extends Character
 
     Texture texture = Textures.PARTICLE;
     
-    public Particle(float x, float y, int width, int height, int lifespan, SpriteBatch s, ShapeRenderer sh)
+    public Particle(float x, float y, int width, int height,
+            int lifespan, float speed, float angle, SpriteBatch s, ShapeRenderer sh)
     {
         super(s, sh);
         
@@ -27,12 +29,20 @@ public class Particle extends Character
         this.y = y;
         this.width = width;
         this.height = height;
+        this.speed = speed;
+        this.angle = angle;
         healthMax = health = lifespan;
        
     }
     
-    public void update()
+    @Override
+    public void update(World world, float deltaTime)
     {
+        super.update(world, deltaTime);
+        
+        x += speed * ((float)health / (float)healthMax) * MathUtils.cosDeg(angle) * deltaTime;
+        y += speed * ((float)health / (float)healthMax) * MathUtils.sinDeg(angle) * deltaTime;
+        
         health--;
     }
 

@@ -67,9 +67,7 @@ public class Bullet extends GameObject
     @Override
     public void draw()
     {
-       s.begin();
        s.draw(new TextureRegion(texture), x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1, 1, angle);
-       s.end();
     }
     
     public int getDamage()
