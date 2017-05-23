@@ -67,10 +67,10 @@ public class Robot extends Character
         
         if(!isAlive)
         {
-            for (int i = 0; i < 5000; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 world.addEntity(new Particle(x + width / 2, y + height / 2,  4, 4, 
-                        MathUtils.random(60), MathUtils.random(600), MathUtils.random(360), s, sh));
+                        MathUtils.random(15), MathUtils.random(600), MathUtils.random(360), s, sh));
             }
         }
     }
