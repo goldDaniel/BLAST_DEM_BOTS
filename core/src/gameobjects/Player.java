@@ -70,7 +70,7 @@ public class Player extends Character
         
         Vector2 movement = controller.getMoveDirection();
         
-        collisionTiles.addAll(world.getCollisionTiles((int)(x + width / 2), (int)(y + height / 2)));
+        collisionTiles.addAll(world.getCollisionTiles(this));
         
         /**
          * SEPERATE AXIS THEOREM.

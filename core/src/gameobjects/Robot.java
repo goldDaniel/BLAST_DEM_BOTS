@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 
 /**
  *
@@ -69,8 +70,19 @@ public class Robot extends Character
                 break;
             }
         }     
+        collisionTiles = world.getCollisionTiles(this);
+        
         x += speed * MathUtils.cosDeg(angle) * deltaTime;
+        for(Tile tile : collisionTiles)
+        {
+            handleTileCollisionResponse(tile);
+        }
         y += speed * MathUtils.sinDeg(angle) * deltaTime;
+        for(Tile tile : collisionTiles)
+        {
+            handleTileCollisionResponse(tile);
+        }
+        collisionTiles.clear();
         
         if(!isAlive)
         {
@@ -80,6 +92,8 @@ public class Robot extends Character
                         MathUtils.random(25), MathUtils.random(600), MathUtils.random(360), s, sh));
             }
         }
+        
+        
     }
 
     /**

@@ -53,10 +53,11 @@ public class TestGameScreen extends Screen
         world = new World(temp, tmr, engine, s, sh);
         player = new Player(s, sh, engine.getNextController());
         world.addEntity(player);
-        
-        for (int i = 0; i < 0; i++)
+
+        int robotCount = 1;
+        for (int i = 0; i < robotCount; i++)
         {
-            world.addEntity(new Robot(100, 100 * i, s, sh, Textures.ROBOT));
+            world.addEntity(new Robot(100, 100, s, sh, Textures.ROBOT));
         }
         world.addEntity(new Tank(100, 100, s, sh));
         

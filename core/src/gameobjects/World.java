@@ -173,11 +173,11 @@ public class World extends GameObject
                     
                     if(robot.isAlive())
                     {
-                        engine.sleep(3);
+                        engine.sleep(2);
                     }
                     else
                     {
-                        engine.sleep(10);
+                        engine.sleep(5);
                     }
                     
                     for (int i = 0; i < 3; i++)
@@ -198,11 +198,11 @@ public class World extends GameObject
                     
                     if(tank.isAlive())
                     {
-                        engine.sleep(3);
+                        engine.sleep(2);
                     }
                     else
                     {
-                        engine.sleep(20);
+                        engine.sleep(10);
                     }
                     
                     for (int i = 0; i < 5; i++)
