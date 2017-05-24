@@ -159,13 +159,6 @@ public class World extends GameObject
         {
             for(Robot robot : robots)
             {
-                if(player != null)
-                {
-                    if(robot.isColliding(player))
-                    {
-                        player.damage(1);
-                    }
-                }
                 if(bullet.isColliding(robot))
                 {
                     bullet.isAlive = false;
@@ -202,7 +195,7 @@ public class World extends GameObject
                     }
                     else
                     {
-                        engine.sleep(10);
+                        engine.sleep(8);
                     }
                     
                     for (int i = 0; i < 5; i++)
@@ -213,6 +206,13 @@ public class World extends GameObject
                             s, sh));
                     }
                 }
+            }
+        }
+        for(Robot robot : robots)
+        {
+            if(player.isColliding(robot))
+            {
+                player.damage(1);
             }
         }
         

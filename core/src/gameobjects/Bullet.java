@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
 
 /**
  *
@@ -59,7 +58,7 @@ public class Bullet extends GameObject
             
             if(!isAlive)
             {
-                    world.addEntity(new Particle(x, y, 2, 2, 
+                    world.addEntity(new Particle(x, y, 3, 3, 
                         5, speed + MathUtils.random(150), 
                         angle + 180 + MathUtils.random(-25, 25), 
                         s, sh));
