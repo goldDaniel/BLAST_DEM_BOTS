@@ -48,6 +48,9 @@ public class GameController
     
     public Vector2 getMoveDirection()
     {
+        //assign controller vector to movement underneath all this
+        //because we want controller to override keyboard
+        
         Vector2 result = new Vector2();
 
         if(engine.isKeyPressed(Keys.A))
@@ -66,6 +69,10 @@ public class GameController
         {
             result.y -= 1;
         }
+        
+        ////////////////////////////////////////////////////////////////
+        //CONTROLLER CODE HERE
+        ///////////////////////////////////////////////////////////////
         
         return result.nor();
     }

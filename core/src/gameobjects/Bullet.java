@@ -59,6 +59,11 @@ public class Bullet extends GameObject
             
             if(!isAlive)
             {
+                    world.addEntity(new Particle(x, y, 2, 2, 
+                        5, speed + MathUtils.random(150), 
+                        angle + 180 + MathUtils.random(-25, 25), 
+                        s, sh));
+                
                 world.removeEntity(this);
             }
         }

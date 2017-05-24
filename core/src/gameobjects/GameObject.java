@@ -93,12 +93,10 @@ public abstract class GameObject
      * @param y
      * @return 
      */
-    protected float calculateAnglePoint(float x, float y)
+    protected float calculateAngleToPoint(float x, float y)
     {
         Vector2 temp = new Vector2(this.x + width / 2, this.y + height / 2);
-        temp.sub(x, y);
-
-        return temp.angle();
+        return temp.sub(x, y).angle();
     }
     
     /**

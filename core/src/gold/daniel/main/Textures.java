@@ -20,7 +20,8 @@ public class Textures
     
     public static Texture BULLET_12 = new Texture(Gdx.files.internal("weapons/bullets/12.png"));
     
-    
+    public static Texture TANK_BODY = new Texture(Gdx.files.internal("characters/tank-base.png"));
+    public static Texture TANK_CANNON = new Texture(Gdx.files.internal("characters/tank-cannon.png"));
     
     public static Texture HEALTHBAR_END = new Texture(Gdx.files.internal("hud/part-1.png"));
     public static Texture HEALTHBAR_MID = new Texture(Gdx.files.internal("hud/part-2.png"));

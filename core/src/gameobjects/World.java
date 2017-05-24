@@ -11,7 +11,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import gold.daniel.main.GameEngine;
 
 /**
  *`
@@ -29,6 +31,8 @@ public class World extends GameObject
     
     Player player;
     
+    GameEngine engine;
+    
     boolean updating = false;
     
     
@@ -36,13 +40,15 @@ public class World extends GameObject
      * 
      * @param map
      * @param tmr
+     * @param engine
      * @param s
      * @param sh 
      */
-    public World(TiledMap map, OrthogonalTiledMapRenderer tmr, SpriteBatch s, ShapeRenderer sh)
+    public World(TiledMap map, OrthogonalTiledMapRenderer tmr, GameEngine engine, SpriteBatch s, ShapeRenderer sh)
     {
         super(s, sh);
         this.map = map;
+        this.engine = engine;
         this.tmr = tmr;
 
         x = 0;
@@ -113,6 +119,8 @@ public class World extends GameObject
      * 
      * updating entities, adding, and removing done in here
      * 
+     * this is turning into a clusterfuck of a method
+     * 
      * @param deltaTime 
      */
     public void update(float deltaTime)
@@ -121,6 +129,7 @@ public class World extends GameObject
         
         Array<Robot> robots = new Array<Robot>();
         Array<Bullet> bullets = new Array<Bullet>();
+        Array<Tank> tanks = new Array<Tank>();
         
         for(GameObject entity : entities)
         {
@@ -139,32 +148,72 @@ public class World extends GameObject
                 {
                     bullets.add((Bullet)entity);
                 }
+                else if(entity instanceof Tank)
+                {
+                    tanks.add((Tank)entity);
+                }
             }
         }
         
-        for(Robot robot : robots)
+        for(Bullet bullet : bullets)
         {
-            for(Bullet bullet : bullets)
+            for(Robot robot : robots)
             {
+                if(player != null)
+                {
+                    if(robot.isColliding(player))
+                    {
+                        player.damage(1);
+                    }
+                }
                 if(bullet.isColliding(robot))
                 {
                     bullet.isAlive = false;
-                    removeEntity(bullet);
                     robot.damage(bullet.getDamage());
                     
-                    addEntity(new Particle(bullet.x, bullet.y, 4, 4, 
-                            12, 200f, -90 - bullet.angle, s, sh));
+                    if(robot.isAlive())
+                    {
+                        engine.sleep(3);
+                    }
+                    else
+                    {
+                        engine.sleep(10);
+                    }
+                    
+                    for (int i = 0; i < 3; i++)
+                    {
+                        addEntity(new Particle(bullet.x, bullet.y, 4, 4, 
+                            10 + MathUtils.random(10), 50f + MathUtils.random(200), 
+                            -90 - bullet.angle + MathUtils.random(-25, 25), 
+                            s, sh));
+                    }
                 }
             }
-            
-            if(player != null)
+            for(Tank tank : tanks)
             {
-                if(robot.isColliding(player))
+                if(bullet.isColliding(tank))
                 {
-                    player.damage(1);
+                    bullet.isAlive = false;
+                    tank.damage(bullet.getDamage());
+                    
+                    if(tank.isAlive())
+                    {
+                        engine.sleep(3);
+                    }
+                    else
+                    {
+                        engine.sleep(20);
+                    }
+                    
+                    for (int i = 0; i < 5; i++)
+                    {
+                        addEntity(new Particle(bullet.x, bullet.y, 4, 4, 
+                            10 + MathUtils.random(10), 50f + MathUtils.random(200), 
+                            -90 - bullet.angle + MathUtils.random(-25, 25), 
+                            s, sh));
+                    }
                 }
             }
-            
         }
         
         updating = false;

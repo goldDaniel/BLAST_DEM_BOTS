@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import gameobjects.World;
 import gameobjects.Player;
 import gameobjects.Robot;
+import gameobjects.Tank;
 import gold.daniel.main.GameEngine;
 import gold.daniel.main.Main;
 import gold.daniel.main.Screen;
@@ -30,7 +31,6 @@ public class TestGameScreen extends Screen
 
     Player player;
     
-    Robot robot;
     
     World world;
     OrthogonalTiledMapRenderer tmr;
@@ -50,12 +50,16 @@ public class TestGameScreen extends Screen
         updating = true;
         TiledMap temp = new TmxMapLoader().load("maps/test.tmx");
         tmr = new OrthogonalTiledMapRenderer(temp);
-        world = new World(temp, tmr, s, sh);
+        world = new World(temp, tmr, engine, s, sh);
         player = new Player(s, sh, engine.getNextController());
         world.addEntity(player);
         
-        robot = new Robot(s, sh, Textures.ROBOT);
-        world.addEntity(robot);
+        for (int i = 0; i < 0; i++)
+        {
+            world.addEntity(new Robot(100, 100 * i, s, sh, Textures.ROBOT));
+        }
+        world.addEntity(new Tank(100, 100, s, sh));
+        
         
         backgroundSong = Sounds.GAME_BACKGROUND;
         
@@ -92,8 +96,8 @@ public class TestGameScreen extends Screen
         }
         ////////////////////////////////////////
         
-        //CAMERA MAP CLAMPING FOR Y-AXIS
         engine.getCamera().position.y = (int)(player.getY() + player.getHeight() / 2);
+        //CAMERA MAP CLAMPING FOR Y-AXIS
         if(engine.getCamera().position.y < world.getY() + Main.HEIGHT / 2 * engine.getCamera().zoom)
         {
             engine.getCamera().position.y = world.getY() + Main.HEIGHT / 2 * engine.getCamera().zoom;

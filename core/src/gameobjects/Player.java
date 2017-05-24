@@ -23,14 +23,16 @@ import weapons.Weapon;
  */
 public class Player extends Character
 {
-
-        
     //Please try to keep all input related things here
     GameController controller;
    
     Texture texture;
 
     Weapon weapon;
+    
+    final int HURT_FRAMES = 120;
+    int frameCount = 0;
+        
             
     /**
      * 
@@ -45,7 +47,7 @@ public class Player extends Character
         x = 400;
         y = 400;
 
-        health = healthMax = 60;
+        health = healthMax = 10;
         
         weapon = new Weapon(8, 8, 10, 25f, 500f, Textures.BULLET_12);
         
@@ -70,6 +72,13 @@ public class Player extends Character
         
         collisionTiles.addAll(world.getCollisionTiles((int)(x + width / 2), (int)(y + height / 2)));
         
+        /**
+         * SEPERATE AXIS THEOREM.
+         * move in 1 direction and check for collision
+         * move in other direction and check for collision
+         * 
+         * sits beautifully simple
+         */
         x += speed * movement.x * deltaTime;
         for(Tile tile : collisionTiles)
         {
@@ -81,8 +90,12 @@ public class Player extends Character
             handleTileCollisionResponse(tile);
         }
         
+        if(frameCount > 0)
+        {
+            frameCount--;
+        }
         
-        angle = -90 + calculateAnglePoint(controller.getMousePosition().x, controller.getMousePosition().y);
+        angle = -90 + calculateAngleToPoint(controller.getMousePosition().x, controller.getMousePosition().y);
 
         weapon.update();
         handleWeapons(world);
@@ -92,6 +105,17 @@ public class Player extends Character
     public Weapon getWeapon()
     {
         return weapon;
+    }
+    
+    @Override
+    public void damage(int damage)
+    {
+        if(frameCount <= 0)
+        {
+            super.damage(damage);
+            frameCount = HURT_FRAMES;
+        }
+        
     }
        
     private void handleWeapons(World world)
@@ -112,9 +136,13 @@ public class Player extends Character
     @Override
     public void draw()
     {
+        Color temp = Color.WHITE.cpy();
+        temp.a = 1f - (float)frameCount / (float)HURT_FRAMES;
+        s.setColor(temp);
         s.begin();
         s.draw(new TextureRegion(texture), x, y, width / 2, height / 2, width, height, 1, 1, angle);
         s.end();
+        s.setColor(Color.WHITE);
 
         sh.begin(ShapeRenderer.ShapeType.Line);
         //draw line to mouse

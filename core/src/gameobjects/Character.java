@@ -68,8 +68,5 @@ public abstract class Character extends GameObject
     @Override
     public void dispose()
     {
-    }
-     
-
-    
+    }    
 }

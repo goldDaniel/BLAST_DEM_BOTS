@@ -43,6 +43,8 @@ public class GameEngine
     
     ArrayMap<String, Screen> screens;
   
+    int sleepTime = 0;
+    boolean sleep = false;
     
     public GameEngine()
     {
@@ -92,8 +94,12 @@ public class GameEngine
      */
     public void updateEngine()
     {
-        hudCamera.update();
-        camera.update();
+        if(!sleep)
+        {
+            hudCamera.update();
+            camera.update();
+        }
+        
        
     }
 
@@ -105,11 +111,22 @@ public class GameEngine
      */
     public void updateGame(float deltaTime)
     {
-        if (currentScreen != null)
+        if(!sleep)
         {
-            currentScreen.update(deltaTime);
+            if (currentScreen != null)
+            {
+                currentScreen.update(deltaTime);
+            }
         }
-        
+        else
+        {
+            sleepTime--;
+        }
+        if(sleepTime <= 0)
+        {
+            sleep = false;
+            sleepTime = 0;
+        }
     }
 
     /**
@@ -124,6 +141,24 @@ public class GameEngine
         {
             currentScreen.draw();
         }
+    }
+    
+    /**
+     * CHECK IF MULTIPLE KEYS ARE PRESSED AT THE SAME TIME.
+     * 
+     * @param keycode keys wanting to check
+     * @return 
+     */
+    public boolean areKeysPressed(int... keycode)
+    {
+        for(int code : keycode)
+        {
+            if(!Gdx.input.isKeyPressed(code))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -233,6 +268,17 @@ public class GameEngine
         viewport.apply();
         hudViewport.update(width, height);
         hudViewport.apply();
+    }
+    
+    /**
+     * USED TO PAUSE GAME FOR GIVEN AMOUNT OF FRAMES.
+     * gives that "umph" effect
+     * @param time 
+     */
+    public void sleep(int time)
+    {
+        sleep = true;
+        sleepTime = time;
     }
 
     public Vector2 getMouseCoords()

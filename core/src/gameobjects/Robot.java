@@ -20,8 +20,15 @@ public class Robot extends Character
     
     Texture texture;
     
+    public Robot(float x, float y, SpriteBatch s, ShapeRenderer sh, Texture texture)
+    {
+        this(s, sh, texture);
+        this.x = x;
+        this.y = y;
+    }
+    
     /**
-     * TODO: make constructor that takes in position.
+     * 
      * @param s
      * @param sh
      * @param texture 
@@ -38,7 +45,7 @@ public class Robot extends Character
         speed = 20f;
         angle = 0;
         
-        healthMax = health = 2;
+        healthMax = health = 10;
     }
 
     /**
@@ -58,7 +65,7 @@ public class Robot extends Character
                 float playerY = world.entities.get(i).y;
                 
                 //offset for rotation 
-                angle =  180 + calculateAnglePoint(playerX, playerY);
+                angle =  180 + calculateAngleToPoint(playerX, playerY);
                 break;
             }
         }     
@@ -67,10 +74,10 @@ public class Robot extends Character
         
         if(!isAlive)
         {
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 world.addEntity(new Particle(x + width / 2, y + height / 2,  4, 4, 
-                        MathUtils.random(15), MathUtils.random(600), MathUtils.random(360), s, sh));
+                        MathUtils.random(25), MathUtils.random(600), MathUtils.random(360), s, sh));
             }
         }
     }
