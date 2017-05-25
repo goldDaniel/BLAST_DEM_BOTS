@@ -58,9 +58,14 @@ public class Bullet extends GameObject
             
             if(!isAlive)
             {
+                int temp = MathUtils.random(-25, 25);
                     world.addEntity(new Particle(x, y, 4, 4, 
                         5, speed + MathUtils.random(150), 
-                        angle + 180 + MathUtils.random(-25, 25), 
+                        angle + 180 + temp, 
+                        s, sh));
+                    world.addEntity(new Particle(x, y, 4, 4, 
+                        5, speed + MathUtils.random(150), 
+                        angle + 180 - temp, 
                         s, sh));
                 
                 world.removeEntity(this);

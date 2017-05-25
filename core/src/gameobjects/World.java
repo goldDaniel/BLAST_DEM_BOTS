@@ -5,6 +5,7 @@
  */
 package gameobjects;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.GameEngine;
+import gold.daniel.main.Sounds;
 
 /**
  *`
@@ -32,6 +34,8 @@ public class World extends GameObject
     Player player;
     
     GameEngine engine;
+    
+
     
     boolean updating = false;
     
@@ -198,7 +202,7 @@ public class World extends GameObject
                     }
                     else
                     {
-                        engine.sleep(15);
+                        engine.sleep(10);
                         engine.shake(15);
                     }
                     
@@ -210,7 +214,6 @@ public class World extends GameObject
                             s, sh));
                     }
                 }
-                
             }
         }
         for(Robot robot : robots)

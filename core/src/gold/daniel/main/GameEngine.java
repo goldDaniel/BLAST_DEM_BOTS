@@ -264,6 +264,12 @@ public class GameEngine
         Gdx.app.exit();
     }
 
+    /**
+     * CURRENTLY GETS ONLY THE FIRST CONTROLLER.
+     * 
+     * TODO: multipleControllers?
+     * @return 
+     */
     public GameController getNextController()
     {
         GameController result = new GameController(this);
@@ -297,8 +303,11 @@ public class GameEngine
     
     public void doCameraShake()
     {
-        camera.position.x += shakeDir ? -shake : shake;
-        camera.position.y += shakeDir ? shake : -shake;
+        if(shake > 0)
+        {
+            camera.position.x += shakeDir ? -shake : shake;
+            camera.position.y += shakeDir ? shake : -shake;
+        }
     }
 
 

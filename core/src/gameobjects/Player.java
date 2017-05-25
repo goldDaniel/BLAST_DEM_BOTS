@@ -5,6 +5,7 @@
  */
 package gameobjects;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.GameController;
+import gold.daniel.main.Sounds;
 import gold.daniel.main.Textures;
 import weapons.Weapon;
 
@@ -29,6 +31,8 @@ public class Player extends Character
     Texture texture;
 
     Weapon weapon;
+    
+    Sound hitSound = Sounds.HIT;
     
     final int HURT_FRAMES = 60;
     int frameCount = 0;
@@ -114,6 +118,7 @@ public class Player extends Character
         {
             super.damage(damage);
             frameCount = HURT_FRAMES;
+            hitSound.play();
         }
         
     }
