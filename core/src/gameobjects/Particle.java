@@ -5,8 +5,10 @@
  */
 package gameobjects;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import gold.daniel.main.Textures;
@@ -49,7 +51,8 @@ public class Particle extends Character
     @Override
     public void draw()
     {
-        s.draw(texture, x, y, width, height);
+        s.draw(new TextureRegion(texture), x, y, width / 2, height / 2, 
+                width, height, 1, 1, 180 * ((float)health / (float)healthMax));
     }
 
     @Override

@@ -100,21 +100,21 @@ public abstract class GameObject
     }
     
     /**
-     * makes entity go to proper position after colliding with a tile.
+     * makes entity go to proper position after colliding with an object.
      * maybe move this method the the World class? 
-     * @param tile 
+     * @param obj 
      */
-    protected void handleTileCollisionResponse(Tile tile)
+    protected void handleMoveCollisionResponse(GameObject obj)
     {
         //broad check if colliding
-        if(isColliding(tile))
+        if(isColliding(obj))
         {
             //decide what side the object is on relative to the tile
             
             //horizontal side
-            boolean left = x < tile.x;
+            boolean left = x < obj.x;
             //vertical side
-            boolean above = y > tile.y;
+            boolean above = y > obj.y;
             
             //holds how deep the object is inside the tile on each axis
             float horizontalDif;
@@ -123,20 +123,20 @@ public abstract class GameObject
             //determine the differences for depth
             if(left)
             {
-                horizontalDif = x + width - tile.x;
+                horizontalDif = x + width - obj.x;
             }
             else
             {
-                horizontalDif = tile.x + tile.width- x;
+                horizontalDif = obj.x + obj.width- x;
             }
             
             if(above)
             {
-                verticalDif = tile.y + tile.height - y;
+                verticalDif = obj.y + obj.height - y;
             }
             else
             {
-                verticalDif = y + height - tile.y;
+                verticalDif = y + height - obj.y;
             }
             
             //DO HORIZONTAL
@@ -144,11 +144,11 @@ public abstract class GameObject
             {
                 if(left)
                 {
-                    x = tile.x - width;
+                    x = obj.x - width;
                 }
                 else
                 {
-                    x = tile.x + tile.width;
+                    x = obj.x + obj.width;
                 }
             }
             //DO VERTICAL
@@ -156,11 +156,11 @@ public abstract class GameObject
             {
                 if(above)
                 {
-                    y = tile.y + tile.height;
+                    y = obj.y + obj.height;
                 }
                 else
                 {
-                    y = tile.y - height;
+                    y = obj.y - height;
                 }
             }
         }

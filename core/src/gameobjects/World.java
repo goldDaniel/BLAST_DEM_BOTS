@@ -166,16 +166,18 @@ public class World extends GameObject
                     
                     if(robot.isAlive())
                     {
-                        engine.sleep(2);
+                        engine.sleep(5);
+                        engine.shake(3);
                     }
                     else
                     {
-                        engine.sleep(5);
+                        engine.sleep(10);
+                        engine.shake(5);
                     }
                     
                     for (int i = 0; i < 3; i++)
                     {
-                        addEntity(new Particle(bullet.x, bullet.y, 4, 4, 
+                        addEntity(new Particle(bullet.x, bullet.y, 8, 8, 
                             10 + MathUtils.random(10), 50f + MathUtils.random(200), 
                             -90 - bullet.angle + MathUtils.random(-25, 25), 
                             s, sh));
@@ -191,21 +193,24 @@ public class World extends GameObject
                     
                     if(tank.isAlive())
                     {
-                        engine.sleep(2);
+                        engine.sleep(5);
+                        engine.shake(3);
                     }
                     else
                     {
-                        engine.sleep(8);
+                        engine.sleep(15);
+                        engine.shake(15);
                     }
                     
                     for (int i = 0; i < 5; i++)
                     {
-                        addEntity(new Particle(bullet.x, bullet.y, 4, 4, 
+                        addEntity(new Particle(bullet.x, bullet.y, 8, 8, 
                             10 + MathUtils.random(10), 50f + MathUtils.random(200), 
                             -90 - bullet.angle + MathUtils.random(-25, 25), 
                             s, sh));
                     }
                 }
+                
             }
         }
         for(Robot robot : robots)
@@ -213,6 +218,13 @@ public class World extends GameObject
             if(player.isColliding(robot))
             {
                 player.damage(1);
+            }
+        }
+        for(Tank tank : tanks)
+        {
+            if(tank.isColliding(player))
+            {
+                player.handleMoveCollisionResponse(tank);
             }
         }
         

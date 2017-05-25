@@ -30,7 +30,7 @@ public class Player extends Character
 
     Weapon weapon;
     
-    final int HURT_FRAMES = 120;
+    final int HURT_FRAMES = 60;
     int frameCount = 0;
         
             
@@ -77,17 +77,17 @@ public class Player extends Character
          * move in 1 direction and check for collision
          * move in other direction and check for collision
          * 
-         * sits beautifully simple
+         * its beautifully simple
          */
         x += speed * movement.x * deltaTime;
         for(Tile tile : collisionTiles)
         {
-            handleTileCollisionResponse(tile);
+            handleMoveCollisionResponse(tile);
         }
         y += speed * movement.y * deltaTime;
         for(Tile tile : collisionTiles)
         {
-            handleTileCollisionResponse(tile);
+            handleMoveCollisionResponse(tile);
         }
         
         if(frameCount > 0)

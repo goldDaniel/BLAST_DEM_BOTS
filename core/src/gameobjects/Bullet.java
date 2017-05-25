@@ -32,7 +32,7 @@ public class Bullet extends GameObject
         this.y = y;
         this.angle = angle;
         this.texture = texture;
-        width = height = 8;
+        width = height = 16;
     }
 
     @Override
@@ -53,12 +53,12 @@ public class Bullet extends GameObject
             collisionTiles.addAll(world.getCollisionTiles(this));
             for(Tile tile : collisionTiles)
             {
-                handleTileCollisionResponse(tile);
+                handleMoveCollisionResponse(tile);
             }
             
             if(!isAlive)
             {
-                    world.addEntity(new Particle(x, y, 3, 3, 
+                    world.addEntity(new Particle(x, y, 4, 4, 
                         5, speed + MathUtils.random(150), 
                         angle + 180 + MathUtils.random(-25, 25), 
                         s, sh));
@@ -80,9 +80,9 @@ public class Bullet extends GameObject
     }
     
     @Override
-    protected void handleTileCollisionResponse(Tile tile)
+    protected void handleMoveCollisionResponse(GameObject obj)
     {
-        if(isColliding(tile))
+        if(isColliding(obj))
         {
             isAlive = false;
         }

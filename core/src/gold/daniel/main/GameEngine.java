@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -45,6 +46,9 @@ public class GameEngine
   
     int sleepTime = 0;
     boolean sleep = false;
+    
+    int shake = 0;
+    boolean shakeDir = false;
     
     public GameEngine()
     {
@@ -98,6 +102,11 @@ public class GameEngine
         {
             hudCamera.update();
             camera.update();
+            if(shake > 0)
+            {
+                shake--;
+                shakeDir = !shakeDir;
+            }
         }
         
        
@@ -280,6 +289,18 @@ public class GameEngine
         sleep = true;
         sleepTime = time;
     }
+    
+    public void shake(int intensity)
+    {
+        shake += intensity;
+    }
+    
+    public void doCameraShake()
+    {
+        camera.position.x += shakeDir ? -shake : shake;
+        camera.position.y += shakeDir ? shake : -shake;
+    }
+
 
     public Vector2 getMouseCoords()
     {

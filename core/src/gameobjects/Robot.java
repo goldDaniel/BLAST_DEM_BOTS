@@ -75,12 +75,12 @@ public class Robot extends Character
         x += speed * MathUtils.cosDeg(angle) * deltaTime;
         for(Tile tile : collisionTiles)
         {
-            handleTileCollisionResponse(tile);
+            handleMoveCollisionResponse(tile);
         }
         y += speed * MathUtils.sinDeg(angle) * deltaTime;
         for(Tile tile : collisionTiles)
         {
-            handleTileCollisionResponse(tile);
+            handleMoveCollisionResponse(tile);
         }
         collisionTiles.clear();
         
