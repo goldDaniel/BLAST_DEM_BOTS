@@ -9,11 +9,11 @@ import screens.HowToPlayScreen;
 import screens.MainMenuScreen;
 import screens.TestGameScreen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -90,6 +90,7 @@ public class GameEngine
         
         currentScreen = screens.get(Screen.MAIN_MENU);
         currentScreen.load();
+        camera.zoom = 0.5f;
     }
 
     /**
@@ -135,6 +136,14 @@ public class GameEngine
         {
             sleep = false;
             sleepTime = 0;
+        }
+        if(isKeyPressed(Keys.NUM_1))
+        {
+            camera.zoom += 0.05f;
+        }
+        if(isKeyPressed(Keys.NUM_2))
+        {
+            camera.zoom -= 0.05f;
         }
     }
 

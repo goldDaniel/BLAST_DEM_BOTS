@@ -34,7 +34,7 @@ public class Particle extends Character
         this.speed = speed;
         this.angle = angle;
         healthMax = health = lifespan;
-       
+   
     }
     
     @Override
@@ -51,8 +51,17 @@ public class Particle extends Character
     @Override
     public void draw()
     {
+        float alpha = (float)health / (float)healthMax;
+        if(alpha > 0.3f)
+        {
+            alpha = 1f;
+        }
+        Color temp = Color.WHITE.cpy();
+        temp.a = alpha;
+        s.setColor(temp);
         s.draw(new TextureRegion(texture), x, y, width / 2, height / 2, 
                 width, height, 1, 1, 180 * ((float)health / (float)healthMax));
+        s.setColor(Color.WHITE);
     }
 
     @Override

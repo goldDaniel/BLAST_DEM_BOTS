@@ -49,7 +49,7 @@ public class TestGameScreen extends Screen
     public void load()
     {
         updating = true;
-        TiledMap temp = new TmxMapLoader().load("maps/test.tmx");
+        TiledMap temp = new TmxMapLoader().load("maps/test-large.tmx");
         tmr = new OrthogonalTiledMapRenderer(temp);
         world = new World(temp, tmr, engine, s, sh);
         player = new Player(s, sh, engine.getNextController());
@@ -60,7 +60,7 @@ public class TestGameScreen extends Screen
         {
             world.addEntity(new Robot(100, 100, s, sh, Textures.ROBOT));
         }
-        world.addEntity(new Tank(100, 100, s, sh));
+        world.addEntity(new Tank(10, 100, s, sh));
         
         
         backgroundSong = Sounds.GAME_BACKGROUND;
@@ -112,7 +112,7 @@ public class TestGameScreen extends Screen
         
         engine.doCameraShake();
         
-        engine.getCamera().zoom = 0.5f;
+        //engine.getCamera().zoom = 0.5f;
         updating = false;
         
         

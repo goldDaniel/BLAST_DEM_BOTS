@@ -179,9 +179,9 @@ public class World extends GameObject
                         engine.shake(5);
                     }
                     
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 10; i++)
                     {
-                        addEntity(new Particle(bullet.x, bullet.y, 8, 8, 
+                        addEntity(new Particle(bullet.x, bullet.y, 3, 3, 
                             10 + MathUtils.random(10), 50f + MathUtils.random(200), 
                             -90 - bullet.angle + MathUtils.random(-25, 25), 
                             s, sh));
@@ -206,9 +206,9 @@ public class World extends GameObject
                         engine.shake(15);
                     }
                     
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < 10; i++)
                     {
-                        addEntity(new Particle(bullet.x, bullet.y, 8, 8, 
+                        addEntity(new Particle(bullet.x, bullet.y, 3, 3, 
                             10 + MathUtils.random(10), 50f + MathUtils.random(200), 
                             -90 - bullet.angle + MathUtils.random(-25, 25), 
                             s, sh));
@@ -221,6 +221,7 @@ public class World extends GameObject
             if(player.isColliding(robot))
             {
                 player.damage(1);
+                player.handleMoveCollisionResponse(robot);
             }
         }
         for(Tank tank : tanks)
@@ -264,6 +265,7 @@ public class World extends GameObject
             }
         }
         s.end();
+        //draw this entity over top everything else
         if(temp != null) temp.draw();
         
     }

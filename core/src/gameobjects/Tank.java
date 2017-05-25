@@ -25,6 +25,8 @@ public class Tank extends Character
     
     float cannonAngle;
     
+    
+    
     public Tank(float x, float y, SpriteBatch s, ShapeRenderer sh)
     {
         this(s, sh);

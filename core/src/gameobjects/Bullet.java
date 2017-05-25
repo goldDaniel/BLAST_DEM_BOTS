@@ -60,11 +60,11 @@ public class Bullet extends GameObject
             {
                 int temp = MathUtils.random(-25, 25);
                     world.addEntity(new Particle(x, y, 4, 4, 
-                        5, speed + MathUtils.random(150), 
+                        15, speed - MathUtils.random(150, 250), 
                         angle + 180 + temp, 
                         s, sh));
                     world.addEntity(new Particle(x, y, 4, 4, 
-                        5, speed + MathUtils.random(150), 
+                        15, speed - MathUtils.random(150, 250), 
                         angle + 180 - temp, 
                         s, sh));
                 
