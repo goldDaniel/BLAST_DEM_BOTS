@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 
 /**
  *
@@ -87,7 +88,9 @@ public class Bullet extends GameObject
     @Override
     protected void handleMoveCollisionResponse(GameObject obj)
     {
-        if(isColliding(obj))
+        //so wall collision is less strict
+        Rectangle rect = new Rectangle(x + width / 3, y + height / 3, width / 4, height / 4);
+        if(obj.isColliding(rect))
         {
             isAlive = false;
         }

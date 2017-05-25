@@ -112,7 +112,7 @@ public class TestGameScreen extends Screen
         
         engine.doCameraShake();
         
-        //engine.getCamera().zoom = 0.5f;
+        engine.getCamera().zoom = 0.5f;
         updating = false;
         
         

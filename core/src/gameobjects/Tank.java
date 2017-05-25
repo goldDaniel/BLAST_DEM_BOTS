@@ -81,6 +81,5 @@ public class Tank extends Character
     {
         s.draw(body, x, y, width / 2, height / 2, width, height, 1, 1, angle);
         s.draw(cannon, x, y + 17f, 45f, cannon.getRegionHeight() / 2, cannon.getRegionWidth(), cannon.getRegionHeight(), 1, 1, cannonAngle);
-  
     }
 }

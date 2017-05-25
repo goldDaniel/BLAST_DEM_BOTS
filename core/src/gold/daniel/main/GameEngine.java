@@ -90,7 +90,6 @@ public class GameEngine
         
         currentScreen = screens.get(Screen.MAIN_MENU);
         currentScreen.load();
-        camera.zoom = 0.5f;
     }
 
     /**
@@ -136,14 +135,6 @@ public class GameEngine
         {
             sleep = false;
             sleepTime = 0;
-        }
-        if(isKeyPressed(Keys.NUM_1))
-        {
-            camera.zoom += 0.05f;
-        }
-        if(isKeyPressed(Keys.NUM_2))
-        {
-            camera.zoom -= 0.05f;
         }
     }
 

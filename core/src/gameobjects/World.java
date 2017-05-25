@@ -203,7 +203,7 @@ public class World extends GameObject
                     else
                     {
                         engine.sleep(10);
-                        engine.shake(15);
+                        engine.shake(20);
                     }
                     
                     for (int i = 0; i < 10; i++)

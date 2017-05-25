@@ -182,4 +182,14 @@ public abstract class GameObject
         
         return rect1.overlaps(rect2) || rect2.overlaps(rect1);
     }
+    
+    public boolean isColliding(Rectangle rect)
+    {
+        rect1.x = this.x;
+        rect1.y = this.y;
+        rect1.width = this.width;
+        rect1.height = this.height;
+        
+        return rect1.overlaps(rect) || rect.overlaps(rect1);
+    }
 }
