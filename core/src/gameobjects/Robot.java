@@ -5,13 +5,12 @@
  */
 package gameobjects;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
+import gold.daniel.main.Textures;
 
 /**
  *
@@ -20,11 +19,19 @@ import com.badlogic.gdx.utils.Array;
 public class Robot extends Character
 {
 
-    Texture texture;
+    static TextureRegion body = new TextureRegion(Textures.ROBOT_BODY);
+    static TextureRegion head = new TextureRegion(Textures.ROBOT_HEAD);
+    
+    
+    int headWidth;
+    int headHeight;
+    float headX;
+    float headY;
+    float headAngle = 0;
 
-    public Robot(float x, float y, SpriteBatch s, ShapeRenderer sh, Texture texture)
+    public Robot(float x, float y, SpriteBatch s, ShapeRenderer sh)
     {
-        this(s, sh, texture);
+        this(s, sh);
         this.x = x;
         this.y = y;
     }
@@ -33,17 +40,18 @@ public class Robot extends Character
      *
      * @param s
      * @param sh
-     * @param texture
      */
-    public Robot(SpriteBatch s, ShapeRenderer sh, Texture texture)
+    public Robot(SpriteBatch s, ShapeRenderer sh)
     {
         super(s, sh);
         this.x = 100;
         this.y = 100;
         this.width = 32;
         this.height = 32;
-        this.texture = texture;
-
+        
+        headWidth = headHeight = 16;
+        
+        
         speed = 20f;
         angle = 0;
 
@@ -64,11 +72,15 @@ public class Robot extends Character
 
         if(player != null)    
         {
-            //angle = 180 + calculateAngleToPoint(player.x, player.y);
+            headAngle = 270 + calculateAngleToPoint(player.x, player.y);
             player = (Player) world.getEntityType(Player.class).first();
             Vector2 temp = new Vector2(angle, 0);
             temp.lerp(new Vector2(180 + calculateAngleToPoint(player.x, player.y), 0), 0.02f);
             angle = temp.x;
+        }
+        else
+        {
+            headAngle = angle;
         }
 
         collisionTiles = world.getCollisionTiles(this);
@@ -83,6 +95,10 @@ public class Robot extends Character
         {
             handleMoveCollisionResponse(tile);
         }
+        
+        headX = x + width / 2 - headWidth / 2;
+        headY = y + height / 2 - headHeight / 2;
+        
         collisionTiles.clear();
 
         if (!isAlive)
@@ -102,7 +118,10 @@ public class Robot extends Character
     @Override
     public void draw()
     {
-        s.draw(new TextureRegion(texture), x, y, width / 2, height / 2, width, height, 1, 1, angle);
+        s.draw(body, x, y, width / 2, height / 2, width, height, 1, 1, angle);
+       
+        s.draw(head, headX, headY, headWidth / 2, headHeight / 2, 
+                headWidth, headHeight, 1, 1, headAngle);
     }
 
     @Override

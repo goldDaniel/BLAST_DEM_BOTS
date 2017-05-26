@@ -19,8 +19,8 @@ import gold.daniel.main.Textures;
 public class Tank extends Character
 {
     
-    TextureRegion body = new TextureRegion(Textures.TANK_BODY);
-    TextureRegion cannon =  new TextureRegion(Textures.TANK_CANNON);
+    static TextureRegion body = new TextureRegion(Textures.TANK_BODY);
+    static TextureRegion cannon =  new TextureRegion(Textures.TANK_CANNON);
     
     
     float cannonAngle;

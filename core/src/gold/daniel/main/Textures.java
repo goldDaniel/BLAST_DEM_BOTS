@@ -16,7 +16,8 @@ public class Textures
 {
     public static Texture PLAYER = new Texture(Gdx.files.internal("characters/example.png"));
     
-    public static Texture ROBOT = new Texture(Gdx.files.internal("characters/robot/example.png"));
+    public static Texture ROBOT_BODY = new Texture(Gdx.files.internal("characters/robot/body.png"));
+    public static Texture ROBOT_HEAD = new Texture(Gdx.files.internal("characters/robot/head.png"));
     
     public static Texture BULLET_12 = new Texture(Gdx.files.internal("weapons/bullets/12.png"));
     

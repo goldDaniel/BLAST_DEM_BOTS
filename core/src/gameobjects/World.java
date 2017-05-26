@@ -131,7 +131,7 @@ public class World extends GameObject
                     }
                     else if(cell.getTile().getProperties().get("robot") != null)
                     {
-                        temp = new Robot(i * Tile.SIZE, j * Tile.SIZE, s, sh, Textures.ROBOT);
+                        temp = new Robot(i * Tile.SIZE, j * Tile.SIZE, s, sh);
                     }
                     else if(cell.getTile().getProperties().get("tank") != null)
                     {
@@ -225,8 +225,9 @@ public class World extends GameObject
         for(Bullet bullet : bullets)
         {
             //iterate over robots to check bullet collision
-            for(Robot robot : robots)
+            for(int i = 0; i < robots.size; i++)
             {
+                Robot robot = robots.get(i);
                 if(bullet.isColliding(robot))
                 {
                     bullet.isAlive = false;
@@ -249,7 +250,7 @@ public class World extends GameObject
                     //create the particles from a colliding bullet
                     //The particles for entity death are handled in their
                     //respective classes
-                    for (int i = 0; i < 10; i++)
+                    for (int j = 0; j < 10; j++)
                     {
                         addEntity(new Particle(bullet.x, bullet.y, 3, 3, 
                             10 + MathUtils.random(10), 50f + MathUtils.random(200), 
