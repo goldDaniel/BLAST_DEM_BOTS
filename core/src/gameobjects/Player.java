@@ -37,7 +37,14 @@ public class Player extends Character
     final int HURT_FRAMES = 60;
     int frameCount = 0;
         
-            
+         
+    
+    public Player(float x, float y, SpriteBatch s, ShapeRenderer sh, GameController c)
+    {
+        this(s, sh, c);
+        this.x = x;
+        this.y = y;
+    }
     /**
      * 
      * @param s

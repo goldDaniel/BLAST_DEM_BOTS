@@ -11,11 +11,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.GameEngine;
 import gold.daniel.main.Sounds;
+import gold.daniel.main.Textures;
 
 /**
  *`
@@ -65,6 +67,7 @@ public class World extends GameObject
         toRemoveFromScene = new Array<GameObject>();
         
         createTiles();
+        spawnEntities();
     }
 
     /**
@@ -77,11 +80,11 @@ public class World extends GameObject
     private void createTiles()
     {
         tiles = new Tile[map.getProperties().get("width", Integer.class)][map.getProperties().get("height", Integer.class)];
+        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("collision");
         for (int i = 0; i < tiles.length; i++)
         {
             for (int j = 0; j < tiles[i].length; j++)
             {
-                TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("collision");
                 int tileX = (int)(i * layer.getTileWidth());
                 int tileY = (int)(j * layer.getTileHeight());
                 
@@ -91,9 +94,50 @@ public class World extends GameObject
                     isSolid = layer.getCell(i, j).getTile().getProperties().get("isSolid") != null;
                 }
                 tiles[i][j] = new Tile(s, sh, tileX, tileY, isSolid);
-                entities.add(tiles[i][j]);
+                addEntity(tiles[i][j]);
             }
         }
+    }
+    
+    /**
+     * Takes the entity markers from the TMX file and creates them.
+     */
+    private void spawnEntities()
+    {
+        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("spawn");
+        for (int i = 0; i < tiles.length; i++)
+        {
+            for (int j = 0; j < tiles[i].length; j++)
+            {
+                Cell cell = layer.getCell(i, j);
+                if(cell != null)
+                {
+                    if(cell.getTile().getProperties().get("player") != null)
+                    {
+                        Player temp = new Player(i * Tile.SIZE, j * Tile.SIZE, 
+                                s, sh, engine.getNextController());
+                        
+                        addEntity(temp);
+                        this.player = temp;
+                    }
+                    else if(cell.getTile().getProperties().get("robot") != null)
+                    {
+                        Robot temp = new Robot(i * Tile.SIZE, j * Tile.SIZE, s, sh, Textures.ROBOT);
+                        addEntity(temp);
+                    }
+                    else if(cell.getTile().getProperties().get("tank") != null)
+                    {
+                        Tank temp = new Tank(i * Tile.SIZE, j * Tile.SIZE, s, sh);
+                        addEntity(temp);
+                    }
+                }
+            }
+        }
+    }
+    
+    public Player getPlayer()
+    {
+        return player;
     }
     
     /**

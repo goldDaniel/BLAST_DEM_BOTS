@@ -56,8 +56,8 @@ public class Tank extends Character
     @Override
     public void update(World world, float deltaTime)
     {
-        Player player;
-        if(world.getEntityType(Player.class).size > 0)
+        Player player = world.getPlayer();
+        if(player != null)
         {
             player = (Player)world.getEntityType(Player.class).first();
             Vector2 temp = new Vector2(cannonAngle, 0);

@@ -37,6 +37,7 @@ public class TestGameScreen extends Screen
     
     Sound backgroundSong;
     
+    float zoom = 0.5f;
     
     boolean updating;
     
@@ -52,19 +53,10 @@ public class TestGameScreen extends Screen
         TiledMap temp = new TmxMapLoader().load("maps/test-large.tmx");
         tmr = new OrthogonalTiledMapRenderer(temp);
         world = new World(temp, tmr, engine, s, sh);
-        player = new Player(s, sh, engine.getNextController());
-        world.addEntity(player);
-
-        int robotCount = 1;
-        for (int i = 0; i < robotCount; i++)
-        {
-            world.addEntity(new Robot(100, 100, s, sh, Textures.ROBOT));
-        }
-        world.addEntity(new Tank(10, 100, s, sh));
-        
-        
+       
         backgroundSong = Sounds.GAME_BACKGROUND;
         
+        player = world.getPlayer();
         updating = false;
     }
 
@@ -98,6 +90,7 @@ public class TestGameScreen extends Screen
         }
         ////////////////////////////////////////
         
+        
         engine.getCamera().position.y = (int)(player.getY() + player.getHeight() / 2);
         //CAMERA MAP CLAMPING FOR Y-AXIS
         if(engine.getCamera().position.y < world.getY() + Main.HEIGHT / 2 * engine.getCamera().zoom)
@@ -112,7 +105,21 @@ public class TestGameScreen extends Screen
         
         engine.doCameraShake();
         
-        engine.getCamera().zoom = 0.5f;
+        engine.getCamera().zoom = zoom;
+        
+        if(engine.isKeyJustPressed(Keys.NUM_1))
+        {
+            zoom += 0.05f;
+        }
+        if(engine.isKeyJustPressed(Keys.NUM_2))
+        {
+            zoom -= 0.05f;
+        }
+        
+        if(engine.isKeyJustPressed(Keys.NUM_3))
+        {
+            zoom = 0.5f;
+        }
         updating = false;
         
         
