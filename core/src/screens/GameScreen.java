@@ -14,8 +14,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import gameobjects.World;
 import gameobjects.Player;
-import gameobjects.Robot;
-import gameobjects.Tank;
 import gold.daniel.main.GameEngine;
 import gold.daniel.main.Main;
 import gold.daniel.main.Screen;
@@ -26,7 +24,7 @@ import gold.daniel.main.Textures;
  *
  * @author wrksttnpc
  */
-public class TestGameScreen extends Screen
+public class GameScreen extends Screen
 {
 
     Player player;
@@ -41,7 +39,7 @@ public class TestGameScreen extends Screen
     
     boolean updating;
     
-    public TestGameScreen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
+    public GameScreen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
     {
         super(engine, s, hudBatch, sh);
     }
@@ -69,7 +67,7 @@ public class TestGameScreen extends Screen
         tmr.setView(engine.getCamera());
         if(engine.isKeyJustPressed(Keys.ESCAPE))
         {
-            engine.switchScreen(TEST_GAME, MAIN_MENU);
+            engine.switchScreen(GAME, MAIN_MENU);
             backgroundSong.stop();
             updating = !updating;
         }

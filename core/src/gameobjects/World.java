@@ -5,7 +5,6 @@
  */
 package gameobjects;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -16,7 +15,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.GameEngine;
-import gold.daniel.main.Sounds;
 import gold.daniel.main.Textures;
 
 /**
@@ -112,29 +110,45 @@ public class World extends GameObject
                 Cell cell = layer.getCell(i, j);
                 if(cell != null)
                 {
+                    GameObject temp = null;
+                    
+                    /*
+                     * There might be a more simple way to write this block?
+                     * as we compare to null every time we cannot use a switch
+                     * and every entity may have a different constructor
+                     * 
+                     *
+                     * I believe we would need to organize the data
+                     * diffrently in the TMX file, and use values instead of 
+                     * null checks
+                     */
                     if(cell.getTile().getProperties().get("player") != null)
                     {
-                        Player temp = new Player(i * Tile.SIZE, j * Tile.SIZE, 
+                        temp = new Player(i * Tile.SIZE, j * Tile.SIZE, 
                                 s, sh, engine.getNextController());
                         
-                        addEntity(temp);
-                        this.player = temp;
+                        this.player = (Player)temp;
                     }
                     else if(cell.getTile().getProperties().get("robot") != null)
                     {
-                        Robot temp = new Robot(i * Tile.SIZE, j * Tile.SIZE, s, sh, Textures.ROBOT);
-                        addEntity(temp);
+                        temp = new Robot(i * Tile.SIZE, j * Tile.SIZE, s, sh, Textures.ROBOT);
                     }
                     else if(cell.getTile().getProperties().get("tank") != null)
                     {
-                        Tank temp = new Tank(i * Tile.SIZE, j * Tile.SIZE, s, sh);
-                        addEntity(temp);
+                        temp = new Tank(i * Tile.SIZE, j * Tile.SIZE, s, sh);
+                        
                     }
+                    addEntity(temp);
                 }
             }
         }
     }
     
+    /**
+     * retrieves the player object.
+     * we need it pretty often so this reference is really useful.
+     * @return 
+     */
     public Player getPlayer()
     {
         return player;
@@ -179,13 +193,17 @@ public class World extends GameObject
         Array<Bullet> bullets = new Array<Bullet>();
         Array<Tank> tanks = new Array<Tank>();
         
+        //updates all currently active entities
         for(GameObject entity : entities)
         {
             entity.update(this, deltaTime);
+            //prepare to remove from scene
             if(!entity.isAlive)
             {
                 toRemoveFromScene.add(entity);
             }
+            //adds entities to their respective lists
+            //used for iterating for entity interactions
             else
             {
                 if(entity instanceof Robot)
@@ -203,8 +221,10 @@ public class World extends GameObject
             }
         }
         
+        //handle bullet mechanics when colliding with enemies
         for(Bullet bullet : bullets)
         {
+            //iterate over robots to check bullet collision
             for(Robot robot : robots)
             {
                 if(bullet.isColliding(robot))
@@ -212,6 +232,9 @@ public class World extends GameObject
                     bullet.isAlive = false;
                     robot.damage(bullet.getDamage());
                     
+                    //these are for the freeze effect and camera shake
+                    //maybe move these into their respective entites later?
+                    //as we have to write this here for every interaction
                     if(robot.isAlive())
                     {
                         engine.sleep(5);
@@ -223,6 +246,9 @@ public class World extends GameObject
                         engine.shake(5);
                     }
                     
+                    //create the particles from a colliding bullet
+                    //The particles for entity death are handled in their
+                    //respective classes
                     for (int i = 0; i < 10; i++)
                     {
                         addEntity(new Particle(bullet.x, bullet.y, 3, 3, 
@@ -232,6 +258,7 @@ public class World extends GameObject
                     }
                 }
             }
+            //iterates over tanks to check bullet collision
             for(Tank tank : tanks)
             {
                 if(bullet.isColliding(tank))
@@ -239,6 +266,9 @@ public class World extends GameObject
                     bullet.isAlive = false;
                     tank.damage(bullet.getDamage());
                     
+                    //these are for the freeze effect and camera shake
+                    //maybe move these into their respective entites later?
+                    //as we have to write this here for every interaction
                     if(tank.isAlive())
                     {
                         engine.sleep(5);
@@ -250,6 +280,9 @@ public class World extends GameObject
                         engine.shake(20);
                     }
                     
+                    //create the particles from a colliding bullet
+                    //The particles for entity death are handled in their
+                    //respective classes
                     for (int i = 0; i < 10; i++)
                     {
                         addEntity(new Particle(bullet.x, bullet.y, 3, 3, 
@@ -260,6 +293,7 @@ public class World extends GameObject
                 }
             }
         }
+        //robot player colision
         for(Robot robot : robots)
         {
             if(player.isColliding(robot))
@@ -268,6 +302,7 @@ public class World extends GameObject
                 player.handleMoveCollisionResponse(robot);
             }
         }
+        //tank player collision
         for(Tank tank : tanks)
         {
             if(tank.isColliding(player))
@@ -279,16 +314,21 @@ public class World extends GameObject
         updating = false;
         
         
+        //adds entities flagged to be added to scene
         if(toAddToScene.size > 0)
         {
             entities.addAll(toAddToScene);
             toAddToScene.clear();
         }
         
+        //removes entities taht are flagged to be removed from scene
         entities.removeAll(toRemoveFromScene, true);
         toRemoveFromScene.clear();
     }
 
+    /**
+     * render calls
+     */
     @Override
     public void draw()
     {

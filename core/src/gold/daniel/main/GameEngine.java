@@ -7,7 +7,7 @@ package gold.daniel.main;
 
 import screens.HowToPlayScreen;
 import screens.MainMenuScreen;
-import screens.TestGameScreen;
+import screens.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -83,9 +83,14 @@ public class GameEngine
 
         screens = new ArrayMap<String, Screen>();
         
+        /*adds all the screens so we can switch between them
+        //NOTE: This does not load all the objects in the scene! 
+        //this just allows us to reference them, initializing should
+        //be done as needed
+        */
         screens.put(Screen.MAIN_MENU, new MainMenuScreen(this, s, hudBatch, sh));
         screens.put(Screen.HOW_TO_PLAY, new HowToPlayScreen(this, s, hudBatch, sh));
-        screens.put(Screen.TEST_GAME, new TestGameScreen(this, s, hudBatch, sh));
+        screens.put(Screen.GAME, new GameScreen(this, s, hudBatch, sh));
         screens.put(Screen.OPTIONS, new OptionsScreen(this, s, hudBatch, sh));
         
         currentScreen = screens.get(Screen.MAIN_MENU);
@@ -301,6 +306,10 @@ public class GameEngine
         shake += intensity;
     }
     
+    /**
+     * Makes the camera jitter around at the current intensity.
+     * This really starts to make the game feel alive
+     */
     public void doCameraShake()
     {
         if(shake > 0)

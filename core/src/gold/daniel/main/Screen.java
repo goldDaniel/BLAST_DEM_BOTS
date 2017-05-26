@@ -17,7 +17,7 @@ public abstract class Screen
     
     public static final String LOADING = "LOADING";
     public static final String MAIN_MENU = "MAIN_MENU";
-    public static final String TEST_GAME = "TEST_GAME";
+    public static final String GAME = "GAME";
     public static final String HOW_TO_PLAY = "HOW_TO_PLAY";
     public static final String OPTIONS = "OPTIONS";
     
@@ -28,6 +28,13 @@ public abstract class Screen
     protected ShapeRenderer sh;
 
     
+    /**
+     * Takes things needed by every screen.
+     * @param engine
+     * @param s
+     * @param hudBatch
+     * @param sh 
+     */
     public Screen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
     {
         this.engine = engine;

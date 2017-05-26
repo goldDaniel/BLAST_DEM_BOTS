@@ -83,7 +83,7 @@ public class MainMenuScreen extends Screen
         {
             if(currentOptionSelection == 0)
             {
-                engine.switchScreen(MAIN_MENU, TEST_GAME);
+                engine.switchScreen(MAIN_MENU, GAME);
             }
             else if(currentOptionSelection == 1)
             {

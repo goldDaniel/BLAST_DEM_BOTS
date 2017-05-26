@@ -166,7 +166,11 @@ public abstract class GameObject
         }
     }
  
-    
+    /**
+     * checks collision with gameObject
+     * @param obj
+     * @return 
+     */
     public boolean isColliding(GameObject obj)
     {
         
@@ -183,6 +187,11 @@ public abstract class GameObject
         return rect1.overlaps(rect2) || rect2.overlaps(rect1);
     }
     
+    /**
+     * checks collision with rectangle.
+     * @param rect
+     * @return 
+     */
     public boolean isColliding(Rectangle rect)
     {
         rect1.x = this.x;
