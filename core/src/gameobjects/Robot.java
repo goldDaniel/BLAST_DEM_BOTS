@@ -78,9 +78,8 @@ public class Robot extends Character
         {
             headAngle = 270 + calculateAngleToPoint(player.x, player.y);
             player = (Player) world.getEntityType(Player.class).first();
-            Vector2 temp = new Vector2(angle, 0);
-            temp.lerp(new Vector2(180 + calculateAngleToPoint(player.x, player.y), 0), 0.02f);
-            angle = temp.x;
+            
+            angle = MathUtils.lerpAngleDeg(angle, 180 + calculateAngleToPoint(player.x, player.y), 0.05f);
         }
         else
         {

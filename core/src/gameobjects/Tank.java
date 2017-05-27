@@ -58,14 +58,13 @@ public class Tank extends Character
     
     @Override
     public void update(World world, float deltaTime)
-    {
+    {        
         Player player = world.getPlayer();
         if(player != null)
         {
-            player = (Player)world.getEntityType(Player.class).first();
-            Vector2 temp = new Vector2(cannonAngle, 0);
-            temp.lerp(new Vector2(calculateAngleToPoint(player.x, player.y), 0), 0.02f);
-            cannonAngle = temp.x;
+           float wantedAngle = calculateAngleToPoint(player.x, player.y);
+           
+           cannonAngle = MathUtils.lerpAngleDeg(cannonAngle, wantedAngle, 0.05f);
         }
         
         
