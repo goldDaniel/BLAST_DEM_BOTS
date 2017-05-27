@@ -19,6 +19,7 @@ import gold.daniel.main.Textures;
 public class Robot extends Character
 {
 
+    static TextureRegion weapon = new TextureRegion(Textures.ROBOT_WEAPON);
     static TextureRegion body = new TextureRegion(Textures.ROBOT_BODY);
     static TextureRegion head = new TextureRegion(Textures.ROBOT_HEAD);
     
@@ -119,7 +120,6 @@ public class Robot extends Character
     public void draw()
     {
         s.draw(body, x, y, width / 2, height / 2, width, height, 1, 1, angle);
-       
         s.draw(head, headX, headY, headWidth / 2, headHeight / 2, 
                 headWidth, headHeight, 1, 1, headAngle);
     }

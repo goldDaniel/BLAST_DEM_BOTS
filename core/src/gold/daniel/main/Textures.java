@@ -18,8 +18,9 @@ public class Textures
     
     public static Texture ROBOT_BODY = new Texture(Gdx.files.internal("characters/robot/body.png"));
     public static Texture ROBOT_HEAD = new Texture(Gdx.files.internal("characters/robot/head.png"));
+    public static Texture ROBOT_WEAPON = new Texture(Gdx.files.internal("characters/robot/weapon.png"));
     
-    public static Texture BULLET_12 = new Texture(Gdx.files.internal("weapons/bullets/12.png"));
+    public static Texture BULLET_12 = new Texture(Gdx.files.internal("weapons/bullets/4.png"));
     
     public static Texture TANK_BODY = new Texture(Gdx.files.internal("characters/tank-base.png"));
     public static Texture TANK_CANNON = new Texture(Gdx.files.internal("characters/tank-cannon.png"));

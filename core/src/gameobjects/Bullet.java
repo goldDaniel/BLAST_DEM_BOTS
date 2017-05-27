@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import gold.daniel.main.Textures;
 
 /**
  *
@@ -23,7 +24,9 @@ public class Bullet extends GameObject
 
     int damage = 1;
     
-    Texture texture;
+    TextureRegion texture;
+    
+    boolean firstFrame;
     
     public Bullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle, float speed, Texture texture)
     {
@@ -32,8 +35,10 @@ public class Bullet extends GameObject
         this.x = x;
         this.y = y;
         this.angle = angle;
-        this.texture = texture;
-        width = height = 16;
+        this.texture = new TextureRegion(texture);
+        width = texture.getWidth();
+        height = texture.getHeight();
+        firstFrame = true;
     }
 
     @Override
@@ -77,7 +82,15 @@ public class Bullet extends GameObject
     @Override
     public void draw()
     {
-       s.draw(new TextureRegion(texture), x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1, 1, angle);
+        if(firstFrame)
+        {
+            s.draw(Textures.PARTICLE, x, y, width, height);
+            firstFrame = false;
+        }
+        else
+        {
+            s.draw(texture, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1, 1, angle);
+        }
     }
     
     public int getDamage()
@@ -89,7 +102,7 @@ public class Bullet extends GameObject
     protected void handleMoveCollisionResponse(GameObject obj)
     {
         //so wall collision is less strict
-        Rectangle rect = new Rectangle(x + width / 3, y + height / 3, width / 4, height / 4);
+        Rectangle rect = new Rectangle(x + width / 2 - 4, y + height / 2 - 4, 8, 8);
         if(obj.isColliding(rect))
         {
             isAlive = false;

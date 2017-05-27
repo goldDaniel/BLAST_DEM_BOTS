@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -98,7 +99,7 @@ public class GameEngine
     }
 
     /**
-     * do engine things. updating camera, polling input. where calculations
+     * do engine things. updating camera. where engine calculations
      * should be done.
      */
     public void updateEngine()
@@ -109,11 +110,20 @@ public class GameEngine
             camera.update();
             if(shake > 0)
             {
+                MathUtils.clamp(shake, 0, 20);
                 shake--;
                 shakeDir = !shakeDir;
             }
         }
-        
+        else
+        {
+            sleepTime--;
+        }
+        if(sleepTime <= 0)
+        {
+            sleep = false;
+            sleepTime = 0;
+        }
        
     }
 
@@ -131,15 +141,6 @@ public class GameEngine
             {
                 currentScreen.update(deltaTime);
             }
-        }
-        else
-        {
-            sleepTime--;
-        }
-        if(sleepTime <= 0)
-        {
-            sleep = false;
-            sleepTime = 0;
         }
     }
 
