@@ -5,11 +5,13 @@
  */
 package gameobjects;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import gold.daniel.main.Sounds;
 import gold.daniel.main.Textures;
 
 /**
@@ -23,6 +25,7 @@ public class Robot extends Character
     static TextureRegion body = new TextureRegion(Textures.ROBOT_BODY);
     static TextureRegion head = new TextureRegion(Textures.ROBOT_HEAD);
     
+    static Sound explosion = Sounds.EXPLOSION;
     
     int headWidth;
     int headHeight;
@@ -56,7 +59,7 @@ public class Robot extends Character
         speed = 20f;
         angle = 0;
 
-        healthMax = health = 10;
+        healthMax = health = 5;
     }
 
     /**
@@ -104,6 +107,7 @@ public class Robot extends Character
 
         if (!isAlive)
         {
+            explosion.play();
             for (int i = 0; i < 100; i++)
             {
                 world.addEntity(new Particle(x + width / 2, y + height / 2, 4, 4,

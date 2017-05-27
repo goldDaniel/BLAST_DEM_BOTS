@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import gold.daniel.main.Textures;
 
 /**
  *
@@ -82,15 +81,7 @@ public class Bullet extends GameObject
     @Override
     public void draw()
     {
-        if(firstFrame)
-        {
-            s.draw(Textures.PARTICLE, x, y, width, height);
-            firstFrame = false;
-        }
-        else
-        {
-            s.draw(texture, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1, 1, angle);
-        }
+        s.draw(texture, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1, 1, angle);
     }
     
     public int getDamage()

@@ -5,11 +5,13 @@
  */
 package gameobjects;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import gold.daniel.main.Sounds;
 import gold.daniel.main.Textures;
 
 /**
@@ -22,6 +24,7 @@ public class Tank extends Character
     static TextureRegion body = new TextureRegion(Textures.TANK_BODY);
     static TextureRegion cannon =  new TextureRegion(Textures.TANK_CANNON);
     
+    static Sound explosion = Sounds.EXPLOSION_TANK;
     
     float cannonAngle;
     
@@ -50,7 +53,7 @@ public class Tank extends Character
         speed = 20f;
         angle = 0;
         
-        healthMax = health = 50;
+        healthMax = health = 20;
     }
     
     @Override
@@ -68,6 +71,7 @@ public class Tank extends Character
         
         if(!isAlive)
         {
+            explosion.play();
             for (int i = 0; i < 1000; i++)
             {
                 world.addEntity(new Particle(x + width / 2, y + height / 2,  4, 4, 

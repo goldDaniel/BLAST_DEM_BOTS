@@ -237,13 +237,13 @@ public class World extends GameObject
                     //as we have to write this here for every interaction
                     if(robot.isAlive())
                     {
-                        engine.sleep(5);
+                        engine.sleep(3);
                         engine.shake(3);
                     }
                     else
                     {
-                        engine.sleep(10);
-                        engine.shake(5);
+                        engine.sleep(5);
+                        engine.shake(7);
                     }
                     
                     //create the particles from a colliding bullet
@@ -271,13 +271,13 @@ public class World extends GameObject
                     //as we have to write this here for every interaction
                     if(tank.isAlive())
                     {
-                        engine.sleep(5);
+                        engine.sleep(3);
                         engine.shake(3);
                     }
                     else
                     {
                         engine.sleep(10);
-                        engine.shake(20);
+                        engine.shake(15);
                     }
                     
                     //create the particles from a colliding bullet

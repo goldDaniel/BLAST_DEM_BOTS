@@ -20,4 +20,6 @@ public class Sounds
     public static Sound FIRE_SOUND = Gdx.audio.newSound(Gdx.files.internal("audio/shoot-1.wav"));
     public static Sound NO_AMMO = Gdx.audio.newSound(Gdx.files.internal("audio/no-ammo.wav"));
     public static Sound HIT = Gdx.audio.newSound(Gdx.files.internal("audio/hit.wav"));
-}
+    public static Sound EXPLOSION = Gdx.audio.newSound(Gdx.files.internal("audio/explosion-1.wav"));
+    public static Sound EXPLOSION_TANK = Gdx.audio.newSound(Gdx.files.internal("audio/explosion-2.wav"));
+}   

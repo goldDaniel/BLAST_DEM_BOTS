@@ -174,15 +174,14 @@ public class GameScreen extends Screen
     @Override
     public void destroy()
     {
-        world.dispose();
-        backgroundSong.dispose();
+       
     }
 
     @Override
     public void enter()
     {
         updating = false;
-        backgroundSong.play(0.1f);
+        backgroundSong.loop(0.1f);
     }
     @Override
     public void exit()
