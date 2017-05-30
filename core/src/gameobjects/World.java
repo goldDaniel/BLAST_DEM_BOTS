@@ -118,7 +118,8 @@ public class World extends Entity
                      *
                      * I believe we would need to organize the data
                      * diffrently in the TMX file, and use values instead of 
-                     * null checks
+                     * null checks. This would mean adding every property to 
+                     * every tile however, and that would be a pain
                      */
                     if(cell.getTile().getProperties().get("player") != null)
                     {
