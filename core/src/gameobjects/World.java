@@ -21,8 +21,12 @@ import gold.daniel.main.GameEngine;
  */
 public class World extends Entity
 {
+    /*THESE ARE PARALLEL STRUCTURES*/
     TiledMap map;
     Tile[][] tiles;
+    /*******************************/
+    
+    
     TiledMapRenderer tmr;
     
     Array<Entity> entities;

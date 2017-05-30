@@ -7,8 +7,9 @@ package screens;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.*;
@@ -43,10 +44,9 @@ public class MainMenuScreen extends Screen
     {
         menuOptions = new Array<String>();
         {
-            menuOptions.add("START GAME");
-            menuOptions.add("HOW TO PLAY");
-            menuOptions.add("OPTIONS");
-            menuOptions.add("EXIT");
+            menuOptions.add("start game");
+            menuOptions.add("how to play");
+            menuOptions.add("exit");
         
         }
 
@@ -65,12 +65,12 @@ public class MainMenuScreen extends Screen
         engine.getCamera().position.y = Main.HEIGHT / 2;
         if(engine.isKeyJustPressed(Keys.W, Keys.UP))
         {
-            currentOptionSelection--;
+            currentOptionSelection++;
             navSound.play(0.3f);
         }
         else if(engine.isKeyJustPressed(Keys.S, Keys.DOWN))
         {
-            currentOptionSelection++;
+            currentOptionSelection--;
             navSound.play(0.3f);
         }
             
@@ -81,7 +81,7 @@ public class MainMenuScreen extends Screen
         
         if(engine.isKeyJustPressed(Keys.SPACE, Keys.ENTER))
         {
-            if(currentOptionSelection == 0)
+            if(currentOptionSelection == 2)
             {
                 engine.switchScreen(MAIN_MENU, GAME);
             }
@@ -89,11 +89,7 @@ public class MainMenuScreen extends Screen
             {
                 engine.switchScreen(MAIN_MENU, HOW_TO_PLAY);
             }
-            else if(currentOptionSelection == 2)
-            {
-                engine.switchScreen(MAIN_MENU, OPTIONS);
-            }
-            else if(currentOptionSelection == 3)
+            else if(currentOptionSelection == 0)
             {
                 engine.exit();
             }
@@ -110,30 +106,34 @@ public class MainMenuScreen extends Screen
     public void draw()
     {
         hudBatch.begin();
-        Fonts.TITLE_FONT.setColor(Color.MAGENTA);
-        Fonts.TITLE_FONT.draw(hudBatch, "MAIN MENU", Main.WIDTH / 2 - Fonts.TITLE_GLYPH_LAYOUT.width / 2, Main.HEIGHT - Fonts.TITLE_GLYPH_LAYOUT.height / 2);
-
-        for (int i = 0; i < menuOptions.size; i++)
+       
+        for(int i = 0; i < menuOptions.size; i++)
         {
-            if(i == currentOptionSelection)
-            {
-                Fonts.OPTIONS_FONT.setColor(Color.MAROON);
-            }
-            else
-            {
-                Fonts.OPTIONS_FONT.setColor(Color.WHITE);
-            }
-            Fonts.OPTIONS_FONT.draw(hudBatch, menuOptions.get(i), Main.WIDTH / 2 - Fonts.TITLE_GLYPH_LAYOUT.width / 2, Main.WIDTH / 3- (i * 60));
+            String option = menuOptions.get(menuOptions.size - 1 - i);
+            drawString(option, i);
         }
+        Texture tex = Textures.ARROW;
+        hudBatch.draw(tex, 550, 150 * currentOptionSelection);
 
         hudBatch.end();
     }
 
+    private void drawString(String string, int i)
+    { 
+        for(int j = 0; j < string.length(); j++)
+        {
+            if(Textures.CHARACTERS.containsKey(string.charAt(j)))
+            {
+                TextureRegion tex = Textures.CHARACTERS.get(string.charAt(j));
+                hudBatch.draw(tex, j * 47, 150 * i);
+            }
+        }
+    }
+    
     @Override
     public void destroy()
     {
-        menuSound.dispose();
-        navSound.dispose();
+        
     }
 
     @Override

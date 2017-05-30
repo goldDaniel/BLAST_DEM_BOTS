@@ -36,9 +36,12 @@ public class Textures
  
     public final static Texture PARTICLE = new Texture(Gdx.files.internal("particle.png"));
     
+    public final static Texture ARROW = new Texture(Gdx.files.internal("hud/arrow.png"));
+    
     
     //LETTERS ARE 35x28 WIITH A SPACING OF 9
     public final static Texture FONT = new Texture(Gdx.files.internal("font.png"));
+    
     
     
     public final static ObjectMap<Character, TextureRegion> CHARACTERS = new ObjectMap<Character, TextureRegion>();

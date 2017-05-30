@@ -9,6 +9,7 @@ import screens.HowToPlayScreen;
 import screens.MainMenuScreen;
 import screens.GameScreen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -76,11 +77,9 @@ public class GameEngine
         hudBatch.enableBlending();
         
         sh = new ShapeRenderer();
+                
+        Textures.loadMaps();
         
-        
-        Fonts.load();
-       
-
         screens = new ArrayMap<String, Screen>();
         
         /*adds all the screens so we can switch between them

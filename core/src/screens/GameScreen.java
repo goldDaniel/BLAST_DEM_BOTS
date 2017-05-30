@@ -54,9 +54,6 @@ public class GameScreen extends Screen
         world = new World(temp, tmr, engine, s, sh);
        
         backgroundSong = Sounds.GAME_BACKGROUND;
-        
-        Textures.loadMaps();
-        
         player = world.getPlayer();
         updating = false;
     }
