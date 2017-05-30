@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  *
  * @author wrksttnpc
  */
-public class Tile extends GameObject 
+public class Tile extends Entity 
 {
     boolean isSolid;
     

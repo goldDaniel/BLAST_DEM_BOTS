@@ -12,7 +12,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.GameEngine;
 
@@ -20,15 +19,15 @@ import gold.daniel.main.GameEngine;
  *`
  * @author wrksttnpc
  */
-public class World extends GameObject
+public class World extends Entity
 {
     TiledMap map;
     Tile[][] tiles;
     TiledMapRenderer tmr;
     
-    Array<GameObject> entities;
-    Array<GameObject> toAddToScene;
-    Array<GameObject> toRemoveFromScene;
+    Array<Entity> entities;
+    Array<Entity> toAddToScene;
+    Array<Entity> toRemoveFromScene;
     
     Player player;
     
@@ -59,9 +58,9 @@ public class World extends GameObject
         width = Tile.SIZE * map.getProperties().get("width", Integer.class);
         height = Tile.SIZE * map.getProperties().get("height", Integer.class);
         
-        entities = new Array<GameObject>();
-        toAddToScene = new Array<GameObject>();
-        toRemoveFromScene = new Array<GameObject>();
+        entities = new Array<Entity>();
+        toAddToScene = new Array<Entity>();
+        toRemoveFromScene = new Array<Entity>();
         
         createTiles();
         spawnEntities();
@@ -109,7 +108,7 @@ public class World extends GameObject
                 Cell cell = layer.getCell(i, j);
                 if(cell != null)
                 {
-                    GameObject temp = null;
+                    Entity temp = null;
                     
                     /*
                      * There might be a more simple way to write this block?
@@ -157,7 +156,7 @@ public class World extends GameObject
      * 
      * @param obj to add
      */
-    public void addEntity(GameObject obj)
+    public void addEntity(Entity obj)
     {
         if(obj == null) return;
         if(updating)toAddToScene.add(obj);
@@ -168,7 +167,7 @@ public class World extends GameObject
      * 
      * @param obj to remove
      */
-    public void removeEntity(GameObject obj)
+    public void removeEntity(Entity obj)
     {
         if(obj == null) return;
         if(updating) toRemoveFromScene.add(obj);
@@ -193,7 +192,7 @@ public class World extends GameObject
         Array<Tank> tanks = new Array<Tank>();
         
         //updates all currently active entities
-        for(GameObject entity : entities)
+        for(Entity entity : entities)
         {
             entity.update(this, deltaTime);
             //prepare to remove from scene
@@ -224,14 +223,13 @@ public class World extends GameObject
         for(Bullet bullet : bullets)
         {
             //iterate over robots to check bullet collision
-            for(int i = 0; i < robots.size; i++)
+            for(Robot robot : robots)
             {
-                Robot robot = robots.get(i);
                 if(bullet.isColliding(robot))
                 {
                     bullet.isAlive = false;
                     robot.damage(bullet.getDamage());
-                    
+                    robot.spawnParticles(this, bullet.x, bullet.y, bullet.angle);
                     //these are for the freeze effect and camera shake
                     //maybe move these into their respective entites later?
                     //as we have to write this here for every interaction
@@ -242,19 +240,8 @@ public class World extends GameObject
                     }
                     else
                     {
-                        engine.sleep(5);
+                        engine.sleep(7);
                         engine.shake(7);
-                    }
-                    
-                    //create the particles from a colliding bullet
-                    //The particles for entity death are handled in their
-                    //respective classes
-                    for (int j = 0; j < 10; j++)
-                    {
-                        addEntity(new Particle(bullet.x, bullet.y, 3, 3, 
-                            10 + MathUtils.random(10), 50f + MathUtils.random(200), 
-                            -90 - bullet.angle + MathUtils.random(-25, 25), 
-                            s, sh));
                     }
                 }
             }
@@ -265,10 +252,11 @@ public class World extends GameObject
                 {
                     bullet.isAlive = false;
                     tank.damage(bullet.getDamage());
-                    
+                    tank.spawnParticles(this, bullet.x, bullet.y, bullet.angle);
                     //these are for the freeze effect and camera shake
                     //maybe move these into their respective entites later?
                     //as we have to write this here for every interaction
+                    //in this loop, looks ugly
                     if(tank.isAlive())
                     {
                         engine.sleep(3);
@@ -279,17 +267,7 @@ public class World extends GameObject
                         engine.sleep(10);
                         engine.shake(15);
                     }
-                    
-                    //create the particles from a colliding bullet
-                    //The particles for entity death are handled in their
-                    //respective classes
-                    for (int i = 0; i < 10; i++)
-                    {
-                        addEntity(new Particle(bullet.x, bullet.y, 3, 3, 
-                            10 + MathUtils.random(10), 50f + MathUtils.random(200), 
-                            -90 - bullet.angle + MathUtils.random(-25, 25), 
-                            s, sh));
-                    }
+
                 }
             }
         }
@@ -335,7 +313,7 @@ public class World extends GameObject
         tmr.render();
         Player temp = null;
         s.begin();
-        for(GameObject entity : entities)
+        for(Entity entity : entities)
         {
             if(entity instanceof Player)
             {
@@ -367,7 +345,7 @@ public class World extends GameObject
      * @param obj
      * @return 
      */
-    public Array<Tile> getCollisionTiles(GameObject obj)
+    public Array<Tile> getCollisionTiles(Entity obj)
     {
         return getCollisionTiles((int)(obj.x + obj.width / 2), (int)(obj.y + obj.height / 2));
     }
@@ -436,12 +414,12 @@ public class World extends GameObject
      */
     Array<?> getEntityType(Class<?> type)
     {
-        Array<GameObject> result = new Array<GameObject>();
+        Array<Entity> result = new Array<Entity>();
         
         
         for(int i = 0; i < entities.size; i++)
         {
-            GameObject obj = entities.get(i);
+            Entity obj = entities.get(i);
             if(obj.getClass() == type)
             {
                 result.add(obj);

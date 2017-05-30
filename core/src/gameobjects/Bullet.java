@@ -16,7 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
  *
  * @author wrksttnpc
  */
-public class Bullet extends GameObject
+public class Bullet extends Entity
 {
     float angle;
     float speed;
@@ -25,7 +25,6 @@ public class Bullet extends GameObject
     
     TextureRegion texture;
     
-    boolean firstFrame;
     
     public Bullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle, float speed, Texture texture)
     {
@@ -37,12 +36,13 @@ public class Bullet extends GameObject
         this.texture = new TextureRegion(texture);
         width = texture.getWidth();
         height = texture.getHeight();
-        firstFrame = true;
     }
 
     @Override
     public void update(World world, float deltaTime)
     {
+        super.update(world, deltaTime);
+        
         x += speed * MathUtils.cosDeg(angle) * deltaTime;
         y += speed * MathUtils.sinDeg(angle) * deltaTime;
         
@@ -63,7 +63,7 @@ public class Bullet extends GameObject
             
             if(!isAlive)
             {
-                int temp = MathUtils.random(-25, 25);
+                int temp = MathUtils.random(25);
                     world.addEntity(new Particle(x, y, 4, 4, 
                         15, speed - MathUtils.random(150, 250), 
                         angle + 180 + temp, 
@@ -90,10 +90,10 @@ public class Bullet extends GameObject
     }
     
     @Override
-    protected void handleMoveCollisionResponse(GameObject obj)
+    protected void handleMoveCollisionResponse(Entity obj)
     {
         //so wall collision is less strict
-        Rectangle rect = new Rectangle(x + width / 2 - 4, y + height / 2 - 4, 8, 8);
+        Rectangle rect = new Rectangle(x + width / 2 - 2, y + height / 2 - 2, 4, 4);
         if(obj.isColliding(rect))
         {
             isAlive = false;

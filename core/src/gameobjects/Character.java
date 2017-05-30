@@ -7,12 +7,13 @@ package gameobjects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 
 /**
  *
  * @author wrksttnpc
  */
-public abstract class Character extends GameObject
+public abstract class Character extends Entity
 {
     protected float speed = 75f;
 
@@ -69,4 +70,15 @@ public abstract class Character extends GameObject
     public void dispose()
     {
     }    
+    
+    public void spawnParticles(World world, float x, float y, float angle)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            world.addEntity(new Particle(x, y, 3, 3, 
+                10 + MathUtils.random(10), 50f + MathUtils.random(200), 
+                angle, 
+                s, sh));
+        }
+    }
 }

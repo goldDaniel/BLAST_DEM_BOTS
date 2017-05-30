@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import gold.daniel.main.Sounds;
 import gold.daniel.main.Textures;
 
@@ -59,6 +58,8 @@ public class Tank extends Character
     @Override
     public void update(World world, float deltaTime)
     {        
+        super.update(world, deltaTime);
+        
         Player player = world.getPlayer();
         if(player != null)
         {
@@ -84,5 +85,17 @@ public class Tank extends Character
     {
         s.draw(body, x, y, width / 2, height / 2, width, height, 1, 1, angle);
         s.draw(cannon, x, y + 17f, 45f, cannon.getRegionHeight() / 2, cannon.getRegionWidth(), cannon.getRegionHeight(), 1, 1, cannonAngle);
+    }
+    
+    @Override
+    public void spawnParticles(World world, float x, float y, float angle)
+    {
+         for (int i = 0; i < 10; i++)
+        {
+            world.addEntity(new Particle(x, y, 3, 3, 
+                10 + MathUtils.random(10), 50f + MathUtils.random(200), 
+                180 + angle + MathUtils.random(-25, 25), 
+                s, sh));
+        }
     }
 }

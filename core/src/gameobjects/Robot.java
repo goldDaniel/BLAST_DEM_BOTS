@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import gold.daniel.main.Sounds;
 import gold.daniel.main.Textures;
 
@@ -27,11 +26,14 @@ public class Robot extends Character
     
     static Sound explosion = Sounds.EXPLOSION;
     
-    int headWidth;
-    int headHeight;
+    float headWidth;
+    float headHeight;
     float headX;
     float headY;
     float headAngle = 0;
+    
+    
+    float scale = 0.75f;
 
     public Robot(float x, float y, SpriteBatch s, ShapeRenderer sh)
     {
@@ -50,10 +52,10 @@ public class Robot extends Character
         super(s, sh);
         this.x = 100;
         this.y = 100;
-        this.width = 32;
-        this.height = 32;
+        this.width = 32 * scale;
+        this.height = 32 * scale;
         
-        headWidth = headHeight = 16;
+        headWidth = headHeight = 16 * scale;
         
         
         speed = 20f;
@@ -77,7 +79,6 @@ public class Robot extends Character
         if(player != null)    
         {
             headAngle = 270 + calculateAngleToPoint(player.x, player.y);
-            player = (Player) world.getEntityType(Player.class).first();
             
             angle = MathUtils.lerpAngleDeg(angle, 180 + calculateAngleToPoint(player.x, player.y), 0.05f);
         }
@@ -133,4 +134,16 @@ public class Robot extends Character
 
     }
 
+    
+    @Override
+    public void spawnParticles(World world, float x, float y, float angle)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            world.addEntity(new Particle(x, y, 3, 3, 
+                10 + MathUtils.random(10), 50f + MathUtils.random(200), 
+                180 + angle + MathUtils.random(-35, 35), 
+                s, sh));
+        }
+    }
 }

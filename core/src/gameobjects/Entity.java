@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Array;
  *
  * @author wrksttnpc
  */
-public abstract class GameObject
+public abstract class Entity
 {
     protected Vector2 position;
     protected float x;
@@ -44,7 +44,7 @@ public abstract class GameObject
     
            
     
-    public GameObject(SpriteBatch s, ShapeRenderer sh)
+    public Entity(SpriteBatch s, ShapeRenderer sh)
     {
         this.s = s;
         this.sh = sh;
@@ -104,7 +104,7 @@ public abstract class GameObject
      * maybe move this method the the World class? 
      * @param obj 
      */
-    protected void handleMoveCollisionResponse(GameObject obj)
+    protected void handleMoveCollisionResponse(Entity obj)
     {
         //broad check if colliding
         if(isColliding(obj))
@@ -171,7 +171,7 @@ public abstract class GameObject
      * @param obj
      * @return 
      */
-    public boolean isColliding(GameObject obj)
+    public boolean isColliding(Entity obj)
     {
         
         rect1.x = this.x;
