@@ -68,5 +68,17 @@ public class Particle extends Character
     public void dispose()
     {
     }
+
+    @Override
+    public int getHitShake()
+    {
+        return 0;
+    }
+
+    @Override
+    public int getDeathShake()
+    {
+        return 0;
+    }
     
 }

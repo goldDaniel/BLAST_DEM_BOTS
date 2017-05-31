@@ -10,8 +10,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import gold.daniel.main.Sounds;
 import gold.daniel.main.Textures;
+import weapons.TankCannon;
+import weapons.Weapon;
 
 /**
  *
@@ -20,13 +23,16 @@ import gold.daniel.main.Textures;
 public class Tank extends Character
 {
     
-    static TextureRegion body = new TextureRegion(Textures.TANK_BODY);
-    static TextureRegion cannon =  new TextureRegion(Textures.TANK_CANNON);
+    static TextureRegion bodyTex = new TextureRegion(Textures.TANK_BODY);
+    static TextureRegion cannonTex =  new TextureRegion(Textures.TANK_CANNON);
     
     static Sound explosion = Sounds.EXPLOSION_TANK;
     
+    float cannonX;
+    float cannonY;
     float cannonAngle;
     
+    Weapon cannon;
     
     
     public Tank(float x, float y, SpriteBatch s, ShapeRenderer sh)
@@ -34,6 +40,8 @@ public class Tank extends Character
         this(s, sh);
         this.x = x;
         this.y = y;
+        
+        cannon = new TankCannon();
     }
     
     /**
@@ -46,11 +54,14 @@ public class Tank extends Character
         super(s, sh);
         this.x = 100;
         this.y = 100;
-        this.width = body.getRegionWidth();
-        this.height = body.getRegionHeight();
+        this.width = bodyTex.getRegionWidth();
+        this.height = bodyTex.getRegionHeight();
         
         speed = 20f;
         angle = 0;
+        
+        cannonX = x;
+        cannonY = y + 17f;
         
         healthMax = health = 20;
     }
@@ -59,20 +70,28 @@ public class Tank extends Character
     public void update(World world, float deltaTime)
     {        
         super.update(world, deltaTime);
+        cannonX = x;
+        cannonY = y + 17f;
         
+        cannon.update();
         Player player = world.getPlayer();
         if(player != null)
         {
-           float wantedAngle = calculateAngleToPoint(player.x, player.y);
+           float wantedAngle = calculateAngleToPoint(player.x + player.width / 2, player.y + player.height / 2);
            
            cannonAngle = MathUtils.lerpAngleDeg(cannonAngle, wantedAngle, 0.05f);
+           
+           world.addEntity(cannon.fireBullet(s, sh, 
+                   cannonX + cannonTex.getRegionWidth() / 2, 
+                   cannonY + cannonTex.getRegionHeight() / 2,
+                   cannonAngle - 90));
         }
         
         
         if(!isAlive)
         {
             explosion.play();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 250; i++)
             {
                 world.addEntity(new Particle(x + width / 2, y + height / 2,  4, 4, 
                         MathUtils.random(25), MathUtils.random(600), MathUtils.random(360), s, sh));
@@ -83,8 +102,20 @@ public class Tank extends Character
     @Override
     public void draw()
     {
-        s.draw(body, x, y, width / 2, height / 2, width, height, 1, 1, angle);
-        s.draw(cannon, x, y + 17f, 45f, cannon.getRegionHeight() / 2, cannon.getRegionWidth(), cannon.getRegionHeight(), 1, 1, cannonAngle);
+        s.draw(bodyTex, x, y, width / 2, height / 2, width, height, 1, 1, angle);
+        s.draw(cannonTex, cannonX, cannonY, 45f, cannonTex.getRegionHeight() / 2, cannonTex.getRegionWidth(), cannonTex.getRegionHeight(), 1, 1, cannonAngle);
+    }
+    /**
+     *  calculates angle from center of character to a point X,Y
+     * @param x
+     * @param y
+     * @return 
+     */
+    @Override
+    protected float calculateAngleToPoint(float x, float y)
+    {
+        Vector2 temp = new Vector2(cannonX + cannonTex.getRegionWidth() / 2, cannonY + cannonTex.getRegionHeight() / 2);
+        return temp.sub(x, y).angle();
     }
     
     @Override
@@ -97,5 +128,17 @@ public class Tank extends Character
                 180 + angle + MathUtils.random(-25, 25), 
                 s, sh));
         }
+    }
+
+    @Override
+    public int getHitShake()
+    {
+        return 3;
+    }
+
+    @Override
+    public int getDeathShake()
+    {
+        return 10;
     }
 }

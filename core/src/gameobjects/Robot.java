@@ -146,4 +146,16 @@ public class Robot extends Character
                 s, sh));
         }
     }
+
+    @Override
+    public int getHitShake()
+    {
+        return 3;
+    }
+
+    @Override
+    public int getDeathShake()
+    {
+        return 7;
+    }
 }

@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.GameController;
@@ -60,7 +61,10 @@ public class Player extends Character
 
         health = healthMax = 10;
         
-        weapon = new Weapon(8, 8, 10, 25f, 500f, Textures.BULLET_12);
+        Array<Class> canCollide = new Array<Class>();
+        canCollide.add(Robot.class);
+        canCollide.add(Tank.class);
+        weapon = new Weapon(8, 8, 25f, 500f, 1, Textures.BULLET_8, canCollide);
         
         
         collisionTiles = new Array<Tile>();
@@ -77,7 +81,19 @@ public class Player extends Character
     public void update(World world, float deltaTime)
     {
         super.update(world, deltaTime);
-        if (!isAlive) return;
+        if (!isAlive)
+        {
+            float particleCount = 200;
+            for (int i = 0; i < particleCount; i++)
+            {
+                float rand = MathUtils.random(-100, 100);
+                world.addEntity(new Particle(x, y, 4, 4, 
+                        200 + (int)rand, 300f + rand, 
+                        ((float)i / (float)particleCount) * 360, s, sh));
+            }
+            
+            return;
+        }
         
         Vector2 movement = controller.getMoveDirection();
         
@@ -138,10 +154,7 @@ public class Player extends Character
         }
         if(controller.isReloadPressed())
         {
-            if(!weapon.hasAmmo())
-            {
-                weapon.reload();
-            }
+            
         }
     }
 
@@ -164,10 +177,42 @@ public class Player extends Character
          sh.end();
     }
 
+    /**
+     *
+     * @param world
+     * @param x
+     * @param y
+     * @param angle
+     */
+    @Override
+    public void spawnParticles(World world, float x, float y, float angle)
+    {   boolean toggle = false;
+        for (int i = 0; i < 5; i++)
+        {
+            toggle = !toggle;
+            float rand = MathUtils.random(40);
+            float span = rand;
+            if(toggle) rand = -rand;
+            
+            world.addEntity(new Particle(x, y, 4, 4, (int)span, 150 + rand, angle + rand, s, sh));
+        }
+    }
 
     @Override
     public void dispose()
     {
 
+    }
+
+    @Override
+    public int getHitShake()
+    {
+        return 5;
+    }
+
+    @Override
+    public int getDeathShake()
+    {
+        return 25;
     }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Array;
 import gameobjects.Bullet;
 import gold.daniel.main.Sounds;
 
@@ -20,11 +21,10 @@ public class Weapon {
     
     boolean canShoot;
     
+    int damage;
+    
     float width;
     float height;
-    
-    int ammoCur;
-    int ammoMax;
     
     float speed;
     
@@ -37,7 +37,12 @@ public class Weapon {
     
     static Sound noAmmoSound = Sounds.NO_AMMO;
     
-    public Weapon(float width, float height, int ammoMax, float delay, float speed, Texture texture)
+    Array<Class> canCollide;
+    
+    public Weapon(){}
+    
+    public Weapon(float width, float height, float delay, float speed, 
+            int damage, Texture texture, Array<Class> canCollide)
     {
         if(texture != null)
         {
@@ -47,12 +52,12 @@ public class Weapon {
         else
         {
         }
-        this.ammoMax = ammoCur = ammoMax;
         this.delay = delay;
         timer = delay;
         this.speed = speed;
+        this.damage = damage;
         this.texture = texture;
-        
+        this.canCollide = canCollide;
        
         
         
@@ -77,42 +82,19 @@ public class Weapon {
         return canShoot;
     }
     
-    public boolean hasAmmo()
+    public Array<Class> getTypes()
     {
-        return ammoCur > 0;
+        return canCollide;
     }
-    
-    public int getCurrentAmmo()
-    {
-        return ammoCur;
-    }
-    
-    public int getMaxAmmo()
-    {
-        return ammoMax;
-    }
-    
-    public void reload()
-    {
-        ammoCur = ammoMax;
-    }
-    
+
     public Bullet fireBullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle)
     {
         Bullet result = null;
         if(canShoot)
         {
-            if(hasAmmo())
-            {
-                result = new Bullet(s, sh, x, y, angle - 90, speed, texture);
-                fireSound.play();
-                ammoCur--;
-            }
-            else
-            {
-                noAmmoSound.play(0.4f);
-                
-            }
+            result = new Bullet(s, sh, x, y, damage, angle - 90, speed, texture, this);
+            fireSound.play();
+            
             timer = delay;
             canShoot = false;
         }

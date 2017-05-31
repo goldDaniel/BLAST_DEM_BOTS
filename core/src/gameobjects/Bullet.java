@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import weapons.Weapon;
 
 /**
  *
@@ -24,16 +25,20 @@ public class Bullet extends Entity
     int damage = 1;
     
     TextureRegion texture;
+    Weapon weapon;
     
     
-    public Bullet(SpriteBatch s, ShapeRenderer sh, float x, float y, float angle, float speed, Texture texture)
+    public Bullet(SpriteBatch s, ShapeRenderer sh, float x, float y, int damage, float angle, float speed, Texture texture,
+            Weapon weapon)
     {
         super(s, sh);
         this.speed = speed;
         this.x = x;
         this.y = y;
+        this.damage = damage;
         this.angle = angle;
         this.texture = new TextureRegion(texture);
+        this.weapon = weapon;
         width = texture.getWidth();
         height = texture.getHeight();
     }
@@ -76,6 +81,11 @@ public class Bullet extends Entity
                 world.removeEntity(this);
             }
         }
+    }
+    
+    public Weapon getWeapon()
+    {
+        return weapon;
     }
     
     @Override

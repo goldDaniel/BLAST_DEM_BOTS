@@ -8,7 +8,6 @@ package screens;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -130,15 +129,6 @@ public class GameScreen extends Screen
         world.draw();
 
         hudBatch.begin();
-        ////DRAWING AMMO COUNTER
-        for(int i = 0; i < player.getWeapon().getCurrentAmmo(); i++)
-        {
-            hudBatch.draw(Textures.AMMO_TEXTURE, Textures.AMMO_TEXTURE.getWidth() * i * 2 + 1*i, 0, Textures.AMMO_TEXTURE.getWidth() * 2, Textures.AMMO_TEXTURE.getHeight() * 2);
-        }
-        for(int i = player.getWeapon().getCurrentAmmo(); i < player.getWeapon().getMaxAmmo(); i++)
-        {
-            hudBatch.draw(Textures.AMMO_EMPTY_TEXTURE, Textures.AMMO_EMPTY_TEXTURE.getWidth() * i * 2 + 1*i, 0, Textures.AMMO_EMPTY_TEXTURE.getWidth() * 2, Textures.AMMO_EMPTY_TEXTURE.getHeight() * 2);
-        }
         
         hudBatch.draw(Textures.HEALTHBAR_END, 
                 0, 

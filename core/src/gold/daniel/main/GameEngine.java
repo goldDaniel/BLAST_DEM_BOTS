@@ -9,7 +9,6 @@ import screens.HowToPlayScreen;
 import screens.MainMenuScreen;
 import screens.GameScreen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,14 +19,12 @@ import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import screens.OptionsScreen;
 
-
 /**
  *
  * @author wrksttnpc
  */
 public class GameEngine
 {
-
     Screen currentScreen;
 
     FitViewport viewport;
@@ -53,7 +50,6 @@ public class GameEngine
     
     public GameEngine()
     {
-
         camera = new OrthographicCamera();
         hudCamera = new OrthographicCamera();
         

@@ -27,6 +27,9 @@ public abstract class Character extends Entity
         super(s, sh);
     }
     
+    public abstract int getHitShake();
+    public abstract int getDeathShake();
+    
     @Override
     public void update(World world, float deltaTime)
     {

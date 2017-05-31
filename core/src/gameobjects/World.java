@@ -223,56 +223,42 @@ public class World extends Entity
                 }
             }
         }
-        
         //handle bullet mechanics when colliding with enemies
         for(Bullet bullet : bullets)
         {
-            //iterate over robots to check bullet collision
-            for(Robot robot : robots)
+            Array<Character> toIterate = new Array<Character>();
+            if(bullet.getWeapon().getTypes().contains(Robot.class, true))
             {
-                if(bullet.isColliding(robot))
+                toIterate.addAll(robots);
+            }
+            if(bullet.getWeapon().getTypes().contains(Tank.class, true))
+            {
+                toIterate.addAll(tanks);
+            }
+            if(bullet.getWeapon().getTypes().contains(Player.class, true))
+            {
+                toIterate.add(player);
+            }
+            for(Character entity : toIterate)
+            {
+                if(bullet.isColliding(entity))
                 {
                     bullet.isAlive = false;
-                    robot.damage(bullet.getDamage());
-                    robot.spawnParticles(this, bullet.x, bullet.y, bullet.angle);
+                    entity.damage(bullet.getDamage());
+                    entity.spawnParticles(this, bullet.x, bullet.y, bullet.angle);
                     //these are for the freeze effect and camera shake
                     //maybe move these into their respective entites later?
                     //as we have to write this here for every interaction
-                    if(robot.isAlive())
+                    if(entity.isAlive())
                     {
                         engine.sleep(3);
-                        engine.shake(3);
+                        engine.shake(entity.getHitShake());
                     }
                     else
                     {
                         engine.sleep(7);
-                        engine.shake(7);
+                        engine.shake(entity.getDeathShake());
                     }
-                }
-            }
-            //iterates over tanks to check bullet collision
-            for(Tank tank : tanks)
-            {
-                if(bullet.isColliding(tank))
-                {
-                    bullet.isAlive = false;
-                    tank.damage(bullet.getDamage());
-                    tank.spawnParticles(this, bullet.x, bullet.y, bullet.angle);
-                    //these are for the freeze effect and camera shake
-                    //maybe move these into their respective entites later?
-                    //as we have to write this here for every interaction
-                    //in this loop, looks ugly
-                    if(tank.isAlive())
-                    {
-                        engine.sleep(3);
-                        engine.shake(3);
-                    }
-                    else
-                    {
-                        engine.sleep(10);
-                        engine.shake(15);
-                    }
-
                 }
             }
         }

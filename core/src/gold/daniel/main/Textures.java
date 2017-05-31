@@ -22,7 +22,18 @@ public class Textures
     public final static Texture ROBOT_HEAD = new Texture(Gdx.files.internal("characters/robot/head.png"));
     public final static Texture ROBOT_WEAPON = new Texture(Gdx.files.internal("characters/robot/weapon.png"));
     
-    public final static Texture BULLET_12 = new Texture(Gdx.files.internal("weapons/bullets/4.png"));
+    public final static Texture BULLET_1 = new Texture(Gdx.files.internal("weapons/bullets/1.png"));
+    public final static Texture BULLET_2 = new Texture(Gdx.files.internal("weapons/bullets/2.png"));
+    public final static Texture BULLET_3 = new Texture(Gdx.files.internal("weapons/bullets/3.png"));
+    public final static Texture BULLET_4 = new Texture(Gdx.files.internal("weapons/bullets/4.png"));
+    public final static Texture BULLET_5 = new Texture(Gdx.files.internal("weapons/bullets/5.png"));
+    public final static Texture BULLET_6 = new Texture(Gdx.files.internal("weapons/bullets/6.png"));
+    public final static Texture BULLET_7 = new Texture(Gdx.files.internal("weapons/bullets/7.png"));
+    public final static Texture BULLET_8 = new Texture(Gdx.files.internal("weapons/bullets/8.png"));
+    public final static Texture BULLET_9 = new Texture(Gdx.files.internal("weapons/bullets/9.png"));
+    public final static Texture BULLET_10 = new Texture(Gdx.files.internal("weapons/bullets/10.png"));
+    public final static Texture BULLET_11 = new Texture(Gdx.files.internal("weapons/bullets/11.png"));
+    public final static Texture BULLET_12 = new Texture(Gdx.files.internal("weapons/bullets/12.png"));
     
     public final static Texture TANK_BODY = new Texture(Gdx.files.internal("characters/tank-base.png"));
     public final static Texture TANK_CANNON = new Texture(Gdx.files.internal("characters/tank-cannon.png"));
