@@ -7,7 +7,6 @@ package screens;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -53,6 +52,7 @@ public class MainMenuScreen extends Screen
         menuSound = Sounds.MENU_SOUND;
         navSound = Sounds.NAV_SOUND;
         menuSoundID = menuSound.play(audioFade);
+        currentOptionSelection = menuOptions.size - 1;
     }
 
     
@@ -107,28 +107,37 @@ public class MainMenuScreen extends Screen
     {
         hudBatch.begin();
        
+        drawString("BLAST DEM BOTS", 125, 500);
         for(int i = 0; i < menuOptions.size; i++)
         {
-            String option = menuOptions.get(menuOptions.size - 1 - i);
-            drawString(option, i);
+            drawString(menuOptions.get(menuOptions.size - 1 - i), 50, 100 + 100 * i);
         }
-        Texture tex = Textures.ARROW;
-        hudBatch.draw(tex, 550, 150 * currentOptionSelection);
+        hudBatch.draw(Textures.ARROW, 550,100 +  100 * currentOptionSelection);
 
         hudBatch.end();
     }
-
-    private void drawString(String string, int i)
-    { 
-        for(int j = 0; j < string.length(); j++)
+    
+    
+    private void drawString(String str, int x, int y)
+    {
+        String string = str.toLowerCase();
+        float  distance = 0;
+        for(int i = 0; i < string.length(); i++)
         {
-            if(Textures.CHARACTERS.containsKey(string.charAt(j)))
+            if(Textures.CHARACTERS.containsKey(string.charAt(i)))
             {
-                TextureRegion tex = Textures.CHARACTERS.get(string.charAt(j));
-                hudBatch.draw(tex, j * 47, 150 * i);
+                TextureRegion tex = Textures.CHARACTERS.get(string.charAt(i));
+                
+                hudBatch.draw(tex,x + distance, y);
+                distance += tex.getRegionWidth() + 4;
+            }
+            else if(Character.isWhitespace(string.charAt(i)))
+            {
+                distance += 35f;
             }
         }
     }
+    
     
     @Override
     public void destroy()

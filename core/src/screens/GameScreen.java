@@ -168,26 +168,6 @@ public class GameScreen extends Screen
                 -Textures.HEALTHBAR_END.getWidth() * 2,
                 Textures.HEALTHBAR_END.getHeight());
         /////////////////////////
-    
-        //TEXT TEST
-    /*
-        for (char i = 'a'; i <= 'n'; i++)
-        {
-            TextureRegion tex = Textures.CHARACTERS.get(i);
-            hudBatch.draw(tex, (i - 'a') * 47, 100);
-            
-        }
-        for (char i = 'o'; i <= 'z'; i++)
-        {
-            TextureRegion tex = Textures.CHARACTERS.get(i);
-            hudBatch.draw(tex, (i - 'o') * 47, 150);
-        }
-        for (int i = 0; i < 10; i++)
-        {
-            TextureRegion tex = Textures.NUMBERS.get(i);
-            hudBatch.draw(tex, 47 * i, 200);
-        }
-    */
         
         hudBatch.end();
     }

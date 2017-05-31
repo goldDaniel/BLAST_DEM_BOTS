@@ -58,16 +58,16 @@ public class Textures
         new TextureRegion(FONT, 264, 0, 35, 28),//G
         new TextureRegion(FONT, 310, 0, 35, 28),//H
         new TextureRegion(FONT, 354, 0, 23, 28),//I
-        new TextureRegion(FONT, 386, 0, 35, 28),//J 421
+        new TextureRegion(FONT, 386, 0, 35, 28),//J 
         new TextureRegion(FONT, 430, 0, 35, 28),//K
         new TextureRegion(FONT, 474, 0, 35, 28),//L
         new TextureRegion(FONT, 518, 0, 47, 28),//M
         new TextureRegion(FONT, 574, 0, 35, 28),//N
-        
+        //NEW LINE IN TEXTURE
         new TextureRegion(FONT, 0, 42, 35, 28),//O
         new TextureRegion(FONT, 44, 42, 35, 28),//P
         new TextureRegion(FONT, 88, 42, 35, 28),//Q
-        new TextureRegion(FONT, 132, 42, 35, 28),//R
+        new TextureRegion(FONT, 132, 42,35, 28),//R
         new TextureRegion(FONT, 176, 42, 35, 28),//S
         new TextureRegion(FONT, 220, 42, 35, 28),//T
         new TextureRegion(FONT, 264, 42, 35, 28),//U
@@ -82,6 +82,7 @@ public class Textures
     {
         new TextureRegion(FONT, 542, 42, 35, 28),//0
         new TextureRegion(FONT, 584, 42, 25, 28),//1
+        //NEW LINE IN TEXTURE
         new TextureRegion(FONT, 0,  84, 35, 28),//2
         new TextureRegion(FONT, 44, 84, 35, 28),//3
         new TextureRegion(FONT, 88, 84, 35, 28),//4
