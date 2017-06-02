@@ -6,6 +6,7 @@
 package gold.daniel.main;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
@@ -54,4 +55,24 @@ public abstract class Screen
     public abstract void draw();
     
     public abstract void destroy();
+    
+    protected void drawString(String str, int x, int y)
+    {
+        String string = str.toLowerCase();
+        float  distance = 0;
+        for(int i = 0; i < string.length(); i++)
+        {
+            if(Textures.CHARACTERS.containsKey(string.charAt(i)))
+            {
+                TextureRegion tex = Textures.CHARACTERS.get(string.charAt(i));
+                
+                hudBatch.draw(tex,x + distance, y);
+                distance += tex.getRegionWidth() + 4;
+            }
+            else if(Character.isWhitespace(string.charAt(i)))
+            {
+                distance += 35f;
+            }
+        }
+    }
 }

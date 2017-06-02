@@ -132,15 +132,15 @@ public class GameScreen extends Screen
         
         hudBatch.draw(Textures.HEALTHBAR_END, 
                 0, 
-                Textures.AMMO_EMPTY_TEXTURE.getHeight() * 2,
+                0,
                 Textures.HEALTHBAR_END.getWidth() * 2,
                 Textures.HEALTHBAR_END.getHeight());
-        int barLen = 10;
+        int barLen = player.getHealth();
         for (int i = 0; i < barLen; i++)
         {
             hudBatch.draw(Textures.HEALTHBAR_MID, 
                     Textures.HEALTHBAR_END.getWidth() * 2 + i * Textures.HEALTHBAR_RECT.getWidth() * 2,
-                    Textures.AMMO_EMPTY_TEXTURE.getHeight() * 2 + 1,
+                    1,
                     Textures.HEALTHBAR_MID.getWidth() * 2,
                     Textures.HEALTHBAR_MID.getHeight());
         }
@@ -148,17 +148,16 @@ public class GameScreen extends Screen
         {
             hudBatch.draw(Textures.HEALTHBAR_RECT,
                     Textures.HEALTHBAR_END.getWidth() * 2 + i * Textures.HEALTHBAR_RECT.getWidth() * 2,
-                    Textures.AMMO_EMPTY_TEXTURE.getHeight() * 2 + 6,
+                    6,
                     Textures.HEALTHBAR_RECT.getWidth() * 2,
                     Textures.HEALTHBAR_RECT.getHeight());
         }
         hudBatch.draw(Textures.HEALTHBAR_END, 
-                barLen * Textures.HEALTHBAR_MID.getWidth() * 2 + Textures.HEALTHBAR_END.getWidth() * 2,
-                Textures.AMMO_EMPTY_TEXTURE.getHeight() * 2,
+                (barLen * Textures.HEALTHBAR_MID.getWidth() * 2) + Textures.HEALTHBAR_END.getWidth() * 2,
+                0,
                 -Textures.HEALTHBAR_END.getWidth() * 2,
                 Textures.HEALTHBAR_END.getHeight());
         /////////////////////////
-        
         hudBatch.end();
     }
 

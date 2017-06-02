@@ -68,13 +68,14 @@ public class Bullet extends Entity
             
             if(!isAlive)
             {
+                float randDif = MathUtils.random(speed / 2);
                 int temp = MathUtils.random(25);
                     world.addEntity(new Particle(x, y, 4, 4, 
-                        15, speed - MathUtils.random(150, 250), 
+                        15, speed - randDif, 
                         angle + 180 + temp, 
                         s, sh));
                     world.addEntity(new Particle(x, y, 4, 4, 
-                        15, speed - MathUtils.random(150, 250), 
+                        15, speed - randDif, 
                         angle + 180 - temp, 
                         s, sh));
                 

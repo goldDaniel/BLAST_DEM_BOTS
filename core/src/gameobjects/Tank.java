@@ -81,10 +81,17 @@ public class Tank extends Character
            
            cannonAngle = MathUtils.lerpAngleDeg(cannonAngle, wantedAngle, 0.05f);
            
-           world.addEntity(cannon.fireBullet(s, sh, 
-                   cannonX + cannonTex.getRegionWidth() / 2, 
-                   cannonY + cannonTex.getRegionHeight() / 2,
-                   cannonAngle - 90));
+      
+           if(cannonAngle > wantedAngle -2f && cannonAngle < wantedAngle + 2f)
+           {
+                if(cannon.canShoot())
+                {
+                    world.addEntity(cannon.fireBullet(s, sh, 
+                        cannonX + cannonTex.getRegionWidth() / 2, 
+                        cannonY + cannonTex.getRegionHeight() / 2,
+                        cannonAngle - 90));
+                }
+           }
         }
         
         

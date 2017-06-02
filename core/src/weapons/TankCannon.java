@@ -27,12 +27,12 @@ public class TankCannon extends Weapon
     {
         Array<Class> cc = new Array<Class>();
         cc.add(Player.class);
-        this.width = Textures.BULLET_3.getWidth();
-        this.height = Textures.BULLET_3.getHeight();
+        this.width = Textures.BULLET_4.getWidth();
+        this.height = Textures.BULLET_4.getHeight();
         this.delay = 500f;
         this.speed = 200f;
         this.damage = 2;
-        this.texture = Textures.BULLET_3;
+        this.texture = Textures.BULLET_4;
         this.canCollide = cc;
     }
     

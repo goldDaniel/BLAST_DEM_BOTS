@@ -56,7 +56,6 @@ public class Textures
     
     
     public final static ObjectMap<Character, TextureRegion> CHARACTERS = new ObjectMap<Character, TextureRegion>();
-    public final static ObjectMap<Integer, TextureRegion> NUMBERS = new ObjectMap<Integer, TextureRegion>();
     
     private final static TextureRegion[] CHARACTER_ARRAY= 
     {
@@ -100,7 +99,7 @@ public class Textures
         new TextureRegion(FONT, 132, 84, 35, 28),//5
         new TextureRegion(FONT, 176, 84, 35, 28),//6
         new TextureRegion(FONT, 220, 84, 35, 28),//7
-        new TextureRegion(FONT, 264, 84, 47, 28),//8
+        new TextureRegion(FONT, 264, 84, 35, 28),//8
         new TextureRegion(FONT, 310, 84, 35, 28),//9
     };
     
@@ -110,9 +109,9 @@ public class Textures
         {
             CHARACTERS.put(i, CHARACTER_ARRAY[i - 'a']);
         }
-        for (int i = 0; i < 10; i++)
+        for (char i = '0'; i <= '9'; i++)
         {
-            NUMBERS.put(i, NUMBER_ARRAY[i]);
+            CHARACTERS.put(i, NUMBER_ARRAY[i - '0']);
         }
     }
 }
