@@ -56,7 +56,7 @@ public abstract class Screen
     
     public abstract void destroy();
     
-    protected void drawString(String str, int x, int y)
+    protected void drawString(String str, int x, int y, float scale)
     {
         String string = str.toLowerCase();
         float  distance = 0;
@@ -66,13 +66,20 @@ public abstract class Screen
             {
                 TextureRegion tex = Textures.CHARACTERS.get(string.charAt(i));
                 
-                hudBatch.draw(tex,x + distance, y);
-                distance += tex.getRegionWidth() + 4;
+                hudBatch.draw(tex,x + distance, y, 
+                        tex.getRegionWidth() * scale, 
+                        tex.getRegionHeight() * scale);
+                distance += tex.getRegionWidth() * scale + 4;
             }
             else if(Character.isWhitespace(string.charAt(i)))
             {
-                distance += 35f;
+                distance += 35f * scale;
             }
         }
+    }
+    
+    protected void drawString(String str, int x, int y)
+    {
+        drawString(str, x, y, 1);
     }
 }

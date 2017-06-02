@@ -39,6 +39,9 @@ public class GameScreen extends Screen
     
     boolean updating;
     
+    
+    float scale = 1f;
+    
     public GameScreen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
     {
         super(engine, s, hudBatch, sh);
@@ -158,6 +161,8 @@ public class GameScreen extends Screen
                 -Textures.HEALTHBAR_END.getWidth() * 2,
                 Textures.HEALTHBAR_END.getHeight());
         /////////////////////////
+
+        
         hudBatch.end();
     }
 

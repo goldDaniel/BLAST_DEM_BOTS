@@ -320,7 +320,6 @@ public class World extends Entity
         s.end();
         //draw this entity over top everything else
         if(temp != null) temp.draw();
-        
     }
 
     @Override
@@ -403,7 +402,7 @@ public class World extends Entity
      * @param type 
      * @return 
      */
-    Array<?> getEntityType(Class<?> type)
+    public Array<?> getEntityType(Class<?> type)
     {
         Array<Entity> result = new Array<Entity>();
         
