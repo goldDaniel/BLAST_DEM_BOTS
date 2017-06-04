@@ -5,8 +5,6 @@
  */
 package Utils;
 
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -239,7 +237,27 @@ public class PathFinding
     
     public void update(GameEngine engine)
     {
-        end = nodes[(int)engine.getMouse().x / 16][(int)engine.getMouse().y / 16];
+        int i = (int)engine.getMouse().x / Tile.SIZE;
+        int j = (int)engine.getMouse().y / Tile.SIZE;
+        if(i < 0)
+        {
+            i = 0;
+        }
+        else if(i > nodes.length)
+        {
+            i = nodes.length - 1;
+        }
+        
+        if(j < 0)
+        {
+            j = 0;
+        }
+        if(j > nodes[i].length)
+        {
+            j = nodes[i].length - 1;
+        }
+        end = nodes[i][j];
+        
         calculate();
     }
 }
