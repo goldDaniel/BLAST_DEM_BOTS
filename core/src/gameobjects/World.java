@@ -26,7 +26,6 @@ public class World extends Entity
     Tile[][] tiles;
     /*******************************/
     
-    
     TiledMapRenderer tmr;
     
     Array<Entity> entities;
@@ -37,7 +36,6 @@ public class World extends Entity
     
     GameEngine engine;
     
-
     
     boolean updating = false;
     
@@ -79,7 +77,8 @@ public class World extends Entity
      */
     private void createTiles()
     {
-        tiles = new Tile[map.getProperties().get("width", Integer.class)][map.getProperties().get("height", Integer.class)];
+        tiles = new Tile[map.getProperties().get("width", Integer.class)]
+                        [map.getProperties().get("height", Integer.class)];
         TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("collision");
         for (int i = 0; i < tiles.length; i++)
         {
@@ -124,6 +123,12 @@ public class World extends Entity
                      * diffrently in the TMX file, and use values instead of 
                      * null checks. This would mean adding every property to 
                      * every tile however, and that would be a pain
+                     * 
+                     * Maybe we could change by making an "entity" field
+                     * and making the value a string with the entity type? 
+                     * but this could get large as the number of types increases
+                     * 
+                     * 
                      */
                     if(cell.getTile().getProperties().get("player") != null)
                     {
@@ -192,9 +197,13 @@ public class World extends Entity
     {
         updating = true;
         
+        //maybe make these a private member? we would avoid allocating every 
+        //frame this way
         Array<Robot> robots = new Array<Robot>();
         Array<Bullet> bullets = new Array<Bullet>();
         Array<Tank> tanks = new Array<Tank>();
+        ////////////////////////////////////////////////////////////////
+    
         
         //updates all currently active entities
         for(Entity entity : entities)
@@ -248,7 +257,9 @@ public class World extends Entity
                     entity.spawnParticles(this, bullet.x, bullet.y, bullet.angle);
                     //these are for the freeze effect and camera shake
                     //maybe move these into their respective entites later?
-                    //as we have to write this here for every interaction
+                    //as we have to write this here for every interaction7
+                    
+                    //NOTE: entity should never have access to engine
                     if(entity.isAlive())
                     {
                         engine.sleep(3);
@@ -308,7 +319,7 @@ public class World extends Entity
         {
             if(entity instanceof Player)
             {
-                //this is okay because there should only ever be 1 player instance
+                //this is 'okay' because there should only ever be 1 player instance
                 temp = (Player)entity;
                 player = temp;
             }
@@ -329,7 +340,7 @@ public class World extends Entity
     }
     
     /**
-     * get neighboring tiles of the centre of the gameobject.
+     * get neighboring tiles of the centre of the entity.
      * calls getCollisionTiles(x,y) 
      * 
      * @param obj
@@ -402,10 +413,9 @@ public class World extends Entity
      * @param type 
      * @return 
      */
-    public Array<?> getEntityType(Class<?> type)
+    public Array<Entity> getEntityType(Class<?> type)
     {
         Array<Entity> result = new Array<Entity>();
-        
         
         for(int i = 0; i < entities.size; i++)
         {

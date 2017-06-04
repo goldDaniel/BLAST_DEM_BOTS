@@ -107,6 +107,7 @@ public class Bullet extends Entity
         Rectangle rect = new Rectangle(x + width / 2 - 2, y + height / 2 - 2, 4, 4);
         if(obj.isColliding(rect))
         {
+            super.handleMoveCollisionResponse(obj);
             isAlive = false;
         }
     }

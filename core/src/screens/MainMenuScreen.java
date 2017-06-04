@@ -81,17 +81,19 @@ public class MainMenuScreen extends Screen
         
         if(engine.isKeyJustPressed(Keys.SPACE, Keys.ENTER))
         {
-            if(currentOptionSelection == 2)
+            switch (currentOptionSelection)
             {
-                engine.switchScreen(MAIN_MENU, GAME);
-            }
-            else if(currentOptionSelection == 1)
-            {
-                engine.switchScreen(MAIN_MENU, HOW_TO_PLAY);
-            }
-            else if(currentOptionSelection == 0)
-            {
-                engine.exit();
+                case 2:
+                    engine.switchScreen(MAIN_MENU, GAME);
+                    break;
+                case 1:
+                    engine.switchScreen(MAIN_MENU, HOW_TO_PLAY);
+                    break;
+                case 0:
+                    engine.exit();
+                    break;
+                default:
+                    break;
             }
         }
         

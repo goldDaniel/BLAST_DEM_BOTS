@@ -133,35 +133,7 @@ public class GameScreen extends Screen
 
         hudBatch.begin();
         
-        hudBatch.draw(Textures.HEALTHBAR_END, 
-                0, 
-                0,
-                Textures.HEALTHBAR_END.getWidth() * 2,
-                Textures.HEALTHBAR_END.getHeight());
-        int barLen = player.getHealth();
-        for (int i = 0; i < barLen; i++)
-        {
-            hudBatch.draw(Textures.HEALTHBAR_MID, 
-                    Textures.HEALTHBAR_END.getWidth() * 2 + i * Textures.HEALTHBAR_RECT.getWidth() * 2,
-                    1,
-                    Textures.HEALTHBAR_MID.getWidth() * 2,
-                    Textures.HEALTHBAR_MID.getHeight());
-        }
-        for (int i = 0; i < (float)barLen * ((float)player.getHealth() / (float)player.getMaxHealth()); i++)
-        {
-            hudBatch.draw(Textures.HEALTHBAR_RECT,
-                    Textures.HEALTHBAR_END.getWidth() * 2 + i * Textures.HEALTHBAR_RECT.getWidth() * 2,
-                    6,
-                    Textures.HEALTHBAR_RECT.getWidth() * 2,
-                    Textures.HEALTHBAR_RECT.getHeight());
-        }
-        hudBatch.draw(Textures.HEALTHBAR_END, 
-                (barLen * Textures.HEALTHBAR_MID.getWidth() * 2) + Textures.HEALTHBAR_END.getWidth() * 2,
-                0,
-                -Textures.HEALTHBAR_END.getWidth() * 2,
-                Textures.HEALTHBAR_END.getHeight());
-        /////////////////////////
-
+        drawHealthBar();
         
         hudBatch.end();
     }
@@ -182,5 +154,39 @@ public class GameScreen extends Screen
     public void exit()
     {
         backgroundSong.stop();
+    }
+
+    private void drawHealthBar()
+    {
+        hudBatch.draw(Textures.HEALTHBAR_END, 
+                0, 
+                0,
+                Textures.HEALTHBAR_END.getWidth() * 2,
+                Textures.HEALTHBAR_END.getHeight());
+
+        //draw the midddle section of the life bar
+        for (int i = 0; i < player.getMaxHealth(); i++)
+        {
+            hudBatch.draw(Textures.HEALTHBAR_MID, 
+                    Textures.HEALTHBAR_END.getWidth() * 2 + i * Textures.HEALTHBAR_RECT.getWidth() * 2,
+                    1,
+                    Textures.HEALTHBAR_MID.getWidth() * 2,
+                    Textures.HEALTHBAR_MID.getHeight());
+        }
+        //draws the red life-rectangles representing health remaining
+        for (int i = 0; i < player.getHealth() * ((float)player.getHealth() / (float)player.getMaxHealth()); i++)
+        {
+            hudBatch.draw(Textures.HEALTHBAR_RECT,
+                    Textures.HEALTHBAR_END.getWidth() * 2 + i * Textures.HEALTHBAR_RECT.getWidth() * 2,
+                    6,
+                    Textures.HEALTHBAR_RECT.getWidth() * 2,
+                    Textures.HEALTHBAR_RECT.getHeight());
+        }
+        //draws the right-hand side healthbar end
+        hudBatch.draw(Textures.HEALTHBAR_END, 
+                (player.getMaxHealth() * Textures.HEALTHBAR_MID.getWidth() * 2) + Textures.HEALTHBAR_END.getWidth() * 2,
+                0,
+                -Textures.HEALTHBAR_END.getWidth() * 2,
+                Textures.HEALTHBAR_END.getHeight());
     }
 }
