@@ -6,11 +6,15 @@
 package screens;
 
 import Utils.PathFinding;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import gameobjects.Tile;
 import gameobjects.World;
 import gold.daniel.main.GameEngine;
@@ -29,6 +33,7 @@ public class PathFindingTestScreen extends Screen
     World world;
     
     PathFinding pathFinding;
+    Array<Vector2> pathCoords;
     
     public PathFindingTestScreen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
     {
@@ -44,8 +49,8 @@ public class PathFindingTestScreen extends Screen
         tiles = engine.createTiles(map, world);
         
         pathFinding = new PathFinding(map);
-        pathFinding.calculate();
-    }
+        pathCoords = pathFinding.calculate();
+   }
 
     @Override
     public void enter()
@@ -61,6 +66,8 @@ public class PathFindingTestScreen extends Screen
     public void update(float deltaTime)
     {
         world.update(deltaTime);
+        pathFinding.update(engine);
+        pathCoords = pathFinding.calculate();
     }
 
     @Override
@@ -72,6 +79,14 @@ public class PathFindingTestScreen extends Screen
         tmr.setView(engine.getCamera());
         tmr.render();
         world.draw();
+        
+        sh.begin(ShapeRenderer.ShapeType.Line);
+        if(pathCoords != null)
+        for(int i = 0; i < pathCoords.size - 1; i++)
+        {
+            sh.line(pathCoords.get(i), pathCoords.get(i + 1));
+        }
+        sh.end();
     }
 
     @Override

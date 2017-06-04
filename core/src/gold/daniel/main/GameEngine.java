@@ -17,6 +17,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import gameobjects.Tile;
@@ -256,12 +257,9 @@ public class GameEngine
     
     public Vector2 getMouse()
     {
-        Vector2 result = new Vector2();
-
-        result.x = Gdx.input.getX();
-        result.y = Main.HEIGHT - Gdx.input.getY();
-        
-        return result;
+        Vector3 values = new Vector3(getMouseCoords(), 0);
+        values = viewport.unproject(values);
+        return new Vector2(values.x, values.y);
     }
     
     public void exit()

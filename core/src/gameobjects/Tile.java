@@ -18,6 +18,11 @@ public class Tile extends Entity
     
     public static final int SIZE = 16;
 
+    public Tile(int x, int y, boolean isSolid)
+    {
+        this(null, null, x, y, isSolid);
+    }
+    
     public Tile(SpriteBatch s, ShapeRenderer sh, int x, int y, boolean isSolid)
     {
         super(s, sh);
