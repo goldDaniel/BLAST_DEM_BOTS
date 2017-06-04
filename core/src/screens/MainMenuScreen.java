@@ -8,7 +8,6 @@ package screens;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.*;
@@ -44,6 +43,7 @@ public class MainMenuScreen extends Screen
         menuOptions = new Array<String>();
         {
             menuOptions.add("start game");
+            menuOptions.add("pathfinding test");
             menuOptions.add("how to play");
             menuOptions.add("exit");
         
@@ -83,8 +83,11 @@ public class MainMenuScreen extends Screen
         {
             switch (currentOptionSelection)
             {
-                case 2:
+                case 3:
                     engine.switchScreen(MAIN_MENU, GAME);
+                    break;
+                case 2:
+                    engine.switchScreen(MAIN_MENU, PATHFINDING);
                     break;
                 case 1:
                     engine.switchScreen(MAIN_MENU, HOW_TO_PLAY);
@@ -109,7 +112,8 @@ public class MainMenuScreen extends Screen
     {
         hudBatch.begin();
        
-        drawString("BLAST DEM BOTS", 125, 500);
+        drawString("BLAST DEM", 0, 500, 2.2f);
+        drawString("BOTS", 235, 430, 2.2f);
         for(int i = 0; i < menuOptions.size; i++)
         {
             drawString(menuOptions.get(menuOptions.size - 1 - i), 50, 100 + 100 * i);

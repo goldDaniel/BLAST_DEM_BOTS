@@ -21,6 +21,7 @@ public abstract class Screen
     public static final String GAME = "GAME";
     public static final String HOW_TO_PLAY = "HOW_TO_PLAY";
     public static final String OPTIONS = "OPTIONS";
+    public static final String PATHFINDING = "PATHFINDING";
     
     protected GameEngine engine;
     

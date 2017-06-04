@@ -64,89 +64,62 @@ public class World extends Entity
         toAddToScene = new Array<Entity>();
         toRemoveFromScene = new Array<Entity>();
         
-        createTiles();
+        tiles = engine.createTiles(map, this);
         spawnEntities();
     }
-
-    /**
-     * creates tiles from tiledmap passed through constructor
-     * this exists so the constructor doesn't seem too long
-     * 
-     * probably should use the TiledMap properties, but I like rolling
-     * my own structure for tiles for simplicity
-     */
-    private void createTiles()
-    {
-        tiles = new Tile[map.getProperties().get("width", Integer.class)]
-                        [map.getProperties().get("height", Integer.class)];
-        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("collision");
-        for (int i = 0; i < tiles.length; i++)
-        {
-            for (int j = 0; j < tiles[i].length; j++)
-            {
-                int tileX = (int)(i * layer.getTileWidth());
-                int tileY = (int)(j * layer.getTileHeight());
-                
-                boolean isSolid = false;
-                if(layer.getCell(i, j) != null)
-                {
-                    isSolid = layer.getCell(i, j).getTile().getProperties().get("isSolid") != null;
-                }
-                tiles[i][j] = new Tile(s, sh, tileX, tileY, isSolid);
-                addEntity(tiles[i][j]);
-            }
-        }
-    }
-    
+  
     /**
      * Takes the entity markers from the TMX file and creates them.
      */
     private void spawnEntities()
     {
         TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("spawn");
-        for (int i = 0; i < tiles.length; i++)
+        if(layer != null)
         {
-            for (int j = 0; j < tiles[i].length; j++)
+            for (int i = 0; i < tiles.length; i++)
             {
-                Cell cell = layer.getCell(i, j);
-                if(cell != null)
+                for (int j = 0; j < tiles[i].length; j++)
                 {
-                    Entity temp = null;
-                    
-                    /*
-                     * There might be a more simple way to write this block?
-                     * as we compare to null every time we cannot use a switch
-                     * and every entity may have a different constructor
-                     * 
-                     *
-                     * I believe we would need to organize the data
-                     * diffrently in the TMX file, and use values instead of 
-                     * null checks. This would mean adding every property to 
-                     * every tile however, and that would be a pain
-                     * 
-                     * Maybe we could change by making an "entity" field
-                     * and making the value a string with the entity type? 
-                     * but this could get large as the number of types increases
-                     * 
-                     * 
-                     */
-                    if(cell.getTile().getProperties().get("player") != null)
+                    Cell cell = layer.getCell(i, j);
+                    if(cell != null)
                     {
-                        temp = new Player(i * Tile.SIZE, j * Tile.SIZE, 
-                                s, sh, engine.getNextController());
-                        
-                        this.player = (Player)temp;
+                        Entity temp = null;
+
+                        /*
+                         * There might be a more simple way to write this block?
+                         * as we compare to null every time we cannot use a switch
+                         * and every entity may have a different constructor
+                         * 
+                         *
+                         * I believe we would need to organize the data
+                         * diffrently in the TMX file, and use values instead of 
+                         * null checks. This would mean adding every property to 
+                         * every tile however, and that would be a pain
+                         * 
+                         * Maybe we could change by making an "entity" field
+                         * and making the value a string with the entity type? 
+                         * but this could get large as the number of types increases
+                         * 
+                         * 
+                         */
+                        if(cell.getTile().getProperties().get("player") != null)
+                        {
+                            temp = new Player(i * Tile.SIZE, j * Tile.SIZE, 
+                                    s, sh, engine.getNextController());
+
+                            this.player = (Player)temp;
+                        }
+                        else if(cell.getTile().getProperties().get("robot") != null)
+                        {
+                            temp = new Robot(i * Tile.SIZE, j * Tile.SIZE, s, sh);
+                        }
+                        else if(cell.getTile().getProperties().get("tank") != null)
+                        {
+                            temp = new Tank(i * Tile.SIZE, j * Tile.SIZE, s, sh);
+
+                        }
+                        addEntity(temp);
                     }
-                    else if(cell.getTile().getProperties().get("robot") != null)
-                    {
-                        temp = new Robot(i * Tile.SIZE, j * Tile.SIZE, s, sh);
-                    }
-                    else if(cell.getTile().getProperties().get("tank") != null)
-                    {
-                        temp = new Tank(i * Tile.SIZE, j * Tile.SIZE, s, sh);
-                        
-                    }
-                    addEntity(temp);
                 }
             }
         }
@@ -405,21 +378,22 @@ public class World extends Entity
     }
 
     /**
-     * Gets all entities of type ?.
+     * Gets all entities of type T.
      * 
      * useful for checking against types. - No shit.
      *
      * 
+     * @param <T>
      * @param type 
      * @return 
      */
-    public Array<Entity> getEntityType(Class<?> type)
+    public <T> Array<T> getEntityType(Class<T> type)
     {
-        Array<Entity> result = new Array<Entity>();
+        Array<T> result = new Array<T>();
         
         for(int i = 0; i < entities.size; i++)
         {
-            Entity obj = entities.get(i);
+            T obj = (T)entities.get(i);
             if(obj.getClass() == type)
             {
                 result.add(obj);

@@ -13,11 +13,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import gameobjects.Tile;
+import gameobjects.World;
 import screens.OptionsScreen;
+import screens.PathFindingTestScreen;
 
 /**
  *
@@ -87,6 +92,7 @@ public class GameEngine
         screens.put(Screen.HOW_TO_PLAY, new HowToPlayScreen(this, s, hudBatch, sh));
         screens.put(Screen.GAME, new GameScreen(this, s, hudBatch, sh));
         screens.put(Screen.OPTIONS, new OptionsScreen(this, s, hudBatch, sh));
+        screens.put(Screen.PATHFINDING, new PathFindingTestScreen(this, s, hudBatch, sh));
         
         currentScreen = screens.get(Screen.MAIN_MENU);
         currentScreen.load();
@@ -323,5 +329,37 @@ public class GameEngine
     public OrthographicCamera getCamera()
     {
         return camera;
+    }
+    
+     /**
+     * 
+     * probably should use the TiledMap properties, but I like rolling
+     * my own structure for tiles for simplicity
+     * @param map
+     * @param world
+     * @return 
+     */
+    public Tile[][] createTiles(TiledMap map, World world)
+    {
+        Tile[][] result = new Tile[map.getProperties().get("width", Integer.class)]
+                        [map.getProperties().get("height", Integer.class)];
+        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("collision");
+        for (int i = 0; i < result.length; i++)
+        {
+            for (int j = 0; j < result[i].length; j++)
+            {
+                int tileX = (int)(i * layer.getTileWidth());
+                int tileY = (int)(j * layer.getTileHeight());
+                
+                boolean isSolid = false;
+                if(layer.getCell(i, j) != null)
+                {
+                    isSolid = layer.getCell(i, j).getTile().getProperties().get("isSolid") != null;
+                }
+                result[i][j] = new Tile(s, sh, tileX, tileY, isSolid);
+                world.addEntity(result[i][j]);
+            }
+        }
+        return result;
     }
 }

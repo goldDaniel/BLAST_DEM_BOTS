@@ -31,7 +31,6 @@ public class GameScreen extends Screen
     
     
     World world;
-    OrthogonalTiledMapRenderer tmr;
     
     Sound backgroundSong;
     
@@ -39,6 +38,7 @@ public class GameScreen extends Screen
     
     boolean updating;
     
+    OrthogonalTiledMapRenderer tmr;
     
     float scale = 1f;
     
