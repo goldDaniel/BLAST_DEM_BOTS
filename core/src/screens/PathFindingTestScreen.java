@@ -6,8 +6,8 @@
 package screens;
 
 import Utils.PathFinding;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -33,7 +33,10 @@ public class PathFindingTestScreen extends Screen
     World world;
     
     PathFinding pathFinding;
-    Array<Vector2> pathCoords;
+    
+    Array<Vector2> steps;
+    
+    int count = 0;
     
     public PathFindingTestScreen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
     {
@@ -49,7 +52,6 @@ public class PathFindingTestScreen extends Screen
         tiles = engine.createTiles(map, world);
         
         pathFinding = new PathFinding(map);
-        pathCoords = pathFinding.calculate();
    }
 
     @Override
@@ -66,8 +68,21 @@ public class PathFindingTestScreen extends Screen
     public void update(float deltaTime)
     {
         world.update(deltaTime);
-        pathFinding.update(engine);
-        pathCoords = pathFinding.calculate();
+        if(engine.isMouseButtonPressed(Buttons.LEFT))
+        {
+            pathFinding.update(engine);
+            steps = pathFinding.calculate();
+            count = 0;
+        }
+        if(steps != null)
+        {
+            if(count < steps.size)
+            {
+                count++;
+                engine.sleep(3);
+            }
+        }
+        
     }
 
     @Override
@@ -81,10 +96,13 @@ public class PathFindingTestScreen extends Screen
         world.draw();
         
         sh.begin(ShapeRenderer.ShapeType.Line);
-        if(pathCoords != null)
-        for(int i = 0; i < pathCoords.size - 1; i++)
+        sh.setColor(Color.GREEN);
+        if(steps != null)
         {
-            sh.line(pathCoords.get(i), pathCoords.get(i + 1));
+            for(int i = 0; i < count - 1; i++)
+            {
+                sh.line(steps.get(i), steps.get(i + 1));
+            }
         }
         sh.end();
     }

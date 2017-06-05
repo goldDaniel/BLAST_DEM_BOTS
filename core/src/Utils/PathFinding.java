@@ -180,7 +180,6 @@ public class PathFinding
             
             if(open.size == 0)
             {
-                System.out.println("no route");
                 return null;
             }
             
@@ -198,6 +197,7 @@ public class PathFinding
             
             open.removeValue(curr, true);
             closed.add(curr);
+            
             
             for(PathNode neighbor : curr.neighbors)
             {
@@ -234,7 +234,6 @@ public class PathFinding
         
         return result;
     }
-    
     public void update(GameEngine engine)
     {
         int i = (int)engine.getMouse().x / Tile.SIZE;
@@ -243,7 +242,7 @@ public class PathFinding
         {
             i = 0;
         }
-        else if(i > nodes.length)
+        else if(i > nodes.length - 1)
         {
             i = nodes.length - 1;
         }
@@ -252,13 +251,11 @@ public class PathFinding
         {
             j = 0;
         }
-        if(j > nodes[i].length)
+        if(j > nodes[i].length - 1)
         {
             j = nodes[i].length - 1;
         }
         end = nodes[i][j];
-        
-        calculate();
     }
 }
 class PathNode
