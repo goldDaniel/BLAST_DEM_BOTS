@@ -9,7 +9,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import gold.daniel.main.GameEngine;
-import gold.daniel.main.Main;
 import gold.daniel.main.Screen;
 
 /**
@@ -39,9 +38,19 @@ public class HowToPlayScreen extends Screen
     @Override
     public void draw()
     {
-        sh.begin(ShapeRenderer.ShapeType.Line);
-        sh.rect(Main.WIDTH / 2, Main.HEIGHT / 2, 100, 100);
-        sh.end();
+        hudBatch.begin();
+        drawString("W A S D", 0, 500, 2);
+        drawString("TO MOVE AROUND", 0, 450);
+        
+        drawString("MOUSE", 0, 325, 2);
+        drawString("to aim", 0, 275);
+        
+        drawString("LEFT CLICK", 0, 150, 2);
+        drawString("to shoot", 0, 100);
+        
+        drawString("press escape to return", 0, 0, 0.94f);
+        hudBatch.end();
+        
     }
 
     @Override

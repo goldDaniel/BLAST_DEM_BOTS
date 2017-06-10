@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import gameobjects.Entity;
 import gameobjects.Tile;
 import gold.daniel.main.GameEngine;
 
@@ -26,6 +27,7 @@ public class PathFinding
     PathNode start;
     PathNode end;
     
+    Entity toTrack;
 
        
     Array<PathNode> closed;
@@ -33,12 +35,18 @@ public class PathFinding
     
     
     int size = Tile.SIZE;
-    
+
     public PathFinding(TiledMap map)
+    {
+        this(map, null);
+    }
+    
+    public PathFinding(TiledMap map, Entity entity)
     {
         this.map = map;
         open = new Array<PathNode>();
         closed = new Array<PathNode>();
+        toTrack = entity;
         init();
     }
     
@@ -58,10 +66,10 @@ public class PathFinding
             for (int j = 0; j < mapHeight; j++)
             {
                 boolean isSolid = false;
+                
                 if(layer.getCell(i, j) != null)
                 {
                     TiledMapTile tile = layer.getCell(i, j).getTile();
-                    
                     
                     if(tile.getProperties().containsKey("start"))
                     {
@@ -71,7 +79,7 @@ public class PathFinding
                     {
                         end = nodes[i][j] = new PathNode(i, j, isSolid);
                     }
-                    else if(tile.getProperties().containsKey("isSolid"))
+                    if(tile.getProperties().containsKey("isSolid"))
                     {
                         isSolid = true;
                     }
@@ -229,15 +237,22 @@ public class PathFinding
             result.add(new Vector2(curr.x, curr.y));
             curr = curr.parent;
         }
+        result.add(new Vector2(start.x, start.y));
         result.reverse();
         
         
         return result;
     }
-    public void update(GameEngine engine)
+    
+    /**
+     * updates path from given XY coordinates
+     * @param x
+     * @param y 
+     */
+    public void update(int x, int y)
     {
-        int i = (int)engine.getMouse().x / Tile.SIZE;
-        int j = (int)engine.getMouse().y / Tile.SIZE;
+        int i = x / Tile.SIZE;
+        int j = y / Tile.SIZE;
         if(i < 0)
         {
             i = 0;
@@ -275,8 +290,8 @@ class PathNode
     
     public PathNode(int x, int y, boolean isSolid)
     {
-        this.x = x * 16 + 8;
-        this.y = y * 16 + 8;
+        this.x = x * Tile.SIZE + Tile.SIZE  / 2;
+        this.y = y * Tile.SIZE + Tile.SIZE  / 2;
         this.isSolid = isSolid;
         neighbors = new Array<PathNode>();
     }

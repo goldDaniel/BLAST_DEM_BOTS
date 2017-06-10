@@ -6,7 +6,10 @@
 package screens;
 
 import Utils.PathFinding;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -67,10 +70,14 @@ public class PathFindingTestScreen extends Screen
     @Override
     public void update(float deltaTime)
     {
+        if(engine.isKeyJustPressed(Keys.ESCAPE))
+        {
+            engine.switchScreen(PATHFINDING, MAIN_MENU);
+        }
         world.update(deltaTime);
         if(engine.isMouseButtonPressed(Buttons.LEFT))
         {
-            pathFinding.update(engine);
+            pathFinding.update((int)engine.getMouse().x, (int)engine.getMouse().y);
             steps = pathFinding.calculate();
             count = 0;
         }

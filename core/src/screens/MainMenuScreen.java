@@ -116,9 +116,10 @@ public class MainMenuScreen extends Screen
         drawString("BOTS", 235, 430, 2.2f);
         for(int i = 0; i < menuOptions.size; i++)
         {
-            drawString(menuOptions.get(menuOptions.size - 1 - i), 50, 100 + 100 * i);
+            int y = 100 + 75 * i;
+            drawString(menuOptions.get(menuOptions.size - 1 - i), 50, y);
         }
-        hudBatch.draw(Textures.ARROW, 550,100 +  100 * currentOptionSelection);
+        hudBatch.draw(Textures.ARROW, 650,100 +  75 * currentOptionSelection);
 
         hudBatch.end();
     }
