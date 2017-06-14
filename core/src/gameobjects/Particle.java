@@ -56,6 +56,7 @@ public class Particle extends Character
         {
             alpha = 1f;
         }
+        //to allow for fade outs
         Color temp = Color.WHITE.cpy();
         temp.a = alpha;
         s.setColor(temp);

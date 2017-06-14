@@ -42,7 +42,7 @@ public class Robot extends Character
     Array<Vector2> path = null;
     
     Vector2 destination = null;
-    int pathUpdateCount = 30;
+    int pathUpdateCount = 0;
 
     public Robot(float x, float y, SpriteBatch s, ShapeRenderer sh)
     {
@@ -99,6 +99,11 @@ public class Robot extends Character
                 {
                     destination = path.first();
                 }
+                pathUpdateCount = 120;
+            }
+            else
+            {
+                pathUpdateCount--;
             }
             
             headAngle = 270 + calculateAngleToPoint(player.x, player.y);
@@ -142,6 +147,11 @@ public class Robot extends Character
 
     }
 
+    public PathFinding getPath()
+    {
+        return pf;
+    }
+    
     /**
      *
      */

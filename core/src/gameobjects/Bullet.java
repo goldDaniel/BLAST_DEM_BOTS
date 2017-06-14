@@ -19,15 +19,29 @@ import weapons.Weapon;
  */
 public class Bullet extends Entity
 {
+    //angle and speed to move at
     float angle;
     float speed;
 
+    //the amount of damage done by the bullet
     int damage = 1;
     
     TextureRegion texture;
     Weapon weapon;
     
     
+    /**
+     * 
+     * @param s
+     * @param sh
+     * @param x
+     * @param y
+     * @param damage
+     * @param angle
+     * @param speed
+     * @param texture
+     * @param weapon 
+     */
     public Bullet(SpriteBatch s, ShapeRenderer sh, float x, float y, int damage, float angle, float speed, Texture texture,
             Weapon weapon)
     {
@@ -46,11 +60,14 @@ public class Bullet extends Entity
     @Override
     public void update(World world, float deltaTime)
     {
+        //always call super.update()
         super.update(world, deltaTime);
         
+        //moves the bullet
         x += speed * MathUtils.cosDeg(angle) * deltaTime;
         y += speed * MathUtils.sinDeg(angle) * deltaTime;
         
+        //if the bullet is outside world bounds we can remove it
         if(x <= world.x || x >= world.x + world.width ||
            y <= world.y || y >= world.y + world.height)
         {
@@ -58,14 +75,17 @@ public class Bullet extends Entity
             world.removeEntity(this);
         }
         
+        //if the bullet is alive then do its updates
         if(isAlive)
         {
+            //checks for colliding tiles
             collisionTiles.addAll(world.getCollisionTiles(this));
             for(Tile tile : collisionTiles)
             {
                 handleMoveCollisionResponse(tile);
             }
             
+            //if no logner alive, spawn the death particles
             if(!isAlive)
             {
                 float randDif = MathUtils.random(speed / 2);
@@ -100,6 +120,10 @@ public class Bullet extends Entity
         return damage;
     }
     
+    /**
+     * special hitbox params and different behaviour demand an overrride.
+     * @param obj 
+     */
     @Override
     protected void handleMoveCollisionResponse(Entity obj)
     {

@@ -74,6 +74,13 @@ public abstract class Character extends Entity
     {
     }    
     
+    /**
+     * default particle spwaning for characters
+     * @param world
+     * @param x
+     * @param y
+     * @param angle 
+     */
     public void spawnParticles(World world, float x, float y, float angle)
     {
         for (int i = 0; i < 10; i++)

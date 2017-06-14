@@ -39,7 +39,14 @@ public class Player extends Character
     int frameCount = 0;
         
          
-    
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param s
+     * @param sh
+     * @param c 
+     */
     public Player(float x, float y, SpriteBatch s, ShapeRenderer sh, GameController c)
     {
         this(s, sh, c);
@@ -81,6 +88,7 @@ public class Player extends Character
     public void update(World world, float deltaTime)
     {
         super.update(world, deltaTime);
+        //spawn the death particles
         if (!isAlive)
         {
             float particleCount = 200;

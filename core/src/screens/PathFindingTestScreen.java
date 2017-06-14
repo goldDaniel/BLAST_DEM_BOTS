@@ -18,7 +18,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import gameobjects.Tile;
 import gameobjects.World;
-import gameobjects.Character;
 import gameobjects.Entity;
 import gold.daniel.main.GameEngine;
 import gold.daniel.main.Screen;
@@ -45,7 +44,6 @@ public class PathFindingTestScreen extends Screen
     public PathFindingTestScreen(GameEngine engine, SpriteBatch s, SpriteBatch hudBatch, ShapeRenderer sh)
     {
         super(engine, s, hudBatch, sh);
-        
     }
 
     @Override
@@ -111,6 +109,12 @@ public class PathFindingTestScreen extends Screen
     }
     
 }
+/**
+ * used to test entity tracking.
+ * SHOULD NOT BE USED IN FINAL GAME. only exists so we can instantiate an entity
+ * as the class is abstract
+ * @author wrksttnpc
+ */
 class TestObj extends Entity
 {
 
@@ -128,7 +132,4 @@ class TestObj extends Entity
     public void dispose()
     {
     }
-
-
-    
 }

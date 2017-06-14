@@ -8,6 +8,7 @@ package weapons;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import gameobjects.Player;
+import gameobjects.Robot;
 import gold.daniel.main.Textures;
 
 /**
@@ -27,6 +28,7 @@ public class TankCannon extends Weapon
     {
         Array<Class> cc = new Array<Class>();
         cc.add(Player.class);
+        cc.add(Robot.class);
         this.width = Textures.BULLET_4.getWidth();
         this.height = Textures.BULLET_4.getHeight();
         this.delay = 500f;

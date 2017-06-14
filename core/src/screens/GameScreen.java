@@ -5,15 +5,19 @@
  */
 package screens;
 
+import Utils.PathFinding;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.Array;
 import gameobjects.World;
 import gameobjects.Player;
+import gameobjects.Robot;
 import gold.daniel.main.GameEngine;
 import gold.daniel.main.Main;
 import gold.daniel.main.Screen;
@@ -121,9 +125,6 @@ public class GameScreen extends Screen
             zoom = 0.5f;
         }
         updating = false;
-        
-        
-
     }
 
     @Override
@@ -131,6 +132,32 @@ public class GameScreen extends Screen
     {
         world.draw();
 
+        Array<Robot> robots = world.getEntityType(Robot.class);
+        
+        sh.begin(ShapeRenderer.ShapeType.Line);
+        Array<Color> colors = new Array<Color>();
+        colors.add(Color.RED);
+        colors.add(Color.BLUE);
+        colors.add(Color.GREEN);
+        colors.add(Color.CYAN);
+        colors.add(Color.BLACK);
+        colors.add(Color.PURPLE);
+        colors.add(Color.BROWN);
+        
+        int i = 0;
+        for(Robot robot : robots)
+        {
+            sh.setColor(colors.get(i));
+            PathFinding pf = robot.getPath();
+            if(pf != null)
+            {
+                pf.draw(sh);
+            }
+            i++;
+            if(i > colors.size - 1) i = 0;
+        }
+        sh.end();
+        
         hudBatch.begin();
         
         drawHealthBar();
