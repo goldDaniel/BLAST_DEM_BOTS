@@ -5,11 +5,14 @@
  */
 package gameobjects;
 
+import Utils.PathFinding;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.Sounds;
 import gold.daniel.main.Textures;
 
@@ -34,6 +37,12 @@ public class Robot extends Character
     
     
     float scale = 0.75f;
+    
+    PathFinding pf;
+    Array<Vector2> path = null;
+    
+    Vector2 destination = null;
+    int pathUpdateCount = 30;
 
     public Robot(float x, float y, SpriteBatch s, ShapeRenderer sh)
     {
@@ -78,9 +87,25 @@ public class Robot extends Character
 
         if(player != null)    
         {
-            headAngle = 270 + calculateAngleToPoint(player.x, player.y);
+            if(pf == null)
+            {
+                pf = new PathFinding(world.map, this, player);
+            }
+            if(pathUpdateCount <= 0)
+            {
+                pf.update(player);
+                path = pf.calculate();
+                if(path != null)
+                {
+                    destination = path.first();
+                }
+            }
             
-            angle = MathUtils.lerpAngleDeg(angle, 180 + calculateAngleToPoint(player.x, player.y), 0.05f);
+            headAngle = 270 + calculateAngleToPoint(player.x, player.y);
+            if(path != null)
+            {
+                angle = MathUtils.lerpAngleDeg(angle, 180 + calculateAngleToPoint(path.first().x, path.first().y), 0.05f);
+            }
         }
         else
         {

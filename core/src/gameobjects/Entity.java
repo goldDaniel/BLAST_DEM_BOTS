@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.Array;
  */
 public abstract class Entity
 {
-    protected Vector2 position;
     protected float x;
     protected float y;
     
@@ -49,14 +48,11 @@ public abstract class Entity
         this.s = s;
         this.sh = sh;
         isAlive = true;
-        position = new Vector2();
         collisionTiles = new Array<Tile>(5);
     }
     
     public void update(World world, float deltaTime)
     {
-        position.x = x;
-        position.y = y;
         collisionTiles.clear();
     }
     public abstract void draw();
@@ -64,7 +60,13 @@ public abstract class Entity
     
     public Vector2 getPosition()
     {
-        return position;
+        return new Vector2(x, y);
+    }
+    
+    public void setPosition(float x, float y)
+    {
+        this.x = x;
+        this.y = y;
     }
     
     public float getX()

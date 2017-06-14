@@ -5,6 +5,7 @@
  */
 package Utils;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -12,10 +13,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import gameobjects.Entity;
 import gameobjects.Tile;
-import gold.daniel.main.GameEngine;
 
 /**
- *
+ * The whole purpose of this class is to find 
+ * a list of points for an entity to traverse.
+ * 
+ * handling where the entity is moving to should be handled 
+ * in its respective class
+ * 
  * @author wrksttnpc
  */
 public class PathFinding
@@ -27,27 +32,22 @@ public class PathFinding
     PathNode start;
     PathNode end;
     
-    Entity toTrack;
-
+    Array<Vector2> finalPath;
        
+    
     Array<PathNode> closed;
     Array<PathNode> open;
     
-    
-    int size = Tile.SIZE;
 
-    public PathFinding(TiledMap map)
-    {
-        this(map, null);
-    }
-    
-    public PathFinding(TiledMap map, Entity entity)
+    public PathFinding(TiledMap map, Entity entity, Entity target)
     {
         this.map = map;
         open = new Array<PathNode>();
         closed = new Array<PathNode>();
-        toTrack = entity;
         init();
+        
+        start = nodes[(int)entity.getX() / Tile.SIZE][(int)entity.getY() / Tile.SIZE];
+        end = nodes[(int)target.getX() / Tile.SIZE][(int)entity.getY() / Tile.SIZE];
     }
     
     private void init()
@@ -70,15 +70,6 @@ public class PathFinding
                 if(layer.getCell(i, j) != null)
                 {
                     TiledMapTile tile = layer.getCell(i, j).getTile();
-                    
-                    if(tile.getProperties().containsKey("start"))
-                    {
-                        start = nodes[i][j] = new PathNode(i, j, isSolid);
-                    }
-                    else if(tile.getProperties().containsKey("end"))
-                    {
-                        end = nodes[i][j] = new PathNode(i, j, isSolid);
-                    }
                     if(tile.getProperties().containsKey("isSolid"))
                     {
                         isSolid = true;
@@ -108,22 +99,7 @@ public class PathFinding
             {
                 nodes[i][j].neighbors.add(nodes[i - 1][j]);
             }
-            
-            if(j + 1 <= nodes[i].length - 1)
-            {
-                if(!nodes[i - 1][j + 1].isSolid)
-                {
-                    nodes[i][j].neighbors.add(nodes[i - 1][ j + 1]);
-                }
-            }
-            if(j - 1 >= 0)
-            {
-                if(!nodes[i - 1][j - 1].isSolid)
-                {
-                    nodes[i][j].neighbors.add(nodes[i - 1][ j - 1]);
-                }
-                
-            }
+
         }
         if(i + 1 <= nodes.length - 1)
         {
@@ -131,20 +107,6 @@ public class PathFinding
             if(!nodes[i + 1][j].isSolid)
             {
                 nodes[i][j].neighbors.add(nodes[i + 1][j]);
-            }
-            if(j + 1 <= nodes[i].length - 1)
-            {
-                if(!nodes[i + 1][j + 1].isSolid)
-                {
-                    nodes[i][j].neighbors.add(nodes[i + 1][ j + 1]);
-                }
-            }
-            if(j - 1 >= 0)
-            {
-                if(!nodes[i + 1][j - 1].isSolid)
-                {
-                    nodes[i][j].neighbors.add(nodes[i + 1][ j - 1]);
-                }
             }
         }
         if(j - 1 >= 0)
@@ -240,8 +202,17 @@ public class PathFinding
         result.add(new Vector2(start.x, start.y));
         result.reverse();
         
-        
+        finalPath = result;
         return result;
+    }
+    
+    /**
+     * 
+     * @param entity 
+     */
+    public void update(Entity entity)
+    {
+        update(entity.getX() + entity.getWidth() / 2, entity.getY() + entity.getHeight() / 2);
     }
     
     /**
@@ -249,10 +220,10 @@ public class PathFinding
      * @param x
      * @param y 
      */
-    public void update(int x, int y)
+    public void update(float x, float y)
     {
-        int i = x / Tile.SIZE;
-        int j = y / Tile.SIZE;
+        int i = (int)x / Tile.SIZE;
+        int j = (int)y / Tile.SIZE;
         if(i < 0)
         {
             i = 0;
@@ -272,6 +243,18 @@ public class PathFinding
         }
         end = nodes[i][j];
     }
+    
+    public void draw(ShapeRenderer sh)
+    {
+        if(finalPath != null)
+        {
+            for(int i = 0; i < finalPath.size - 1; i++)
+            {
+                sh.line(finalPath.get(i), finalPath.get(i + 1));
+            }
+        }
+    }
+   
 }
 class PathNode
 {
