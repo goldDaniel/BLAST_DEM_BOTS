@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import gold.daniel.main.Sounds;
@@ -41,7 +42,9 @@ public class Robot extends Character
     PathFinding pf;
     Array<Vector2> path = null;
     
-    Vector2 destination = null;
+    int destinationIndex = 0;
+    
+    
     int pathUpdateCount = 0;
 
     public Robot(float x, float y, SpriteBatch s, ShapeRenderer sh)
@@ -67,7 +70,7 @@ public class Robot extends Character
         headWidth = headHeight = 16 * scale;
         
         
-        speed = 20f;
+        speed = 35f;
         angle = 0;
 
         healthMax = health = 5;
@@ -93,24 +96,17 @@ public class Robot extends Character
             }
             if(pathUpdateCount <= 0)
             {
-                pf.update(player);
+                pf.update(this, player);
                 path = pf.calculate();
-                if(path != null)
-                {
-                    destination = path.first();
-                }
-                pathUpdateCount = 120;
+                pathUpdateCount = 60;
+                destinationIndex = 1;
             }
             else
             {
                 pathUpdateCount--;
             }
-            
+            handlePathfinding();
             headAngle = 270 + calculateAngleToPoint(player.x, player.y);
-            if(path != null)
-            {
-                angle = MathUtils.lerpAngleDeg(angle, 180 + calculateAngleToPoint(path.first().x, path.first().y), 0.05f);
-            }
         }
         else
         {
@@ -144,7 +140,30 @@ public class Robot extends Character
                         MathUtils.random(25), MathUtils.random(600), MathUtils.random(360), s, sh));
             }
         }
-
+    }
+    
+    private void handlePathfinding()
+    {
+        if(path != null)
+        {
+            if(destinationIndex >= path.size) return;
+            
+            Vector2 dest = path.get(destinationIndex);
+            if(pathFindingPointCollision(dest))
+            {
+                destinationIndex++;
+            }
+            float wantedAngle = 180 + calculateAngleToPoint(dest.x, dest.y);
+            if(wantedAngle != angle)
+            {
+                angle = MathUtils.lerpAngleDeg(angle, wantedAngle, 0.05f);
+            }
+        }
+    }
+    
+    private boolean pathFindingPointCollision(Vector2 point)
+    {
+        return isColliding(new Rectangle(point.x, point.y, 4, 4));
     }
 
     public PathFinding getPath()

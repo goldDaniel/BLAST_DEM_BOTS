@@ -175,18 +175,12 @@ public abstract class Entity
      */
     public boolean isColliding(Entity obj)
     {
-        
-        rect1.x = this.x;
-        rect1.y = this.y;
-        rect1.width = this.width;
-        rect1.height = this.height;
-        
         rect2.x = obj.x;
         rect2.y = obj.y;
         rect2.width = obj.width;
         rect2.height = obj.height;
         
-        return rect1.overlaps(rect2) || rect2.overlaps(rect1);
+        return isColliding(rect2);
     }
     
     /**

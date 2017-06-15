@@ -82,7 +82,7 @@ public class PathFindingTestScreen extends Screen
         world.update(deltaTime);
         if(engine.isMouseButtonPressed(Buttons.LEFT))
         {
-            pathFinding.update(mouse);
+            pathFinding.update(null, mouse);
             pathFinding.calculate();
         }
     }

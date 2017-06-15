@@ -42,16 +42,14 @@ public class PathFinding
     public PathFinding(TiledMap map, Entity entity, Entity target)
     {
         this.map = map;
-        open = new Array<PathNode>();
-        closed = new Array<PathNode>();
-        init();
-        
-        start = nodes[(int)entity.getX() / Tile.SIZE][(int)entity.getY() / Tile.SIZE];
-        end = nodes[(int)target.getX() / Tile.SIZE][(int)entity.getY() / Tile.SIZE];
+        update(entity, target);
     }
     
     private void init()
     {
+        open = new Array<PathNode>();
+        closed = new Array<PathNode>();
+        finalPath = new Array<Vector2>();
         /*
         This should really get its own method, but lazy 
         */
@@ -133,12 +131,13 @@ public class PathFinding
 
     public Array<Vector2> calculate()
     {
-        if(end == null) return null;
+        if(start == null || end == null) return null;
         
         start.g = 0;
         start.h = calculateDistanceBetweenNodes(start, end);
         start.f = start.h;
         
+        finalPath.clear();
         open.clear();
         closed.clear();
         open.add(start);
@@ -202,46 +201,50 @@ public class PathFinding
         result.add(new Vector2(start.x, start.y));
         result.reverse();
         
-        finalPath = result;
-        return result;
+        finalPath.addAll(trimPoints(result));
+        
+        return finalPath;
+    }
+    
+    /**
+     * MUTATES THE VARIABLE PASSED IN.
+     * @param path
+     * @return 
+     */
+    private Array<Vector2> trimPoints(Array<Vector2> path)
+    {
+        Array<Vector2> toRemove = new Array<Vector2>();
+        for(int i = 0; i < path.size - 1; i++)
+        {
+            if(path.get(i).angle() == path.get(i + 1).angle())
+            {
+               toRemove.add(path.get(i + 1));
+            }
+        }
+        
+        path.removeAll(toRemove, true);
+        
+        return path;
     }
     
     /**
      * 
      * @param entity 
+     * @param target 
      */
-    public void update(Entity entity)
+    public void update(Entity entity, Entity target)
     {
-        update(entity.getX() + entity.getWidth() / 2, entity.getY() + entity.getHeight() / 2);
-    }
-    
-    /**
-     * updates path from given XY coordinates
-     * @param x
-     * @param y 
-     */
-    public void update(float x, float y)
-    {
-        int i = (int)x / Tile.SIZE;
-        int j = (int)y / Tile.SIZE;
-        if(i < 0)
+        init();
+
+        if(entity != null)
         {
-            i = 0;
-        }
-        else if(i > nodes.length - 1)
-        {
-            i = nodes.length - 1;
-        }
+            start = nodes[(int)entity.getX() / Tile.SIZE][(int)entity.getY() / Tile.SIZE];
         
-        if(j < 0)
-        {
-            j = 0;
         }
-        if(j > nodes[i].length - 1)
+        if(target != null)
         {
-            j = nodes[i].length - 1;
+            end = nodes[(int)target.getX() / Tile.SIZE][(int)target.getY() / Tile.SIZE];
         }
-        end = nodes[i][j];
     }
     
     public void draw(ShapeRenderer sh)
